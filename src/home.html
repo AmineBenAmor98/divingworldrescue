@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#072e31">
-<meta name="description" content="Tauchkurse, Scubility, Erste Hilfe und Tauchausrüstung bei Dive-World &amp; Rescue. Finde dein Angebot und nimm Kontakt mit dem Team auf.">
 <title>Tauchen und Erste Hilfe · Dive-World &amp; Rescue</title>
 <link rel="stylesheet" href="main.css">
 </head>
@@ -15,17 +14,50 @@
 <section class="hero" aria-labelledby="headline">
   <div class="scene"><video id="dive" muted loop playsinline preload="none" poster="assets/tauchgang.webp" aria-hidden="true"><source src="assets/tauchgang.mp4" type="video/mp4"></video></div>
   <div class="hero-inner wrap"><div class="hero-copy">
+    <p class="kicker">Dive-World &amp; Rescue · Düsseldorf</p>
     <h1 id="headline">Zusammen<em>abtauchen.</em></h1>
-    <p class="intro">Vom ersten Atemzug unter Wasser bis zum nächsten Tauchgang. Entdecke unsere Tauchkurse, Erste-Hilfe-Ausbildungen und Ausrüstung.</p>
-    <div class="actions"><a class="cta mint" href="pages/kurse.html">Kurse entdecken</a><a class="plain" href="pages/infos.html#team">Team kennenlernen</a></div>
+    <p class="intro">Tauchen lernen, Erste Hilfe trainieren und die passende Ausrüstung finden. Entdecke, was zu dir passt.</p>
+    <div class="actions"><a class="cta mint" href="#angebote">Unsere Angebote</a><a class="plain" href="pages/infos.html#team">Das Team kennenlernen</a></div>
   </div></div>
   <button hidden type="button" class="playback paused" aria-label="Animation abspielen" aria-controls="dive"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="pause" d="M6 4h4v16H6zm8 0h4v16h-4z"/><path class="play" d="M7 3l14 9-14 9z"/></svg></button>
 </section>
-<section class="portal wrap" aria-label="Unsere Bereiche">
-<a class="portal-course" id="kurse" href="pages/kurse.html"><img src="assets/scubility.webp" width="764" height="508" alt="" loading="lazy"><div><h2>Kurse</h2><p>Schnuppertauchen, Tauchschein, Scubility und Erste Hilfe.</p><span>Kursangebot ansehen</span></div></a>
-<div class="portal-side">
-<a href="pages/tauch-shop.html"><img src="assets/tauchen.webp" width="764" height="508" alt="" loading="lazy"><div><h2>Tauchshop</h2><p>Ausrüstung entdecken oder für einen Tauchgang leihen.</p><span>Zum Sortiment</span></div></a>
-<a id="team" href="pages/infos.html"><img src="assets/see.webp" width="764" height="508" alt="" loading="lazy"><div><h2>Infos &amp; Kontakt</h2><p>Lerne das Team kennen und finde deinen Ansprechpartner.</p><span>Zur Tauchschule</span></div></a></div></section>
+<section class="offer-map wrap" id="angebote" aria-labelledby="angebote-title">
+  <div class="landing-heading"><h2 id="angebote-title">Was hast du vor?</h2><p>Vom ersten Tauchgang bis zum nächsten Ausflug. Hier findest du deinen Einstieg.</p></div>
+  <nav aria-label="Angebote von Dive-World & Rescue">
+    <a href="pages/tauchen-lernen-kurse.html"><strong>Tauchen lernen</strong><span>Schnuppertauchen, Tauchschein und Weiterbildung.</span></a>
+    <a href="pages/kurse.html#scubility"><strong>Inklusiv tauchen</strong><span>Scubility und Ausbildung zum Dive Buddy.</span></a>
+    <a href="pages/frti-kurse.html"><strong>Erste Hilfe lernen</strong><span>Für Familie, Beruf und Tauchsport.</span></a>
+    <a href="pages/tauch-shop.html"><strong>Ausrüstung kaufen</strong><span>Computer, Anzüge, Atemregler und Zubehör.</span></a>
+    <a href="pages/equipment-verleih.html"><strong>Ausrüstung leihen</strong><span>Für einen Tag, ein Wochenende oder eine Woche.</span></a>
+    <a href="pages/termine.html"><strong>Gemeinsam tauchen</strong><span>Kurstermine, Tauchausflüge und Reisen anfragen.</span></a>
+  </nav>
+</section>
+<section class="landing-diving wrap" aria-labelledby="diving-title">
+  <div class="landing-photo"><img src="assets/tauchen.webp" width="764" height="508" loading="lazy" alt="Maske und Atemregler auf einem Steg am See"></div>
+  <div class="landing-diving-copy"><p class="kicker">Tauchausbildung</p><h2 id="diving-title">Dein erster Atemzug. Dein nächster Schritt.</h2>
+  <p>Probier das Tauchen aus, mach deinen Tauchschein oder frische deine Kenntnisse auf. Wir bilden nach SDI/TDI und PSS aus.</p>
+  <!-- course-preview -->
+  <a class="path-action" href="pages/tauchen-lernen-kurse.html">Alle Tauchkurse entdecken</a></div>
+</section>
+<section class="inclusive-band"><div class="wrap">
+  <div><p class="kicker">Scubility</p><h2>Tauchen mit Behinderung</h2><p>Du möchtest selbst tauchen oder einen Menschen mit Behinderung als Dive Buddy begleiten? Wir besprechen mit dir den passenden Einstieg.</p><a class="path-action" href="pages/kurse.html#scubility">Inklusive Tauchkurse</a></div>
+  <img src="assets/scubility.webp" width="764" height="508" loading="lazy" alt="Zwei Tauchende an der Wasseroberfläche">
+</div></section>
+<section class="landing-aid wrap" aria-labelledby="aid-title">
+  <img src="assets/erste-hilfe.webp" width="764" height="508" loading="lazy" alt="Erste-Hilfe-Übung an einer Trainingspuppe">
+  <div><p class="kicker">First Response Training International</p><h2 id="aid-title">Im Notfall helfen können.</h2>
+  <p>Erste-Hilfe-Kurse mit Theorie und praktischen Übungen. Einzelunterricht und Gruppenkurse für den Alltag und für Firmen.</p>
+  <ul><li>Erste Hilfe für Erwachsene, Kinder und Säuglinge</li><li>Wiederbelebung und AED am Arbeitsplatz</li><li>Sauerstoff bei Tauchnotfällen und weitere Fachkurse</li></ul>
+  <a class="cta" href="pages/frti-kurse.html">Erste-Hilfe-Kurse ansehen</a>
+  <a class="path-action" href="pages/tauch-shop.html#erste-hilfe">Erste-Hilfe-Material entdecken</a></div>
+</section>
+<!-- equipment-preview -->
+<section class="landing-outings wrap">
+  <div><p class="kicker">Ausrüstung leihen</p><h2>Für deinen nächsten Tauchgang.</h2><p>Atemregler, Computer, Jackets, Anzüge und mehr. Vergleiche Tages-, Wochenend- und Wochenpreise oder frag nach einem Set.</p><a class="path-action" href="pages/equipment-verleih.html">Leihpreise und Ausrüstung</a></div>
+  <div><p class="kicker">Tauchausflüge &amp; Reisen</p><h2>Mit anderen abtauchen.</h2><p>Wir organisieren Tauchgänge und Reisen. Frag nach dem nächsten Termin und schau dir unsere bisherigen Ausflüge an.</p><a class="path-action" href="pages/termine.html">Termine anfragen</a><a class="path-action" href="pages/bilder-reisen-event-s.html">Reisen und Rückblicke</a></div>
+</section>
+<!-- google-reviews -->
+<section class="landing-contact wrap"><div><h2>Noch unsicher, was passt?</h2><p>Erzähl uns, was du vorhast. Wir helfen dir bei Kurswahl und Ausrüstung.</p></div><div><a class="cta" href="pages/anfrage.html">Anfrage stellen</a><a class="plain" href="https://wa.me/4917685639763">WhatsApp schreiben</a></div></section>
 </main>
 <!-- site-footer -->
 <script defer src="home.js"></script></body></html>

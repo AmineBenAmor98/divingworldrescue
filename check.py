@@ -49,7 +49,8 @@ def check():
             if parts.scheme in ('tel', 'mailto'):
                 continue
             if parts.scheme or parts.netloc:
-                assert parts.scheme == 'https' and parts.hostname == 'wa.me', (path, url)
+                allowed = parts.hostname == 'wa.me' or (parts.hostname == 'www.google.com' and parts.path.startswith('/maps/place/'))
+                assert parts.scheme == 'https' and allowed, (path, url)
                 continue
             target = (path.parent / unquote(parts.path)).resolve() if parts.path else path
             assert target.is_relative_to(DIST) and target.is_file(), (path, url)

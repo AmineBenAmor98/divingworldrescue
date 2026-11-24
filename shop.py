@@ -1,8 +1,22 @@
 """Render the equipment directory, grouped listings and local product pages."""
 import re
+import json
 import unicodedata
 from html import escape
 from urllib.parse import urlencode
+
+
+def category_photo(page):
+    selected = {
+        "tauch-shop--atemregler-zubehoer": "Atemregler-Set Genius / Venus",
+        "tauch-shop--jacket-bcd": "TDS Jacket Nemo",
+        "tauch-shop--neopren": "TDS Zero 5.0 · Herren",
+        "tauch-shop--bekleidung": "TDS Lycra-Shirt Whale",
+        "frti-kurse--frti-material-eh-material": "First Aid Kit Small",
+    }.get(page["slug"])
+    if selected:
+        return next(item["photos"][0] for item in catalogue_items(page) if item["name"] == selected)
+    return "../" + next(b["src"] for b in page["blocks"] if b["type"] == "photo")
 
 
 def shop_directory(pages):
@@ -32,10 +46,9 @@ def shop_directory(pages):
     for anchor, title, entries in departments:
         rows = []
         for slug, label, description in entries:
-            photos = [b for b in pages[slug]["blocks"] if b["type"] == "photo"]
-            photo = photos[1] if slug == "tauch-shop--zubehoer" else photos[0]
+            photo = category_photo(pages[slug])
             rows.append(f'''<a class="department-item" href="{slug}.html">
-              <img src="../{escape(photo["src"])}" alt="" loading="lazy">
+              <img src="{escape(photo)}" alt="" loading="lazy">
               <span><strong>{escape(label)}</strong><small>{escape(description)}</small></span>
               <i aria-hidden="true">→</i></a>''')
         sections.append(f'<section class="department" id="{anchor}"><h2>{escape(title)}</h2><div>{"".join(rows)}</div></section>')
@@ -48,7 +61,36 @@ def shop_directory(pages):
         photo = next(b["src"] for b in pages[slug]["blocks"] if b["type"] == "photo")
         promos.append(f'''<a class="shop-offer" href="{slug}.html"><img src="../{photo}" alt="" loading="lazy">
           <span><strong>{title}</strong><small>{description}</small></span><i aria-hidden="true">→</i></a>''')
-    return '<div class="wrap shop-edit"><nav class="shop-offers" aria-label="Angebote und Einzelstücke">' + ''.join(promos) + '</nav>' + ''.join(sections) + '</div>'
+    return '<div class="wrap shop-edit">' + shop_search(pages) + '<div class="shop-browse"><nav class="shop-offers" aria-label="Angebote und Einzelstücke">' + ''.join(promos) + '</nav>' + ''.join(sections) + '</div></div>'
+
+
+def shop_search(pages):
+    records = []
+    for page in pages.values():
+        if not (page["slug"].startswith("tauch-shop--") or page.get("catalogue")):
+            continue
+        for item in catalogue_items(page):
+            records.append({"name": item["name"], "price": item["price"],
+                "summary": item["summary"], "category": page["title"],
+                "url": item["slug"] + ".html", "image": item["photos"][0],
+                "terms": " ".join([item["group"], *item["specs"].values()])})
+    # Repeated listings share one search result. Keep all descriptions and
+    # category/specification terms searchable, while retaining every source page.
+    merged = {}
+    for record in records:
+        key = record["name"].casefold()
+        if key in merged:
+            merged[key]["terms"] += " " + " ".join([record["category"], record["summary"], record["terms"]])
+        else:
+            merged[key] = record
+    index = json.dumps(list(merged.values()), ensure_ascii=False).replace("<", "\\u003c")
+    return f'''<section class="shop-search" hidden aria-labelledby="shop-search-title">
+      <div><h2 id="shop-search-title">Was suchst du?</h2><p>Suche im Sortiment oder entdecke die Kategorien darunter.</p></div>
+      <div><label for="shop-query">Produkt, Marke oder Eigenschaft</label><div class="search-field"><input type="search" id="shop-query" placeholder="z. B. Tauchcomputer, Ratio, Handschuhe" autocomplete="off" aria-controls="shop-search-results"><button type="button" hidden class="clear-search">Zurücksetzen</button></div></div>
+      <p class="search-status" role="status" aria-live="polite"></p>
+      <div id="shop-search-results" class="shop-results" hidden></div>
+      <script type="application/json" id="shop-index">{index}</script>
+    </section>'''
 
 
 def inquiry(product):
@@ -90,9 +132,10 @@ def category_products(items):
             url = item["slug"] + ".html"
             name = escape(item["name"])
             note = f'<small>{escape(item["note"])}</small>' if item.get("note") else ""
+            terms = escape(" ".join([item["name"], item["summary"], item["group"], *item["specs"].values()]), quote=True)
             amount = re.search(r"(\d+),(\d{2})", item["price"])
             cents = int(amount[1]) * 100 + int(amount[2]) if amount else ""
-            rows.append(f'''<article class="stock-row" data-cents="{cents}" data-name="{name}"><a href="{url}">
+            rows.append(f'''<article class="stock-row" data-cents="{cents}" data-name="{name}" data-search="{terms}"><a href="{url}">
               <span class="stock-thumb"><img src="{item["photos"][0]}" loading="lazy" alt=""></span>
               <div class="stock-caption"><h3>{name}</h3><p>{escape(item["summary"])}</p></div>
               <div class="stock-value"><strong>{escape(item["price"])}</strong>{note}
@@ -100,7 +143,7 @@ def category_products(items):
             </a></article>''')
         sections.append(f'<section class="stock-family" id="{anchor}"><h2>{escape(label)}</h2>{"".join(rows)}</section>')
     return f'''<div class="wrap catalogue"><nav class="catalogue-nav" aria-label="Produktgruppen">
-    <details class="stock-groups"><summary>Produktgruppen</summary>{"".join(navigation)}</details>
+    <div class="category-search" hidden><label for="category-query">In dieser Kategorie suchen</label><input id="category-query" type="search" placeholder="Produkt oder Eigenschaft" autocomplete="off"><p role="status" aria-live="polite"></p></div><details class="stock-groups"><summary>Produktgruppen</summary>{"".join(navigation)}</details>
     <label class="sort-order" hidden>Sortierung je Gruppe<select>
     <option value="name">Name (A–Z)</option><option value="asc">Preis aufsteigend</option>
     <option value="desc">Preis absteigend</option></select></label></nav><div>{"".join(sections)}</div></div>'''
@@ -154,4 +197,4 @@ def product_detail(item, parent):
     <div class="item-info">
     <div class="item-purchase"><strong>{escape(item["price"])}</strong>{note}{inquiry(item["name"])}</div>
     {spec_section}{extra}
-    </div></article></div>'''
+    </div></article><nav class="item-next" aria-label="Weiter im Sortiment"><a href="{group_link}">Weitere Artikel aus {escape(item["group"])}</a><a href="tauch-shop.html">Zum gesamten Sortiment</a></nav></div>'''

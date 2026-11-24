@@ -21,7 +21,7 @@ form.addEventListener('submit', event => {
     return;
   }
   const body = 'Anfrage · ' + topic.value + '\n\n' + message.value.trim();
-  const email = 'mailto:info@dive-world-rescue.de?subject=' + encodeURIComponent('Anfrage · ' + topic.value) + '&body=';
+  const email = 'mailto:dive-world@mail.de?subject=' + encodeURIComponent('Anfrage · ' + topic.value) + '&body=';
   const url = event.submitter?.value === 'mail' ? email : 'https://wa.me/4917685639763?text=';
   location.href = url + encodeURIComponent(body);
 });

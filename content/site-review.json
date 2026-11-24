@@ -1,0 +1,306 @@
+{
+  "reviewed_on": "2026-11-24",
+  "scope": {
+    "source_sections": 27,
+    "rebuilt_content_sections": 26,
+    "team_and_contact_destination": "pages/infos.html",
+    "generated_html_pages": 131,
+    "catalogue_records": 100,
+    "distinct_product_names": 90
+  },
+  "strategy": {
+    "primary_navigation": [
+      "Tauchen",
+      "Erste Hilfe",
+      "Ausrüstung",
+      "Tauchschule"
+    ],
+    "homepage_entry_points": [
+      "Tauchen lernen",
+      "Inklusiv tauchen",
+      "Erste Hilfe lernen",
+      "Ausrüstung kaufen",
+      "Ausrüstung leihen",
+      "Gemeinsam tauchen"
+    ],
+    "customer_journey": [
+      "Identify the visitor’s goal",
+      "Explain the relevant offer and costs",
+      "Show the appropriate course or product details",
+      "Open a contextual WhatsApp or email enquiry"
+    ],
+    "commerce_model": "Product catalogue and enquiries. No cart, checkout, payment collection or live stock system.",
+    "advertising_entry_pages": [
+      {
+        "intent": "Learn to dive / first certification",
+        "destination": "pages/tauchen-lernen-kurse.html#tauchschein",
+        "conversion": "Open Water Diver enquiry with the course preselected"
+      },
+      {
+        "intent": "Try diving",
+        "destination": "pages/tauchen-lernen-kurse.html#ausprobieren",
+        "conversion": "Trial dive enquiry with the course preselected"
+      },
+      {
+        "intent": "Inclusive diving / Dive Buddy",
+        "destination": "pages/kurse.html#scubility",
+        "conversion": "Scubility enquiry"
+      },
+      {
+        "intent": "First aid for families, workplaces or diving",
+        "destination": "pages/frti-kurse.html",
+        "conversion": "Enquiry for the chosen programme"
+      },
+      {
+        "intent": "Rent diving equipment",
+        "destination": "pages/equipment-verleih.html",
+        "conversion": "Rental enquiry after viewing rates"
+      },
+      {
+        "intent": "Specific equipment model",
+        "destination": "Corresponding local product page",
+        "conversion": "Product availability enquiry with the product prefilled"
+      }
+    ]
+  },
+  "content_inventory": [
+    {
+      "title": "Sonderangebote",
+      "path": "pages/sonderangebote.html",
+      "kind": "catalogue"
+    },
+    {
+      "title": "Tauchen lernen",
+      "path": "pages/tauchen-lernen-kurse.html",
+      "kind": "guide or reference"
+    },
+    {
+      "title": "Termine und Tauchausflüge",
+      "path": "pages/termine.html",
+      "kind": "guide or reference"
+    },
+    {
+      "title": "Kurspreise",
+      "path": "pages/preis-kurse.html",
+      "kind": "guide or reference"
+    },
+    {
+      "title": "Tauchshop",
+      "path": "pages/tauch-shop.html",
+      "kind": "guide or reference"
+    },
+    {
+      "title": "Jackets und BCDs",
+      "path": "pages/tauch-shop--jacket-bcd.html",
+      "kind": "catalogue"
+    },
+    {
+      "title": "Tauchcomputer",
+      "path": "pages/tauch-shop--computer.html",
+      "kind": "catalogue"
+    },
+    {
+      "title": "Neopren",
+      "path": "pages/tauch-shop--neopren.html",
+      "kind": "catalogue"
+    },
+    {
+      "title": "Masken, Flossen und Zubehör",
+      "path": "pages/tauch-shop--masken-flossenzubehoer.html",
+      "kind": "catalogue"
+    },
+    {
+      "title": "Atemregler und Zubehör",
+      "path": "pages/tauch-shop--atemregler-zubehoer.html",
+      "kind": "catalogue"
+    },
+    {
+      "title": "Koffer und Taschen",
+      "path": "pages/tauch-shop--koffer-taschen.html",
+      "kind": "catalogue"
+    },
+    {
+      "title": "Zubehör",
+      "path": "pages/tauch-shop--zubehoer.html",
+      "kind": "catalogue"
+    },
+    {
+      "title": "Bekleidung",
+      "path": "pages/tauch-shop--bekleidung.html",
+      "kind": "catalogue"
+    },
+    {
+      "title": "Schmuck",
+      "path": "pages/tauch-shop--schmuck.html",
+      "kind": "catalogue"
+    },
+    {
+      "title": "Head-up-Display",
+      "path": "pages/hud.html",
+      "kind": "guide or reference"
+    },
+    {
+      "title": "Verkauf im Kundenauftrag",
+      "path": "pages/im-auftrag-zu-verkaufen.html",
+      "kind": "catalogue"
+    },
+    {
+      "title": "Ausrüstung leihen",
+      "path": "pages/equipment-verleih.html",
+      "kind": "guide or reference"
+    },
+    {
+      "title": "Erste-Hilfe-Kurse",
+      "path": "pages/frti-kurse.html",
+      "kind": "guide or reference"
+    },
+    {
+      "title": "FRTI-Material",
+      "path": "pages/frti-kurse--frti-material-eh-material.html",
+      "kind": "catalogue"
+    },
+    {
+      "title": "FRTI-Abschlüsse",
+      "path": "pages/frti-kurse--frti-glueckwuensche.html",
+      "kind": "guide or reference"
+    },
+    {
+      "title": "Erste-Hilfe-Material",
+      "path": "pages/erste-hilfe-material-zubehoer.html",
+      "kind": "catalogue"
+    },
+    {
+      "title": "Tauchabschlüsse",
+      "path": "pages/glueckwuensche.html",
+      "kind": "guide or reference"
+    },
+    {
+      "title": "Reisen und Events",
+      "path": "pages/bilder-reisen-event-s.html",
+      "kind": "guide or reference"
+    },
+    {
+      "title": "Mitarbeit im Team",
+      "path": "pages/wir-suchen-dich.html",
+      "kind": "guide or reference"
+    },
+    {
+      "title": "Gästebuch",
+      "path": "pages/gaestebuch-bewertung.html",
+      "kind": "guide or reference"
+    },
+    {
+      "title": "Impressum und Datenschutz",
+      "path": "pages/impressum.html",
+      "kind": "guide or reference"
+    },
+    {
+      "title": "Team and contact from Wer wir sind",
+      "path": "pages/infos.html",
+      "kind": "team and contact"
+    }
+  ],
+  "validation": {
+    "local_link_media_anchor_and_enquiry_check": "passed for all 131 reachable HTML pages",
+    "browser_layout_sweep": {
+      "widths": [
+        360,
+        768,
+        1440
+      ],
+      "documents": 131,
+      "extra_home_alias": "/index.html",
+      "horizontal_overflow": 0,
+      "broken_loaded_images": 0
+    },
+    "visual_template_review": [
+      "homepage",
+      "diving course overview",
+      "diving course detail",
+      "first aid courses",
+      "shop directory",
+      "category listing",
+      "product detail",
+      "course fees",
+      "rental fees",
+      "team and contact",
+      "archives and galleries",
+      "guestbook",
+      "jobs",
+      "legal",
+      "enquiry"
+    ],
+    "interaction_checks": [
+      "mobile menu open and Escape close",
+      "catalogue search, no-results state and reset",
+      "deduplicated product search",
+      "category search",
+      "price sorting",
+      "contextual course enquiry prefill",
+      "contextual product enquiry prefill",
+      "hero animation pause/play",
+      "mobile footer disclosure"
+    ],
+    "limitations": [
+      "Browser geometry and link checks cover every page; visual review covers each shared layout and representative products.",
+      "No real message was sent and no order or payment was placed.",
+      "No production deployment or domain migration was performed."
+    ]
+  },
+  "owner_confirmation_needed": [
+    {
+      "priority": "before launch",
+      "item": "Confirm current prices, availability and offer validity.",
+      "details": "Cordura Bag and Pullover Navy had conflicting prices in the source. S-GARD Command Fleecejacke is listed from 59.25 EUR and at 71.25 EUR in different source sections; all affected listings now ask for the price."
+    },
+    {
+      "priority": "before launch",
+      "item": "Confirm course ages, prerequisites, fees and teaching formats.",
+      "details": "The source gives 8 years for Open Water Diver and 13 for e-learning. These are source claims, not independently verified certification standards."
+    },
+    {
+      "priority": "before launch",
+      "item": "Supply future course and trip dates.",
+      "details": "Imported past schedules are visibly archived. The site asks visitors to enquire about the next date."
+    },
+    {
+      "priority": "before launch",
+      "item": "Review legal text against the actual new site and hosting.",
+      "details": "The imported text still mentions registration/accounts, measurement/marketing and older external legal references. This site has no accounts, checkout, tracking or map embeds."
+    },
+    {
+      "priority": "before launch",
+      "item": "Confirm preferred email, contact hours and any active recruitment.",
+      "details": "dive-world@mail.de is the consistent primary contact. The second original address remains on the contact and legal pages. The recruitment page asks about the relevant season."
+    },
+    {
+      "priority": "deployment",
+      "item": "Choose the production URL and configure redirects, HTTPS and SEO metadata.",
+      "details": "SITE_URL enables canonical/share URLs. Product sharing uses its own image. The live DuckDNS preview is not updated by this local build."
+    },
+    {
+      "priority": "content improvement",
+      "item": "Provide higher-resolution original assets where available.",
+      "details": "The original logo and instructor portraits are retained. Some catalogue photos contain collage or brochure text. The old travel section supplied flags/logos rather than trip photographs, so it is now a factual trip archive. Real approved trip photos would improve it. One unavailable Monte Mare source photo was omitted."
+    },
+    {
+      "priority": "optional",
+      "item": "Confirm social profile URLs and whether payment instructions belong on the public site.",
+      "details": "The original about page listed social handles and bank/PayPal information. The redesign does not expose payment instructions in its enquiry journey. The original source is preserved in work/source-pages."
+    }
+  ],
+  "resolved_findings": [
+    "Landing page omitted or buried several offers. It now exposes six visitor goals and four main areas.",
+    "Equipment categories and secondary services lacked clear explanations. The homepage and shop directory now connect them to their own pages.",
+    "Repeated products appeared multiple times in catalogue search. Matching names now share one search result while original listing pages remain accessible.",
+    "Conflicting S-GARD jacket prices were displayed as settled amounts. Both source variants now use a price enquiry with an explanation.",
+    "First-aid material fees could be mistaken for the whole course price. Learning materials and practical tuition are now distinguished.",
+    "Mandatory diving-course extras were hidden in expandable details. They are now visible before expanding.",
+    "The travel page displayed flags and venue logos as travel photographs. It is now a labelled chronological trip/event archive.",
+    "Archive pages had no useful next step. Achievement galleries now link back to the corresponding training.",
+    "Generic interior covers occupied excessive space. Their spacing and heading scale have been reduced.",
+    "Contact addresses varied between entry points. The primary address is now consistent, with the second original address retained on contact/legal pages.",
+    "Returning browsers could show stale shared assets. CSS and script URLs now include content hashes.",
+    "Homepage equipment previews used weak first-in-source images. Category previews now use selected original product photographs."
+  ]
+}

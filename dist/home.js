@@ -22,7 +22,7 @@ function setupFilm() {
     '#kurse': 'kurse.html',
   };
   if (Object.hasOwn(legacySections, location.hash)) {
-    const courses = document.querySelector('.portal-course');
+    const courses = document.querySelector('.nav a');
     location.replace(new URL(legacySections[location.hash], courses.href));
     return;
   }
@@ -93,3 +93,88 @@ if (stockGroups) {
     }
   });
 }
+
+function searchableText(value) {
+  return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('de').replace(/ß/g, 'ss');
+}
+
+function setupShopSearch() {
+  const panel = document.querySelector('.shop-search');
+  if (!panel) return;
+  const items = JSON.parse(document.querySelector('#shop-index').textContent);
+  const query = panel.querySelector('input');
+  const clear = panel.querySelector('.clear-search');
+  const results = panel.querySelector('.shop-results');
+  const status = panel.querySelector('.search-status');
+  const browse = document.querySelector('.shop-browse');
+  function update() {
+    const words = searchableText(query.value.trim()).split(/\s+/).filter(Boolean);
+    clear.hidden = words.length === 0;
+    results.replaceChildren();
+    results.hidden = words.length === 0;
+    browse.hidden = words.length !== 0;
+    status.textContent = '';
+    if (!words.length) return;
+    const matches = items.filter(item => words.every(word => searchableText([item.name, item.summary, item.category, item.terms].join(' ')).includes(word)));
+    status.textContent = matches.length === 1 ? '1 passender Artikel' : matches.length + ' passende Artikel';
+    if (!matches.length) {
+      const empty = document.createElement('p');
+      empty.textContent = 'Kein passender Artikel gefunden. Versuche einen anderen Begriff oder entdecke die Kategorien.';
+      results.append(empty);
+      return;
+    }
+    for (const item of matches) {
+      const link = document.createElement('a');
+      link.className = 'shop-result';
+      link.href = item.url;
+      const img = document.createElement('img');
+      img.src = item.image;
+      img.alt = '';
+      img.loading = 'lazy';
+      const copy = document.createElement('span');
+      const category = document.createElement('small');
+      category.textContent = item.category;
+      const name = document.createElement('strong');
+      name.textContent = item.name;
+      const summary = document.createElement('span');
+      summary.textContent = item.summary;
+      const price = document.createElement('b');
+      price.textContent = item.price;
+      copy.append(category, name, summary);
+      link.append(img, copy, price);
+      results.append(link);
+    }
+  }
+  query.addEventListener('input', update);
+  clear.addEventListener('click', () => { query.value = ''; update(); query.focus(); });
+  document.querySelector('a[href="#ausruestung"]').addEventListener('click', () => { query.value = ''; update(); });
+  panel.hidden = false;
+}
+setupShopSearch();
+
+function setupCategorySearch() {
+  const panel = document.querySelector('.category-search');
+  if (!panel) return;
+  const query = panel.querySelector('input');
+  const status = panel.querySelector('[role="status"]');
+  const groups = [...document.querySelectorAll('.stock-family')];
+  function update() {
+    const words = searchableText(query.value.trim()).split(/\s+/).filter(Boolean);
+    let count = 0;
+    for (const group of groups) {
+      let shown = 0;
+      for (const row of group.querySelectorAll('.stock-row')) {
+        row.hidden = !words.every(word => searchableText(row.dataset.search).includes(word));
+        if (!row.hidden) shown++;
+      }
+      group.hidden = shown === 0;
+      count += shown;
+      const link = document.querySelector('.stock-groups a[href="#' + group.id + '"]');
+      if (link) link.hidden = group.hidden;
+    }
+    status.textContent = words.length ? count + ' passende Artikel' : '';
+  }
+  query.addEventListener('input', update);
+  panel.hidden = false;
+}
+setupCategorySearch();

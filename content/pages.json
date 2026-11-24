@@ -4443,13 +4443,14 @@
         "alt": "",
         "product": {
           "name": "S-GARD Command Fleecejacke",
-          "price": "ab 59,25 €",
+          "price": "Preis auf Anfrage",
           "group": "Pullover & Jacken",
           "summary": "Fleecejacke mit Stehkragen und seitlichen Reißverschlusstaschen.",
           "specs": {
             "Fleece": "300 g/m²",
             "Größen": "XS bis 5XL"
-          }
+          },
+          "note": "Für dieselbe Artikelbezeichnung stehen ab 59,25 € in der Bekleidung und 71,25 € beim FRTI-Material. Bitte Preis und Ausführung anfragen."
         }
       },
       {
@@ -6005,7 +6006,7 @@
         "product": {
           "group": "Dienstbekleidung",
           "name": "S-GARD Command Fleecejacke",
-          "price": "71,25 €",
+          "price": "Preis auf Anfrage",
           "summary": "Jacke mit Stehkragen und Taschen in XS bis 5XL.",
           "specs": {
             "Größen": "XS bis 5XL",
@@ -6013,7 +6014,7 @@
             "Einsätze": "65 % Polyester, 35 % Baumwolle",
             "Artikelnummer": "EB-05045"
           },
-          "note": "FRTI-Angebot 71,25 € (regulär 79,95 €). Die Bekleidungsseite führt denselben Artikel ab 59,25 €. Preis für die gewünschte Ausführung bitte erfragen."
+          "note": "Für dieselbe Artikelbezeichnung stehen ab 59,25 € in der Bekleidung und 71,25 € beim FRTI-Material. Bitte Preis und Ausführung anfragen."
         }
       },
       {

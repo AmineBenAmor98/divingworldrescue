@@ -21,11 +21,11 @@ def first_aid(page, breadcrumb):
         items = []
         for c in courses:
             if c["online"]:
-                fees = f'<dl class="format-fees"><div><dt>E-Learning</dt><dd>{c["online"]}</dd></div><div><dt>Handbuch</dt><dd>{c["book"]}</dd></div></dl><small>Wahlweise. Die Praxisschulung kommt hinzu und kostet je nach Ort unterschiedlich viel.</small>'
+                fees = f'<h4 class="material-label">Lernmaterial · wahlweise</h4><dl class="format-fees"><div><dt>E-Learning</dt><dd>{c["online"]}</dd></div><div><dt>Handbuch</dt><dd>{c["book"]}</dd></div></dl><small>Die Praxisschulung kommt hinzu und kostet je nach Ort unterschiedlich viel.</small>'
             else:
                 fees = '<p>Preis und Ablauf auf Anfrage.</p>'
             items.append(f'''<article class="aid-course"><div><h3>{escape(c["name"])}</h3><p>{escape(c["summary"])}</p>
-              {course_link("Erste Hilfe", c["name"], "Diesen Kurs anfragen")}</div><div class="aid-fees">{fees}</div></article>''')
+              </div><div class="aid-fees">{fees}</div><div class="aid-enquire">{course_link("Erste Hilfe", c["name"], "Diesen Kurs anfragen")}</div></article>''')
         sections.append(f'<section class="aid-group" id="{anchor}"><h2>{escape(group)}</h2><div>{"".join(items)}</div></section>')
     return f'''<header class="aid-cover"><div class="wrap">{breadcrumb}<h1>Erste-Hilfe-Kurse</h1><p>Vom Kindernotfall bis zum Tauchunfall. Finde die Ausbildung von First Response Training International, die zu deinem Alltag passt.</p></div></header>
     <nav class="dive-routes" aria-label="Kursbereiche"><div class="wrap">{"".join(tabs)}</div></nav>
@@ -38,14 +38,26 @@ def image_gallery(blocks, title):
     out = []
     for i, b in enumerate(blocks, 1):
         caption = escape(b.get("caption", ""))
-        alt = caption or f'{escape(title)} · Foto {i}'
+        alt = caption or f'{escape(title)} · Abbildung {i}'
         src = "../" + escape(b["src"])
         desc = f'<figcaption>{caption}</figcaption>' if caption else ''
         out.append(f'<figure><a href="{src}" aria-label="Bild vergrößern: {alt}"><img src="{src}" loading="lazy" alt="{alt}"></a>{desc}</figure>')
     return '<div class="album-grid">' + ''.join(out) + '</div>'
 
 
+def travel_archive(page):
+    years = []
+    for i, (year, events) in enumerate(page["highlights"].items()):
+        items = ''.join(f'<li>{escape(event)}</li>' for event in events)
+        opened = ' open' if i < 2 else ''
+        years.append(f'<details class="travel-year"{opened}><summary>{escape(year)}<small>{len(events)} Rückblick' + ('e' if len(events) != 1 else '') + f'</small></summary><ul>{items}</ul></details>')
+    return '''<section class="reader-panel"><div><h2>Gemeinsam unterwegs</h2><p>Vom Indoor-Tauchgang bis zur Reise nach Safaga. Hier findest du die bisherigen Ausflüge und Veranstaltungen unserer Schule.</p></div><div>''' + course_link("Termine und Reisen", label="Nächsten Ausflug anfragen") + '''<a class="dive-text-link" href="glueckwuensche.html">Tauchabschlüsse ansehen</a></div></section>
+    <section class="travel-archive" aria-labelledby="reise-archiv"><h2 id="reise-archiv">Reisen &amp; Veranstaltungen im Rückblick</h2>''' + ''.join(years) + '</section>'
+
+
 def albums(page):
+    if page["slug"] == "bilder-reisen-event-s":
+        return travel_archive(page)
     groups = {}
     for b in page["blocks"]:
         if b["type"] == "photo":
@@ -59,11 +71,18 @@ def albums(page):
             items = ''.join(f'<li>{escape(e)}</li>' for e in events)
             out.append(f'<details class="archive-period"><summary>{escape(year)}</summary><ul>{items}</ul></details>')
         out.append('</section>')
+    if page["slug"] == "frti-kurse--frti-glueckwuensche":
+        target, heading, copy = "frti-kurse.html", "Selbst Erste Hilfe lernen", "Entdecke die Kurse für Familie, Beruf und Tauchsport."
+    elif page["slug"] == "glueckwuensche":
+        target, heading, copy = "tauchen-lernen-kurse.html", "Dein nächster Schritt", "Vom ersten Tauchgang bis zur Weiterbildung. Finde deinen Kurs."
+    else:
+        target, heading, copy = "termine.html", "Beim nächsten Mal dabei sein", "Frag das Team nach dem nächsten Tauchausflug oder deinem Wunschkurs."
+    out.append(f'<aside class="archive-next"><h2>{heading}</h2><p>{copy}</p><a class="path-action" href="{target}">Mehr erfahren</a></aside>')
     return ''.join(out)
 
 
 def dates(page):
-    out = ['<section class="reader-panel"><div><h2>Den nächsten Termin finden</h2><p>Du möchtest einen Kurs machen oder mittauchen? Nenne uns den Kurs oder Tauchplatz und deinen Wunschzeitraum.</p></div><div>' + course_link("Termine und Reisen") + '<a class="dive-text-link" href="bilder-reisen-event-s.html">Fotos von früheren Ausflügen</a></div></section><section class="reading"><h2>Terminarchiv</h2>']
+    out = ['<section class="reader-panel"><div><h2>Den nächsten Termin finden</h2><p>Du möchtest einen Kurs machen oder mittauchen? Nenne uns den Kurs oder Tauchplatz und deinen Wunschzeitraum.</p></div><div>' + course_link("Termine und Reisen") + '<a class="dive-text-link" href="bilder-reisen-event-s.html">Vergangene Ausflüge ansehen</a></div></section><section class="reading"><h2>Terminarchiv</h2>']
     for year, records in groupby(page["archive"], key=lambda e: e["year"]):
         out.append(f'<details class="archive-period"><summary>{year}</summary><ol class="event-log">')
         for record in records:
@@ -82,7 +101,7 @@ def guestbook(page):
 
 
 def jobs():
-    return '''<article class="reader-panel"><div><h2>Rettungsschwimmer am Unterbacher See</h2><p>Für die Badesaison sucht die Schule Unterstützung, vor allem an Wochenenden und Feiertagen. Einsätze unter der Woche sind je nach Bedarf möglich.</p>
+    return '''<article class="reader-panel"><div><h2>Rettungsschwimmer am Unterbacher See</h2><p>Du möchtest in der Badesaison am Unterbacher See mitarbeiten? Frag uns nach freien Einsätzen, vor allem an Wochenenden und Feiertagen.</p>
     <h3>Deine Aufgaben</h3><ul><li>Badebetrieb beaufsichtigen und Badegäste betreuen</li><li>Rettungs- und Erste-Hilfe-Maßnahmen durchführen</li><li>Ausrüstung kontrollieren und das Team bei der Organisation unterstützen</li></ul>
     <h3>Das bringst du mit</h3><p>Ein aktuelles Rettungsschwimmerabzeichen, einen höchstens zwei Jahre alten Erste-Hilfe-Nachweis, körperliche Fitness und Freude an der Arbeit im Team. Die Schule nennt 18 Jahre als Richtwert und nimmt auch Anfragen von Jüngeren entgegen.</p>
     <p>Rettungsschwimmer- und Rescue-Diver-Ausbildung sowie Erste-Hilfe-Kurse und Auffrischungen sind bei der Schule möglich.</p></div>
@@ -93,7 +112,7 @@ def hud(page):
     photos = [b for b in page["blocks"] if b["type"] == "photo"]
     return f'''<section class="reader-panel"><div><h2>Tauchdaten im Sichtfeld</h2><p>Daïve entwickelt einen Tauchcomputer, der an einer Standard-Tauchmaske befestigt wird. Das Head-up-Display zeigt Tiefe, Zeit, Aufstiegsgeschwindigkeit, Dekompressionswarnungen und Alarme an.</p></div>
     <div><h3>Preis auf Anfrage</h3>{inquiry("Daïve Head-up-Display")}<a class="dive-text-link" href="tauch-shop--computer.html">Tauchcomputer vergleichen</a></div></section>
-    <section class="album"><h2>Ansichten des Displays</h2>{image_gallery(photos,"Daïve Head-up-Display")}</section>'''
+    <section class="album"><h2>Produktinformationen von Daïve</h2>{image_gallery(photos,"Daïve Head-up-Display")}</section>'''
 
 
 def legal(page):
