@@ -91,3 +91,8 @@ The homepage team introduction is a standalone section before the Google reviews
 The homepage trip highlight uses an existing approved lake image with a dark teal overlay. Product photographs, customer reviews, price decisions and the enquiry form retain bounded surfaces where those help understanding. The real logo, instructor portraits, catalogue data, copied page text and destinations are retained.
 
 Validation for this pass: all 131 pages loaded the layout layer and retained identical main-page copy; local links/media/anchors/forms passed; all pages fit at 360, 768 and 1440 pixels without horizontal overflow or broken images. Representative pages were visually reviewed, and catalogue search, mobile menu, product expansion and prefilled enquiries were checked.
+
+
+## First-aid course flow — 25 November 2026
+
+The Ablauf section places its heading above two actual course stages, with age eligibility in a separate note. The heading and steps stay together in a compact single-column section; stages are side by side on larger screens and stack on phones. Verified at 360, 580, 768 and 1280 pixels without horizontal overflow. All 131 pages passed the static link, media, anchor and form checks. This local update does not publish the separate DuckDNS host.

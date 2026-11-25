@@ -83,12 +83,13 @@ def first_aid(page, breadcrumb):
       <h2 id="aid-paths-title" class="aid-paths-title">Für wen ist der Kurs?</h2>
       <nav class="aid-paths" aria-label="Kursbereiche">{"".join(paths)}</nav></div></section>
     <section class="aid-how" id="ablauf" aria-labelledby="ablauf-title"><div class="wrap aid-how-layout">
-      <div><p class="kicker">Ablauf</p><h2 id="ablauf-title">So läuft ein Kurs ab</h2></div>
+      <header class="aid-how-heading"><p class="kicker">Ablauf</p><h2 id="ablauf-title">So läuft ein Kurs ab</h2></header>
       <ol class="step-list aid-how-steps">
         <li><strong>Theorie vorbereiten</strong><span>Per E-Learning oder mit dem Handbuch, in deinem Tempo. Du wählst eins davon.</span></li>
         <li><strong>Praxis mit Ausbilder</strong><span>Die praktischen Übungen und der Abschluss folgen mit einem Ausbilder. Die Kosten dafür kommen je nach Ort hinzu.</span></li>
-        <li><strong>Ab 18 Jahren</strong><span>Mit Zustimmung der Eltern kannst du schon ab 10 Jahren teilnehmen.</span></li>
-      </ol></div></section>
+      </ol>
+      <p class="aid-how-note"><strong>Teilnahme ab 18 Jahren.</strong> Mit Zustimmung der Eltern kannst du schon ab 10 Jahren teilnehmen.</p>
+    </div></section>
     {"".join(sections)}
     <section class="aid-more"><div class="wrap"><a class="aid-material" href="tauch-shop.html#erste-hilfe"><strong>Erste-Hilfe-Material</strong><span>Erste-Hilfe-Sets, Pflaster, Scheren und Diagnostikleuchten aus unserem Shop.</span><span class="path-action">Material ansehen</span></a></div></section>
     {closing_band("Bereit für den Ernstfall?", "Sag uns, welcher Kurs passt und wann du Zeit hast. Wir melden uns mit einem Termin.", request, "Kurs anfragen", "aid-closing")}'''
