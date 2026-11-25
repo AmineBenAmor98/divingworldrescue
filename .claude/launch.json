@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dive-world",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8765",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "/Users/emin/Documents/Codex/2026-11-23/https-dive-world-rescue-de-wer/outputs/dive-world/dist"
+      ],
+      "port": 8765
+    }
+  ]
+}

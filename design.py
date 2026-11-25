@@ -82,59 +82,52 @@ def classes(attrs, extra):
 
 
 def decorate(html, path):
+    """Apply the shared icon rules.
+
+    Illustrations appear only where they are the subject of a large row
+    (homepage visitor goals). Functional contact links keep a small line icon.
+    Navigation, buttons, inline links and page titles carry text only; text
+    links get a trailing arrow from CSS instead of an icon.
+    """
     prefix = "" if path == "index.html" else "../"
-    # Remove decorative arrows; icons supply a consistent visual language.
-    html=re.sub(r'<(span|i)\b[^>]*aria-hidden="true"[^>]*>[→↗↓↑]</\1>', '', html)
-    html=html.replace(' ↗','').replace(' →','').replace(' ↓','')
-    # Footer section labels remain quiet; only their group headings get icons.
-    labels={'Tauchen':('mask','ocean'),'Erste Hilfe':('aid','aid'),'Ausrüstung':('equipment','sand'),'Infos &amp; Kontakt':('school','school')}
-    def footer_group(m):
-        key=m[1]
-        if key not in labels:return m[0]
-        name,tone=labels[key]
-        return f'<summary><span class="summary-label tone-{tone}">{icon(name,prefix)}<span>{key}</span></span></summary>'
-    html=re.sub(r'<summary>([^<]+)</summary>',footer_group,html)
-    # Stash breadcrumb and footer-group links so they do not accumulate icons.
-    protected=[]
+    # Arrows written into templates are replaced by the CSS arrow treatment.
+    html = re.sub(r'<(span|i)\b[^>]*aria-hidden="true"[^>]*>[→↗↓↑]</\1>', '', html)
+    html = html.replace(' ↗', '').replace(' →', '').replace(' ↓', '')
+    protected = []
+
     def stash(m):
-        protected.append(m[0]);return f'<!--design-protected-{len(protected)-1}-->'
-    html=re.sub(r'<nav\b[^>]*class="(?:crumb|item-crumb|footer-groups)[^"]*"[^>]*>.*?</nav>',stash,html,flags=re.S)
+        protected.append(m[0])
+        return f'<!--design-protected-{len(protected)-1}-->'
+    html = re.sub(r'<nav\b[^>]*class="(?:crumb|item-crumb|footer-groups)[^"]*"[^>]*>.*?</nav>', stash, html, flags=re.S)
+
     def link(m):
-        attrs,body=m[1],m[2]
-        # Editorial rows already carry one leading illustration for the topic.
+        attrs, body = m[1], m[2]
         if 'editorial-link' in attrs:
             return m[0]
-        href_match=re.search(r'href="([^"]+)"',attrs)
-        if not href_match:return m[0]
-        href=unescape(href_match[1])
-        name,tone=route_visual(href)
+        href_match = re.search(r'href="([^"]+)"', attrs)
+        if not href_match or '<img' in body or '<svg' in body:
+            return m[0]
+        href = unescape(href_match[1])
         if href.startswith('https://wa.me/'):
-            name,tone='whatsapp','sage'
-            body=re.sub(r'<svg\b.*?</svg>','',body,flags=re.S).strip()
-            attrs=classes(attrs,'whatsapp-link')
-        elif href.startswith('mailto:') or href.startswith('tel:'):
-            name='mail' if href.startswith('mailto:') else 'phone'
-            tone='ocean'
-            body=re.sub(r'<svg\b.*?</svg>','',body,flags=re.S).strip()
-        if not name or '<img' in body or '<svg' in body:return f'<a{attrs}>{body}</a>'
-        if body.lstrip().startswith('<strong>') and '<span>' in body:
-            # Homepage goal cards and the three shopping service cards.
-            if 'pages/' in href:
-                return f'<a{classes(attrs,"visual-card tone-"+tone)}>{badge(name,tone,prefix=prefix)}<span class="visual-card-copy">{body}</span></a>'
-        if '<' in body and not (href.startswith(('mailto:','tel:','https://wa.me/')) or 'path-action' in attrs or 'plain' in attrs):return m[0]
-        return f'<a{classes(attrs,"icon-link")}>{icon(name,prefix)}{body}</a>'
-    html=re.sub(r'<a\b([^>]*)>(.*?)</a>',link,html,flags=re.S)
-    # Photograph tiles already communicate their category visually. Keep their
-    # captions quiet; illustrated icons are used on the adjacent category chips.
-    # Buttons retain their actual form behaviour and accessible text.
+            body = re.sub(r'<svg\b.*?</svg>', '', body, flags=re.S).strip()
+            return f'<a{classes(classes(attrs, "whatsapp-link"), "icon-link")}>{icon("whatsapp")}{body}</a>'
+        if href.startswith(('mailto:', 'tel:')):
+            name = 'mail' if href.startswith('mailto:') else 'phone'
+            body = re.sub(r'<svg\b.*?</svg>', '', body, flags=re.S).strip()
+            return f'<a{classes(attrs, "icon-link")}>{icon(name)}{body}</a>'
+        # Homepage visitor goals: one large illustration per row.
+        if path == 'index.html' and body.lstrip().startswith('<strong>') and '<span>' in body and 'pages/' in href:
+            name, tone = route_visual(href)
+            if name in ARTWORK:
+                return f'<a{classes(attrs, "visual-card tone-"+tone)}>{badge(name, tone, prefix=prefix)}<span class="visual-card-copy">{body}</span></a>'
+        return m[0]
+    html = re.sub(r'<a\b([^>]*)>(.*?)</a>', link, html, flags=re.S)
+
     def form_button(m):
-        name='whatsapp' if 'value="chat"' in m[1] else ('mail' if 'value="mail"' in m[1] else None)
-        return f'<button{classes(m[1],"icon-link")}>{icon(name,prefix)}{m[2]}</button>' if name else m[0]
-    html=re.sub(r'<button\b([^>]*)>(.*?)</button>',form_button,html,flags=re.S)
-    # Add one coloured area marker to each inner-page cover.
-    name,tone=route_visual(path)
-    photo_course_pages = {'pages/tauchen-lernen-kurse.html', 'pages/frti-kurse.html'}
-    if path!='index.html' and path not in photo_course_pages and not path.rsplit('/',1)[-1].startswith('produkt-') and name in ARTWORK:
-        html=re.sub(r'<h1\b',badge(name,tone,'page-mark',prefix=prefix)+'<h1',html,count=1)
-    for i,value in enumerate(protected):html=html.replace(f'<!--design-protected-{i}-->',value)
+        name = 'whatsapp' if 'value="chat"' in m[1] else ('mail' if 'value="mail"' in m[1] else None)
+        return f'<button{classes(m[1], "icon-link")}>{icon(name, prefix)}{m[2]}</button>' if name else m[0]
+    html = re.sub(r'<button\b([^>]*)>(.*?)</button>', form_button, html, flags=re.S)
+    for i, value in enumerate(protected):
+        html = html.replace(f'<!--design-protected-{i}-->', value)
+    # Footer contact links sit outside the stashed footer navigation.
     return html

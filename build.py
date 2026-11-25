@@ -231,10 +231,9 @@ def equipment_preview():
         photo = category_photo(page).removeprefix("../")
         cards.append(f'<a href="pages/{page["slug"]}.html"><img src="{photo}" loading="lazy" alt=""><strong>{escape(label)}</strong></a>')
     return '''<section class="home-equipment" id="ausruestung"><div class="wrap">
-      <div class="landing-heading"><div><p class="kicker">Ausrüstung kaufen</p><h2>Passend zu deinem Tauchgang.</h2></div><a class="path-action" href="pages/tauch-shop.html">Zum gesamten Sortiment</a></div>
+      <div class="landing-heading"><p class="kicker">Ausrüstung kaufen</p><h2>Passend zu deinem Tauchgang.</h2><p>Tauchcomputer, Atemregler, Jackets und Anzüge. Frag das Team, was zu dir und deinem Tauchplatz passt.</p></div>
       <div class="home-equipment-grid">''' + ''.join(cards) + '''</div>
-      <nav class="equipment-categories" aria-label="Weitere Ausrüstung"><a href="pages/tauch-shop--masken-flossenzubehoer.html">Masken &amp; Flossen</a><a href="pages/tauch-shop--koffer-taschen.html">Koffer &amp; Taschen</a><a href="pages/tauch-shop--zubehoer.html">Zubehör</a><a href="pages/tauch-shop--bekleidung.html">Bekleidung</a><a href="pages/tauch-shop--schmuck.html">Schmuck</a><a href="pages/hud.html">Head-up-Display</a></nav>
-      <div class="home-equipment-services"><a href="pages/sonderangebote.html"><strong>Sonderangebote</strong><span>Aktionspreise und Bedingungen ansehen</span></a><a href="pages/im-auftrag-zu-verkaufen.html"><strong>Verkauf im Kundenauftrag</strong><span>Einzelstücke aus Kundenbesitz entdecken</span></a><a href="pages/tauch-shop.html#erste-hilfe"><strong>Erste-Hilfe-Material</strong><span>Notfallausrüstung und Dienstbekleidung</span></a></div>
+      <div class="section-actions centered"><a class="cta" href="pages/tauch-shop.html">Zum gesamten Sortiment</a><a class="path-action" href="pages/sonderangebote.html">Sonderangebote</a></div>
     </div></section>'''
 
 
@@ -242,29 +241,19 @@ def equipment_preview():
 def google_reviews():
     data = json.loads((ROOT / "content/google-reviews.json").read_text())
     url = escape(data["url"], quote=True)
-    icon = '<img class="google-icon" src="assets/google-g.png" width="24" height="24" alt="">'
-    cards = []
+    icon = '<img class="google-icon" src="assets/google-g.png" width="20" height="20" alt="">'
+    quotes = []
     for review in data["reviews"]:
         author = escape(review["author"])
-        initials = "".join(part[0] for part in review["author"].split()[:2])
-        cards.append(f'''<figure class="google-review">
-          <figcaption class="review-person">
-            <span class="review-avatar" aria-hidden="true">{initials}</span>
-            <span><strong>{author}</strong><span class="review-stars" aria-label="{review["stars"]} von 5 Sternen"><span aria-hidden="true">★★★★★</span></span></span>
-            <a class="review-origin" href="{url}" target="_blank" rel="noopener noreferrer" aria-label="Rezension von {author} auf Google lesen">{icon}<span>Google</span></a>
-          </figcaption>
+        quotes.append(f'''<figure class="google-review">
           <blockquote>„{escape(review["excerpt"])}“</blockquote>
-          <a class="review-read" href="{url}" target="_blank" rel="noopener noreferrer">Rezension lesen <span aria-hidden="true">↗</span></a>
+          <figcaption><span class="review-stars" aria-label="{review["stars"]} von 5 Sternen"><span aria-hidden="true">★★★★★</span></span><strong>{author}</strong></figcaption>
         </figure>''')
     return f'''<section class="google-reviews" aria-labelledby="review-title"><div class="wrap">
-      <div class="review-heading"><div><p class="review-eyebrow">{icon}<span>Google-Rezensionen</span></p>
-      <h2 id="review-title">Das sagen unsere Kunden</h2></div>
-      <a class="google-rating" href="{url}" target="_blank" rel="noopener noreferrer" aria-label="{data["rating"]} von 5 Sternen aus {data["count"]} Rezensionen auf Google">
-        <strong>{data["rating"]}</strong><span><span class="review-stars" aria-hidden="true">★★★★★</span><span>aus {data["count"]} Rezensionen</span><span class="rating-source">Auf Google ansehen ↗</span></span>
-      </a></div>
-      <div class="google-review-grid">{"".join(cards)}</div>
-      <div class="review-foot"><span>Auszüge aus Google-Rezensionen · Stand <time datetime="{data["checked_on"]}">{data["checked_label"]}</time></span>
-      <a href="{url}" target="_blank" rel="noopener noreferrer">Alle Rezensionen auf Google <span aria-hidden="true">↗</span></a></div>
+      <div class="review-heading"><p class="kicker">Erfahrungen</p><h2 id="review-title">Das sagen unsere Kunden</h2>
+      <a class="google-rating" href="{url}" target="_blank" rel="noopener noreferrer">{icon}<span class="review-stars" aria-hidden="true">★★★★★</span><span><strong>{data["rating"]}</strong> · {data["count"]} Google-Rezensionen</span></a></div>
+      <div class="google-review-grid">{"".join(quotes)}</div>
+      <p class="review-foot">Auszüge aus Google-Rezensionen, Stand <time datetime="{data["checked_on"]}">{data["checked_label"]}</time> · <a href="{url}" target="_blank" rel="noopener noreferrer">Alle Rezensionen auf Google</a></p>
     </div></section>'''
 
 

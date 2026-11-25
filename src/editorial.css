@@ -8,7 +8,7 @@
   color:var(--teal); box-shadow:none; text-decoration:none;
 }
 .path-action:hover,.dive-text-link:hover,.context-link a:hover,.item-next a:hover {
-  background:transparent; color:#073f38; border-color:transparent;
+  background:transparent; color:var(--teal-dark); border-color:transparent;
 }
 .reader-panel .path-action,.reader-panel .dive-text-link,
 .home-equipment .landing-heading > .path-action { background:transparent; }
@@ -26,7 +26,7 @@
 .offer-map nav a:hover { background:transparent; box-shadow:none; transform:none; border-color:var(--teal); }
 .offer-map .art-badge { width:64px; height:64px; margin:0; }
 .offer-map .visual-card-copy { max-width:none; width:100%; margin:0; }
-.offer-map nav strong { display:block; min-height:0; margin:0 0 7px; color:var(--teal); font-size:1.15rem; line-height:1.35; }
+.offer-map nav strong { display:block; min-height:0; margin:0 0 7px; color:var(--teal); font-size:1.125rem; line-height:1.35; }
 .offer-map .visual-card-copy > span { font-size:1rem; line-height:1.65; text-wrap:pretty; max-width:44ch; margin:0; }
 
 /* Equipment photographs remain framed; category and service navigation is open. */
@@ -36,7 +36,7 @@
   border:0; border-bottom:1px solid var(--editorial-rule); border-radius:0;
   background:transparent; font-size:1rem; gap:12px; color:var(--teal);
 }
-.equipment-categories a:hover { background:transparent; color:#073f38; border-color:var(--teal); }
+.equipment-categories a:hover { background:transparent; color:var(--teal-dark); border-color:var(--teal); }
 .home-equipment-services { gap:0 28px; padding:0; align-items:stretch; }
 .home-equipment-services a,.home-equipment-services a + a {
   display:grid; grid-template-columns:56px minmax(0,1fr); align-items:start; gap:16px;
@@ -57,12 +57,12 @@
 .landing-outings .outing-rental { justify-content:center; border-top:1px solid var(--editorial-rule); }
 .landing-outings .outing-trip {
   position:relative; isolation:isolate; overflow:hidden; justify-content:center;
-  background:#103b3d; color:#fff; padding:36px 30px;
+  background:var(--deep); color:#fff; padding:36px 30px;
 }
 .outing-trip .outing-image { position:absolute; inset:0; z-index:-2; width:100%; height:100%; object-fit:cover; }
 .outing-trip::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(#082f32a6,#082f32ed); }
 .landing-outings .outing-trip .kicker { color:var(--mint); }
-.landing-outings .outing-trip p:not(.kicker) { color:#e0eee6; }
+.landing-outings .outing-trip p:not(.kicker) { color:var(--on-dark); }
 .outing-trip .path-action,.outing-trip .path-action:hover { color:var(--mint); background:transparent; }
 .outing-trip .outings-actions { border-top:1px solid #badbcc55; margin-top:4px; padding-top:12px; }
 
@@ -76,7 +76,7 @@
 }
 .editorial-row .editorial-symbol { width:64px; height:64px; object-fit:contain; }
 .editorial-row .editorial-copy { min-width:0; }
-.editorial-row .editorial-copy h3 { max-width:none; margin:0; font-size:1.25rem; line-height:1.35; }
+.editorial-row .editorial-copy h3 { max-width:none; margin:0; font-size:1.125rem; line-height:1.35; }
 .editorial-row .editorial-copy p { max-width:52ch; margin:7px 0 0; color:var(--muted); text-wrap:pretty; }
 .editorial-row .editorial-actions { display:flex; flex-direction:column; align-items:flex-start; gap:2px; }
 .school-guide .editorial-actions a {
@@ -84,7 +84,7 @@
   min-height:44px; padding:8px 0; border:0; background:transparent;
   border-radius:0; font-size:1rem; text-align:left; color:var(--teal);
 }
-.editorial-actions a:hover { color:#073f38; }
+.editorial-actions a:hover { color:var(--teal-dark); }
 
 /* Courses and service information use sections and rules, rather than cards. */
 .aid-group { border:0; padding-block:0 40px; }
@@ -108,9 +108,9 @@
 .reader-panel > div + div { border-left:1px solid var(--editorial-rule); padding-left:28px; }
 .reader-panel > div:last-child:not(:first-child) { align-self:start; }
 .reader-panel > div:last-child:not(:first-child) > a { margin-inline:0; justify-content:flex-start; text-align:left; }
-.reader-panel h2 { font-size:clamp(1.85rem,3.2vw,2.8rem); }
+.reader-panel h2 { font-size:var(--fs-h2); }
 .dive-trial { background:transparent; border-radius:0; overflow:visible; }
-.dive-trial img { border-radius:6px; }
+.dive-trial img { border-radius:var(--radius-s); }
 .course-booking { border-radius:0; }
 
 /* Shop browsing remains a directory; only the product photograph has a frame. */
@@ -165,14 +165,14 @@
 @media(max-width:540px) {
   .offer-map nav a { grid-template-columns:56px minmax(0,1fr); gap:16px; padding:20px 0; min-height:110px; }
   .offer-map .art-badge { width:56px; height:56px; }
-  .offer-map nav strong { display:block; min-height:0; margin-bottom:6px; font-size:1.1rem; }
+  .offer-map nav strong { display:block; min-height:0; margin-bottom:6px; font-size:1.125rem; }
   .offer-map .visual-card-copy > span { font-size:1rem; line-height:1.6; }
   .equipment-categories a { padding:10px 0; min-height:64px; gap:8px; font-size:1rem; }
   .home-equipment-services a,.home-equipment-services a + a { grid-template-columns:48px minmax(0,1fr); gap:14px; padding:20px 0; }
   .home-equipment-services .art-badge { width:48px; height:48px; }
   .school-guide .editorial-row { grid-template-columns:48px minmax(0,1fr); gap:8px 14px; padding:22px 0; }
   .editorial-row .editorial-symbol { width:48px; height:48px; }
-  .editorial-row .editorial-copy h3 { font-size:1.15rem; }
+  .editorial-row .editorial-copy h3 { font-size:1.125rem; }
   .editorial-row .editorial-actions { gap:0 16px; }
   .dive-trial > div { padding:20px 0 0; }
 }
@@ -180,42 +180,42 @@
 /* Course pages: compact navigation and course information at a practical scale. */
 .dive-intro .wrap { padding-block:28px 34px; max-width:900px; }
 .dive-intro .crumb { margin-bottom:14px; }
-.dive-intro h1 { font-size:clamp(2.25rem,3.5vw,3.25rem); line-height:1.12; letter-spacing:-.04em; }
-.dive-intro p { max-width:54ch; margin-top:14px; font-size:1.0625rem; line-height:1.6; }
+.dive-intro h1 { font-size:clamp(2.25rem,3.5vw,3.25rem); line-height:1.12; letter-spacing:-.02em; }
+.dive-intro p { max-width:54ch; margin-top:14px; font-size:1rem; line-height:1.6; }
 .dive-routes { background:var(--paper); color:var(--ink); border-bottom:1px solid var(--editorial-rule); }
 .dive-routes .wrap { display:flex; justify-content:center; gap:12px; max-width:1120px; }
 .dive-routes a,.dive-routes a:last-child {
   flex:0 1 auto; justify-content:center; gap:9px; min-height:54px; padding:12px 16px;
   border:0; color:var(--muted); font-size:1rem; font-weight:600; line-height:1.4;
 }
-.dive-routes a:hover { background:#e8efea; color:var(--teal); }
+.dive-routes a:hover { background:var(--sage); color:var(--teal); }
 .dive-routes .ui-icon.illustrated-ui { width:24px!important; height:24px!important; }
 .dive-guide { max-width:1120px; padding-block:36px 48px; }
 .dive-guide h2,.training-copy h2,.course-booking h2 {
-  font:650 clamp(1.65rem,2.2vw,2rem)/1.25 var(--sans); letter-spacing:-.03em;
+  font:600 clamp(1.65rem,2.2vw,2rem)/1.25 var(--sans); letter-spacing:-.015em;
 }
 .dive-certificate { grid-template-columns:minmax(0,1fr) 340px; grid-template-areas:"summary fee" "syllabus fee"; gap:24px 48px; align-items:start; }
 .dive-course-summary { grid-area:summary; min-width:0; }
 .dive-lede { margin-top:12px; max-width:62ch; font-size:1rem; line-height:1.7; }
 .dive-syllabus { grid-area:syllabus; min-width:0; }
-.dive-subheading { font:650 1.05rem/1.4 var(--sans); margin:0 0 12px; }
+.dive-subheading { font:600 1rem/1.4 var(--sans); margin:0 0 12px; }
 .dive-stages { margin:0; padding:0; }
 .dive-stages li { grid-template-columns:20px minmax(0,1fr); gap:3px 12px; padding:15px 0; margin:0; }
-.dive-stages li::before { background:transparent; border-radius:0; height:auto; place-content:start; padding-top:1px; font-size:.94rem; line-height:1.5; }
+.dive-stages li::before { background:transparent; border-radius:0; height:auto; place-content:start; padding-top:1px; font-size:1rem; line-height:1.5; }
 .dive-stages h3 { font-size:1rem; }
 .dive-stages p { font-size:1rem; line-height:1.65; }
 .dive-fee { grid-area:fee; padding:0 0 0 28px; background:transparent; border:0; border-left:1px solid var(--editorial-rule); border-radius:0; }
 .dive-fee-top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
 .dive-fee h3 { font:600 1rem/1.4 var(--sans); }
-.dive-fee .dive-amount { margin:0; font:700 2rem/1.2 var(--sans); letter-spacing:-.04em; white-space:nowrap; }
+.dive-fee .dive-amount { margin:0; font:700 1.75rem/1.2 var(--sans); letter-spacing:-.02em; white-space:nowrap; }
 .dive-fee dl { margin:0 0 18px; }
 .dive-fee dl div { padding:12px 0; border-top:1px solid var(--line); }
-.dive-fee dt { font-size:.94rem; }
+.dive-fee dt { font-size:1rem; }
 .dive-fee dd { font-size:1rem; margin:5px 0 0; line-height:1.6; }
 .dive-fee .cta { min-height:48px; }
-.dive-fee .dive-text-link { min-height:44px; margin-top:6px; padding:8px 0; font-size:.94rem; }
+.dive-fee .dive-text-link { min-height:44px; margin-top:6px; padding:8px 0; font-size:1rem; }
 .dive-guide .dive-questions { max-width:none; margin-top:32px; }
-.dive-guide .dive-questions h2 { font-size:1.4rem; margin-bottom:14px; }
+.dive-guide .dive-questions h2 { font-size:1.375rem; margin-bottom:14px; }
 .dive-questions summary { font-size:1rem; line-height:1.5; padding:12px 0; gap:20px; }
 .dive-questions summary::after { flex:none; }
 .dive-questions details > p { max-width:72ch; }
@@ -223,7 +223,7 @@
 .dive-trial img { height:auto; min-height:0; aspect-ratio:1.65; }
 .dive-trial > div { padding:0; }
 .dive-trial p { font-size:1rem; line-height:1.65; }
-.trial-price strong { font-size:1.4rem; }
+.trial-price strong { font-size:1.375rem; }
 .dive-more { border-top:1px solid var(--editorial-rule); padding-top:28px; }
 .dive-more dl { gap:28px; margin-top:20px; }
 .dive-more dt { font-size:1rem; line-height:1.4; }
@@ -244,7 +244,7 @@
  .dive-certificate { grid-template-columns:1fr; grid-template-areas:"summary" "fee" "syllabus"; gap:24px; }
  .dive-fee { padding:18px 0; border:0; border-block:1px solid var(--editorial-rule); }
  .dive-fee-top { flex-direction:row; align-items:center; }
- .dive-fee .dive-amount { font-size:1.9rem; }
+ .dive-fee .dive-amount { font-size:1.75rem; }
  .dive-fee dl { margin-bottom:14px; }
  .dive-fee .cta { width:100%; }
  .dive-guide .dive-questions { margin-top:26px; }
@@ -254,3 +254,338 @@
  .dive-trial .cta { width:100%; }
  .dive-more dl { grid-template-columns:1fr; gap:20px; }
 }
+
+/* ==========================================================================
+   Design system layer. Loaded last; every page family reads from these rules.
+   Type: Newsreader for page and section titles, Figtree for everything else.
+   ========================================================================== */
+:root { --section:clamp(56px,7vw,104px); --editorial-rule:var(--line); }
+body { font-family:var(--sans); font-size:1rem; line-height:1.6; color:var(--ink); }
+h1,h2 { font-family:var(--serif); font-weight:400; letter-spacing:-.015em; text-wrap:balance; }
+h3,h4 { font-family:var(--sans); font-weight:600; letter-spacing:-.005em; }
+main h3 { letter-spacing:-.005em; }
+p,li,dd { text-wrap:pretty; }
+.kicker { font:700 .8125rem/1.4 var(--sans); letter-spacing:.12em; text-transform:uppercase; color:var(--teal); }
+::selection { background:var(--mint); color:var(--ink); }
+
+/* Section and card titles: serif for sections, sans for items in a list. */
+.training-copy h2,.course-booking h2,.dive-guide h2,.dive-guide .dive-questions h2,.reader-panel h2,.archive-next h2,.dive-trial h2,.dive-more h2 {
+  font:400 var(--fs-h3)/1.15 var(--serif); letter-spacing:-.01em;
+}
+.fees-list .rate h2,.prose h2,.prose h3,.request-card-heading h2,.request-direct h2,.request-layout .request-direct h2 {
+  font-family:var(--sans); font-weight:600; letter-spacing:-.01em;
+}
+.catalogue-nav h2,.item-info h2 { font:600 .875rem/1.4 var(--sans); letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+
+/* --- Buttons and links ------------------------------------------------- */
+.cta,.outline { display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:48px; padding:12px 22px; border-radius:var(--radius-s); font:600 1rem/1.25 var(--sans); letter-spacing:0; text-decoration:none; transition:background-color .2s,border-color .2s,color .2s; }
+.cta { background:var(--ink); color:var(--white); }
+.cta:hover { background:var(--deep-2); }
+.cta.mint { background:var(--mint); color:var(--ink); }
+.cta.mint:hover { background:var(--mint-2); }
+.plain { font-weight:600; }
+.hero .plain,.landing-contact .plain { min-height:48px; padding:12px 20px; border:1px solid rgba(227,239,233,.45); border-radius:var(--radius-s); color:var(--white); }
+.hero .plain:hover,.landing-contact .plain:hover { background:rgba(255,255,255,.08); border-color:var(--on-dark); }
+.path-action,.dive-text-link,.context-link a,.item-next a,.school-guide .editorial-actions a,.review-foot a,.view-item {
+  display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:8px 0; border:0; background:none;
+  color:var(--teal); font-weight:600; text-decoration:none;
+}
+.path-action::after,.dive-text-link::after,.context-link a::after,.item-next a::after,.school-guide .editorial-actions a::after,.view-item::after,.course-booking nav a::after,.department-item::after,.shop-offer::after {
+  content:"→"; display:inline-block; transition:transform .2s; font-weight:400;
+}
+.review-foot a::after,.google-rating::after { content:"↗"; margin-left:6px; font-weight:400; }
+.path-action:hover::after,.dive-text-link:hover::after,.context-link a:hover::after,.item-next a:hover::after,.school-guide .editorial-actions a:hover::after,.stock-row a:hover .view-item::after,.course-booking nav a:hover::after,.department-item:hover::after,.shop-offer:hover::after { transform:translateX(3px); }
+.path-action:hover,.dive-text-link:hover,.context-link a:hover,.item-next a:hover,.school-guide .editorial-actions a:hover { color:var(--teal-dark); background:none; }
+.inclusive-band .path-action,.outing-trip .path-action { color:var(--mint); }
+.section-actions { display:flex; flex-wrap:wrap; align-items:center; gap:12px 28px; margin-top:28px; }
+.section-actions.centered { justify-content:center; }
+.section-actions .path-action { margin:0; }
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible { outline:2px solid var(--teal); outline-offset:3px; }
+.icon-link .ui-icon { width:18px; height:18px; }
+
+/* --- Header ------------------------------------------------------------ */
+.mast { border-bottom:1px solid var(--line); }
+.contact-bar { border-bottom:1px solid var(--line); gap:0 24px; }
+.contact-bar a { font-size:.875rem; color:var(--muted); gap:7px; min-height:34px; }
+.contact-bar a:hover { color:var(--teal); }
+.contact-bar .whatsapp-link { color:var(--teal); font-weight:600; }
+.bar { min-height:76px; }
+.brand { gap:12px; }
+.brand img,.footer-brand img { width:54px; height:44px; object-fit:contain; mix-blend-mode:normal; }
+.brand-name { font:500 1.375rem/1 var(--serif); letter-spacing:-.01em; }
+.brand-name small { font:600 .6875rem/1 var(--sans); letter-spacing:.16em; color:var(--muted); margin-top:5px; }
+.nav { gap:4px; }
+.nav a { padding:10px 14px; border-radius:var(--radius-s); font-size:1rem; font-weight:600; color:var(--ink); }
+.nav a:hover { background:var(--sage); color:var(--ink); }
+.nav a[aria-current] { background:none; color:var(--teal); box-shadow:inset 0 -2px 0 var(--teal); border-radius:0; }
+.bar > .cta { min-height:44px; padding:10px 20px; }
+.drawer a { font-size:1.0625rem; font-weight:600; }
+.drawer a[aria-current] { color:var(--teal); background:none; }
+@media(max-width:980px) {
+  .drawer:not([hidden]) { grid-template-columns:1fr; gap:0; padding:0 var(--gutter) 12px; }
+  .drawer a { min-height:52px; padding:12px 0; justify-content:space-between; }
+  .drawer a::after { content:"→"; color:var(--teal); font-weight:400; }
+}
+@media(max-width:700px) {
+  .contact-bar { display:none; }
+  .bar { min-height:64px; }
+  .brand img { width:44px; height:36px; }
+  .brand-name { font-size:1.1875rem; }
+  .brand-name small { font-size:.625rem; margin-top:4px; }
+  .bar > .cta { min-height:42px; padding:9px 14px; font-size:.9375rem; }
+}
+
+/* --- Section rhythm ------------------------------------------------------ */
+.offer-map,.landing-diving,.landing-aid,.home-equipment,.landing-outings,.home-team-preview,.google-reviews { padding-block:var(--section); }
+.landing-diving { padding-top:0; }
+.landing-heading { margin-bottom:40px; gap:14px; }
+.landing-heading > p:not(.kicker) { color:var(--muted); font-size:1.125rem; max-width:52ch; }
+.landing-heading .kicker,.landing-diving .kicker,.inclusive-band .kicker,.landing-aid .kicker,.landing-outings .kicker,.home-team-preview .kicker,.review-heading .kicker { margin:0 0 14px; }
+.landing-heading h2,.landing-diving h2,.inclusive-band h2,.landing-aid h2,.landing-outings h2,.landing-contact h2,.home-team-preview h2,.review-heading h2,.home-section-head h2,.team-intro h2,.school-guide > h2,.travel-archive > h2,.album > h2,.aid-group > h2,.shop-search h2,.department h2,.stock-family h2,.editorial-body h2,.legal-text h2 {
+  font-size:var(--fs-h2); line-height:1.08;
+}
+.department h2,.stock-family h2,.shop-search h2,.legal-text h2,.album > h2 { font-size:var(--fs-h3); }
+
+/* --- Hero ------------------------------------------------------------------ */
+.hero h1 { font-size:var(--fs-hero); line-height:.98; letter-spacing:-.025em; }
+.hero h1 em { font-style:italic; color:var(--mint); }
+.hero .kicker { color:var(--on-dark); margin-bottom:22px; }
+.hero .intro { font-size:clamp(1.0625rem,1.3vw,1.25rem); line-height:1.55; color:var(--on-dark); }
+.hero .actions { gap:12px; }
+
+/* --- Visitor goals: open rows with a clear affordance -------------------- */
+.offer-map nav { gap:0 40px; border-bottom:1px solid var(--line); }
+.offer-map nav a { grid-template-columns:64px minmax(0,1fr) 24px; gap:20px; padding:22px 12px; margin-inline:-12px; border-top:1px solid var(--line); border-radius:var(--radius-s); transition:background-color .2s; }
+.offer-map nav a::after { content:"→"; color:var(--teal); font-size:1.25rem; justify-self:end; transition:transform .2s; }
+.offer-map nav a:hover { background:var(--sage); border-color:var(--line); }
+.offer-map nav a:hover::after { transform:translateX(4px); }
+.offer-map nav strong { color:var(--ink); font-size:1.125rem; font-weight:600; margin-bottom:4px; }
+.offer-map .visual-card-copy > span { color:var(--muted); }
+
+/* --- Diving, Scubility and first-aid sections ---------------------------- */
+.landing-diving-copy > p:not(.kicker),.landing-aid p:not(.kicker) { font-size:1.0625rem; }
+.home-course-choices { margin-top:28px; }
+.home-course-choices a { padding:16px 0; }
+.home-course-choices strong { font-size:1.125rem; font-weight:600; }
+.home-course-choices .home-course-fee { font:500 1.75rem/1 var(--serif); letter-spacing:-.01em; }
+.landing-diving .fee-context { font-size:.875rem; color:var(--muted); margin-top:12px; }
+.landing-photo,.landing-aid > img,.inclusive-band img { border-radius:var(--radius); }
+.inclusive-band { background:var(--deep); }
+.inclusive-band > div { padding-block:var(--section); }
+.inclusive-band p:not(.kicker) { color:var(--on-dark); font-size:1.0625rem; }
+.inclusive-band .kicker { color:var(--mint); }
+.landing-aid ul { margin:18px 0 0; }
+
+/* --- Equipment preview --------------------------------------------------- */
+.home-equipment { background:var(--sage); }
+.home-equipment-grid { gap:20px; }
+.home-equipment-grid a { border:1px solid var(--line); border-radius:var(--radius); background:var(--white); box-shadow:none; transition:box-shadow .2s,transform .2s; }
+.home-equipment-grid a:hover { box-shadow:var(--shadow); transform:translateY(-2px); border-color:var(--line); }
+.home-equipment-grid img { aspect-ratio:1.25; padding:24px; }
+.home-equipment-grid strong { justify-content:flex-start; text-align:left; min-height:0; padding:16px 20px; border-top:1px solid var(--line); font-size:1.0625rem; font-weight:600; }
+.home-equipment .section-actions { margin-top:36px; }
+
+/* --- Rental and trips: one matching pair --------------------------------- */
+.landing-outings { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; align-items:stretch; }
+.landing-outings .outing-card { display:flex; flex-direction:column; background:var(--white); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; padding:0; text-align:left; }
+.outing-card > img { width:100%; height:auto; aspect-ratio:2; object-fit:cover; }
+.outing-copy { display:flex; flex-direction:column; align-items:flex-start; flex:1; padding:28px 32px 24px; }
+.landing-outings h2 { font-size:var(--fs-h3); line-height:1.15; max-width:none; }
+.landing-outings p:not(.kicker) { margin:12px 0 16px; max-width:48ch; color:var(--muted); text-align:left; }
+.landing-outings .outings-actions { justify-content:flex-start; gap:4px 28px; margin-top:auto; padding:0; border:0; }
+
+/* --- Team preview -------------------------------------------------------- */
+.home-team-preview { background:var(--sage); text-align:center; }
+.home-team-intro { font-size:1.125rem; max-width:52ch; }
+.home-team-faces { list-style:none; display:flex; flex-wrap:wrap; justify-content:center; gap:28px 36px; margin:40px auto 28px; padding:0; max-width:900px; }
+.home-team-faces li { display:grid; justify-items:center; gap:4px; width:132px; margin:0; }
+.home-team-faces img { width:88px; height:88px; border-radius:50%; object-fit:cover; object-position:center 25%; margin-bottom:10px; box-shadow:0 0 0 4px var(--white),0 0 0 5px var(--line); }
+.home-team-faces .face-sascha { object-position:center 12%; }
+.home-team-faces strong { font-size:1rem; font-weight:600; line-height:1.3; }
+.home-team-faces span { font-size:.875rem; color:var(--muted); }
+
+/* --- Reviews: pull quotes, no card chrome -------------------------------- */
+.google-reviews { background:var(--paper); border:0; }
+.review-heading { display:flex; flex-direction:column; align-items:center; text-align:center; gap:0; margin-bottom:48px; }
+.google-rating { display:inline-flex; align-items:center; gap:10px; margin-top:18px; padding:8px 16px; border:1px solid var(--line); border-radius:999px; color:var(--ink); font-size:.9375rem; text-decoration:none; background:var(--white); }
+.google-rating strong { font-weight:700; }
+.google-rating:hover { border-color:var(--line-strong); }
+.google-rating .google-icon { width:18px; height:18px; }
+.google-rating::after { color:var(--muted); margin-left:0; }
+.review-stars { color:#a87b0c; letter-spacing:.08em; font-size:.875rem; }
+.google-review-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:48px; }
+.google-review { display:flex; flex-direction:column; gap:18px; margin:0; padding:28px 0 0; border:0; border-top:2px solid var(--ink); border-radius:0; background:none; box-shadow:none; }
+.google-review blockquote { margin:0; font:400 clamp(1.375rem,2vw,1.75rem)/1.3 var(--serif); letter-spacing:-.01em; color:var(--ink); }
+.google-review figcaption { display:flex; flex-direction:column; gap:4px; margin-top:auto; }
+.google-review figcaption strong { font-size:.9375rem; font-weight:600; }
+.review-foot { display:block; margin-top:40px; text-align:center; font-size:.875rem; color:var(--muted); }
+.review-foot a { min-height:0; padding:0; font-size:.875rem; }
+
+/* --- Closing band -------------------------------------------------------- */
+.landing-contact { display:block; padding:0; background:var(--deep); color:var(--white); }
+.landing-contact > .wrap { display:flex; align-items:center; justify-content:space-between; gap:24px 48px; padding-block:clamp(48px,6vw,80px); text-align:left; }
+.landing-contact h2 { font-size:var(--fs-h2); color:var(--white); }
+.landing-contact p { margin:12px 0 0; color:var(--on-dark); font-size:1.125rem; max-width:48ch; }
+.closing-actions { display:flex; flex-wrap:wrap; gap:12px; flex:none; }
+.landing-contact .whatsapp-link { background:none; }
+.landing-contact .whatsapp-link:hover { background:rgba(255,255,255,.08); }
+
+/* --- Footer -------------------------------------------------------------- */
+.site-footer { background:var(--sage); border-top:0; }
+.footer-brand strong { font:500 1.375rem/1.15 var(--serif); letter-spacing:-.01em; }
+.footer-groups summary { font:600 1rem/1.3 var(--sans); }
+.footer-groups a,.footer-contact a,.footer-utility a { color:var(--muted); }
+.footer-groups a:hover,.footer-contact a:hover,.footer-utility a:hover { color:var(--teal); background:none; }
+.footer-contact .whatsapp-link { background:var(--ink); color:var(--white); border-radius:var(--radius-s); padding:10px 16px; }
+.footer-contact .whatsapp-link:hover { background:var(--deep-2); color:var(--white); }
+.footer-utility { border-top:1px solid var(--line-strong); }
+.footer-utility a:last-child::before { content:"↑"; }
+
+/* --- Interior page covers: one alignment, matching the content edge ----- */
+.interior-cover .wrap,.aid-cover .wrap,.dive-intro .wrap { text-align:left; }
+.interior-cover h1,.aid-cover h1,.dive-intro h1 { margin-inline:0; max-width:22ch; }
+.interior-cover h1,.interior-cover:not(.shop-cover):not(.catalogue-cover) h1,.aid-cover h1,.dive-intro h1 { font-size:var(--fs-h1); line-height:1.05; letter-spacing:-.02em; }
+.interior-cover .cover-copy,.aid-cover p,.dive-intro p { margin:16px 0 0; max-width:56ch; font-size:1.125rem; color:var(--on-dark); }
+.interior-cover .crumb,.aid-cover .crumb,.dive-intro .crumb { text-align:left; }
+.dive-intro .wrap { max-width:none; }
+.crumb,.item-crumb { font-size:.875rem; }
+.crumb { color:var(--on-dark-muted); }
+.crumb a { color:var(--on-dark); }
+.cover-choices { justify-content:flex-start; gap:12px 24px; }
+.interior-cover { background:var(--deep); }
+.request-cover h1 { font-size:var(--fs-h1); }
+
+/* Catalogue cover: light, left aligned, count under the intro */
+.catalogue-cover { background:var(--sage); color:var(--ink); padding-block:clamp(32px,4vw,56px); }
+.catalogue-cover .wrap { display:block; }
+.catalogue-cover .crumb { color:var(--muted); margin-bottom:16px; }
+.catalogue-cover .crumb a { color:var(--teal); }
+.catalogue-cover .cover-copy { color:var(--muted); margin-top:12px; }
+.catalogue-cover .catalog-count { display:inline-block; margin-top:16px; padding:4px 12px; border-radius:999px; background:var(--white); border:1px solid var(--line); color:var(--muted); font-size:.875rem; font-weight:600; }
+
+/* --- Catalogue listing ---------------------------------------------------- */
+.stock-family h2 { padding-bottom:14px; border-bottom:1px solid var(--line-strong); }
+.stock-row > a { grid-template-columns:128px minmax(0,1fr) auto; gap:28px; padding:20px 12px; margin-inline:-12px; border-radius:var(--radius-s); align-items:center; transition:background-color .2s; }
+.stock-row a:hover { background:var(--sage); border-radius:var(--radius-s); }
+.stock-thumb { aspect-ratio:1; border-color:var(--line); border-radius:var(--radius-s); }
+.stock-thumb img { padding:10px; }
+.stock-caption h3 { font:600 1.1875rem/1.3 var(--sans); letter-spacing:-.005em; }
+.stock-caption p { font-size:1rem; margin-top:4px; }
+.stock-note { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin-top:6px; font-size:.875rem; color:var(--muted); line-height:1.5; max-width:60ch; }
+.stock-value { justify-items:end; text-align:right; gap:6px; }
+.stock-value strong { font:600 1.375rem/1.2 var(--sans); letter-spacing:-.01em; white-space:nowrap; }
+.view-item { min-height:0; padding:0; font-size:.875rem; }
+.catalogue-nav a { color:var(--ink); }
+.catalogue-nav a:hover { color:var(--teal); }
+.field-label { display:none; }
+.category-search label,.sort-order { font-size:.875rem; font-weight:600; color:var(--ink); }
+.category-search input,.shop-search input,.sort-order select { border:1px solid var(--line-strong); border-radius:var(--radius-s); min-height:48px; font-size:1rem; }
+@media(max-width:850px) {
+  .catalogue-nav { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px 12px; align-items:end; }
+  .catalogue-nav > .field-label { display:block; grid-column:1; grid-row:2; align-self:end; font-size:.875rem; font-weight:600; margin-bottom:-8px; }
+  .catalogue-nav .stock-groups { grid-column:1; grid-row:3; margin:0!important; align-self:start; }
+  .catalogue-nav .sort-order { grid-column:2; grid-row:2 / 4; gap:6px; }
+  .stock-groups { border:1px solid var(--line-strong); border-radius:var(--radius-s); background:var(--white); }
+  .stock-groups summary { min-height:46px; font:400 1rem/1.3 var(--sans); padding:0 12px; }
+  .sort-order select { font-weight:400; }
+}
+@media(max-width:650px) {
+  .stock-row > a { grid-template-columns:96px minmax(0,1fr); gap:6px 16px; align-items:start; padding:16px 8px; margin-inline:-8px; }
+  .stock-thumb { grid-row:span 2; }
+  .stock-value { grid-column:2; justify-items:start; text-align:left; }
+  .stock-value strong { font-size:1.1875rem; }
+  .stock-caption h3 { font-size:1.0625rem; }
+}
+
+/* --- Product page ------------------------------------------------------- */
+.item-heading h1 { font-size:clamp(2.25rem,3.6vw,3.25rem); letter-spacing:-.015em; }
+.item-group { background:var(--sage); color:var(--teal-dark); font-size:.875rem; border-radius:999px; padding:4px 12px; }
+.item-photo { border-color:var(--line); border-radius:var(--radius); }
+.item-purchase { background:var(--sage); border-radius:var(--radius); padding:24px; }
+.item-purchase strong { font:600 1.75rem/1.2 var(--sans); letter-spacing:-.01em; }
+.item-purchase a { border-radius:var(--radius-s); min-height:48px; padding:12px 20px; font-weight:600; }
+.item-note { font-size:.9375rem; color:var(--muted); }
+
+/* --- Prices ---------------------------------------------------------------- */
+.fees-list .course-rate { padding:24px 0; }
+.fees-list .rate { align-items:baseline; }
+.fees-list .rate h2 { font-size:1.375rem; }
+.rate strong,.fees-list .rate strong { font:500 1.75rem/1.1 var(--serif); color:var(--ink); letter-spacing:-.01em; }
+.fees-list .fee-supplement { color:var(--muted); font-size:.9375rem; }
+.format-fees div { font-size:1rem; padding-block:2px; }
+.format-fees dd { font-weight:600; font-variant-numeric:tabular-nums; }
+.dive-fee .dive-amount,.trial-price strong { font-family:var(--serif); font-weight:500; letter-spacing:-.01em; }
+
+/* --- Course overview ----------------------------------------------------- */
+.training-path > img { border-radius:var(--radius); }
+.training-options dt { font-weight:600; }
+.course-booking { border-radius:var(--radius); background:var(--deep); }
+.course-booking nav a { border-color:var(--line-on-dark); }
+.course-booking nav a::after { color:var(--mint); }
+
+/* --- Shop directory ------------------------------------------------------- */
+.shop-offer strong,.department-item strong { font:600 1.125rem/1.3 var(--sans); letter-spacing:-.005em; }
+.shop-offer,.department-item { grid-template-columns:84px minmax(0,1fr) auto; align-items:center; }
+.shop-offer::after,.department-item::after { color:var(--teal); }
+.shop-offer img,.department-item img { border-color:var(--line); border-radius:var(--radius-s); background:var(--white); }
+.department-item small,.shop-offer small { color:var(--muted); font-size:.9375rem; }
+.department h2 { max-width:12ch; }
+
+/* --- Team page ------------------------------------------------------------- */
+.team { background:var(--sage); }
+.people { gap:20px; }
+.people .person { background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:28px 20px 24px; gap:14px; }
+.people .person img,.people .person:not(.lead) img { width:104px; height:104px; border-radius:50%; object-fit:cover; object-position:center 25%; }
+.people .person.sascha img { object-position:center 12%; }
+.people .person.lead { flex-direction:row; align-items:center; text-align:left; gap:28px; max-width:640px; padding:28px 32px; border:1px solid var(--line); background:var(--white); }
+.people .person.lead img { width:120px; height:120px; }
+.people .person h3 { font-size:1.1875rem; margin-bottom:4px; }
+.people .person p { color:var(--muted); font-size:.9375rem; min-height:0!important; }
+.people .person small { display:inline-block; margin-top:10px; padding:3px 10px; border-radius:999px; background:var(--sage); color:var(--teal-dark); font-size:.8125rem; font-weight:600; }
+@media(max-width:540px) {
+  .people .person.lead { flex-direction:column; text-align:center; padding:24px 20px; }
+}
+
+/* --- Galleries --------------------------------------------------------- */
+.album-grid { gap:16px; }
+.album-grid figure { margin:0; }
+.album-grid a { display:block; border-radius:var(--radius-s); overflow:hidden; background:var(--sage); }
+.album-grid img { width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; object-position:center 30%; border-radius:0; transition:transform .3s; }
+.album-grid a:hover img { transform:scale(1.03); }
+.album-grid figcaption { font-size:.875rem; color:var(--muted); margin-top:8px; line-height:1.4; }
+
+/* --- Responsive adjustments for the new homepage pieces ------------------- */
+@media(max-width:980px) {
+  .google-review-grid { grid-template-columns:1fr; gap:32px; max-width:640px; margin-inline:auto; }
+}
+@media(max-width:760px) {
+  .landing-outings { grid-template-columns:1fr; }
+  .outing-copy { padding:24px 22px; }
+  .landing-contact > .wrap { flex-direction:column; align-items:flex-start; }
+  .offer-map nav a { grid-template-columns:56px minmax(0,1fr) 20px; }
+}
+@media(max-width:700px) {
+  .hero-copy { text-align:left; }
+  .hero .intro { margin-inline:0; }
+  .hero .actions { justify-content:flex-start; }
+  .hero .actions a { width:100%; }
+  .landing-diving-copy h2,.landing-aid h2,.inclusive-band h2,.landing-diving-copy > .kicker,.landing-aid .kicker,.inclusive-band .kicker { text-align:left; margin-inline:0; }
+  .landing-diving-copy > p:not(.kicker),.landing-aid p:not(.kicker),.inclusive-band p:not(.kicker) { margin-inline:0; }
+  .section-actions { flex-direction:column; align-items:stretch; gap:4px; }
+  .section-actions .cta { width:100%; }
+  .section-actions .path-action { justify-content:center; }
+  .home-team-faces { gap:24px 12px; }
+  .home-team-faces li { width:104px; }
+  .home-team-faces img { width:72px; height:72px; }
+  .closing-actions { width:100%; flex-direction:column; }
+  .closing-actions a { width:100%; }
+  .landing-heading { margin-bottom:28px; }
+}
+.google-rating > span { display:inline; font-size:.9375rem; color:var(--ink); }
+.landing-contact > .wrap { width:min(100% - 2 * var(--gutter),1240px); margin-inline:auto; flex:initial; }
+.landing-contact > .wrap > div:first-child { text-align:left; }
+section.landing-contact > div.wrap { width:min(100% - 2 * var(--gutter),1240px); justify-content:space-between; }
+@media (max-width:700px){ section.landing-contact > div.wrap > .closing-actions { width:100%; } }
+section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
+.request-card-heading h2 { font-family:var(--serif); font-weight:400; font-size:var(--fs-h3); letter-spacing:-.015em; line-height:1.1; }
+.aid-group > h2 { text-align:left; }

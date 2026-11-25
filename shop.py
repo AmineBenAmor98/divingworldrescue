@@ -132,19 +132,19 @@ def category_products(items):
         for item in sorted(members, key=lambda i: i["name"].casefold()):
             url = item["slug"] + ".html"
             name = escape(item["name"])
-            note = f'<small>{escape(item["note"])}</small>' if item.get("note") else ""
+            note = f'<small class="stock-note">{escape(item["note"])}</small>' if item.get("note") else ""
             terms = escape(" ".join([item["name"], item["summary"], item["group"], *item["specs"].values()]), quote=True)
             amount = re.search(r"(\d+),(\d{2})", item["price"])
             cents = int(amount[1]) * 100 + int(amount[2]) if amount else ""
             rows.append(f'''<article class="stock-row" data-cents="{cents}" data-name="{name}" data-search="{terms}"><a href="{url}">
               <span class="stock-thumb"><img src="{item["photos"][0]}" loading="lazy" alt=""></span>
-              <div class="stock-caption"><h3>{name}</h3><p>{escape(item["summary"])}</p></div>
-              <div class="stock-value"><strong>{escape(item["price"])}</strong>{note}
-              <span class="view-item">Zum Produkt <span aria-hidden="true">→</span></span></div>
+              <div class="stock-caption"><h3>{name}</h3><p>{escape(item["summary"])}</p>{note}</div>
+              <div class="stock-value"><strong>{escape(item["price"])}</strong>
+              <span class="view-item">Zum Produkt</span></div>
             </a></article>''')
         sections.append(f'<section class="stock-family" id="{anchor}"><h2>{escape(label)}</h2>{"".join(rows)}</section>')
     return f'''<div class="wrap catalogue"><nav class="catalogue-nav" aria-label="Produktgruppen">
-    <div class="category-search" hidden><label for="category-query">In dieser Kategorie suchen</label><input id="category-query" type="search" placeholder="Produkt oder Eigenschaft" autocomplete="off"><p role="status" aria-live="polite"></p></div><details class="stock-groups"><summary>Produktgruppen</summary>{"".join(navigation)}</details>
+    <div class="category-search" hidden><label for="category-query">In dieser Kategorie suchen</label><input id="category-query" type="search" placeholder="Produkt oder Eigenschaft" autocomplete="off"><p role="status" aria-live="polite"></p></div><span class="field-label" aria-hidden="true">Springen zu</span><details class="stock-groups"><summary>Produktgruppen</summary>{"".join(navigation)}</details>
     <label class="sort-order" hidden>Sortierung je Gruppe<select>
     <option value="name">Name (A–Z)</option><option value="asc">Preis aufsteigend</option>
     <option value="desc">Preis absteigend</option></select></label></nav><div>{"".join(sections)}</div></div>'''
