@@ -75,21 +75,20 @@ def first_aid(page, breadcrumb):
             extra = f'''<aside class="aid-team-offer"><h3>Für dein ganzes Team</h3><p>Wir schulen Firmen, Kindergärten und Schulklassen ab der ersten Klasse als Gruppe. Eine Ausbildung nach DGUV&nbsp;304&#8209;001 kannst du anfragen.</p>
               {course_link("Erste Hilfe", label="Gruppenkurs anfragen")}</aside>'''
         sections.append(f'''<section class="aid-group{' aid-group-alt' if i % 2 else ''}" id="{anchor}" aria-labelledby="{anchor}-title"><div class="wrap aid-group-layout">
-          <header class="aid-group-head"><p class="kicker">{count}</p><h2 id="{anchor}-title">{escape(group)}</h2><p>{escape(intro)}</p></header>
-          <div class="aid-course-list">{"".join(aid_card(c) for c in courses)}</div>{extra}</div></section>''')
+          <div class="aid-group-head"><p class="kicker">{count}</p><h2 id="{anchor}-title">{escape(group)}</h2><p>{escape(intro)}</p>{extra}</div>
+          <div class="aid-course-list">{"".join(aid_card(c) for c in courses)}</div></div></section>''')
     return f'''<header class="aid-cover aid-cover-v2"><div class="wrap">{breadcrumb}<h1>Erste-Hilfe-Kurse</h1><p>Vom Kindernotfall bis zum Tauchunfall: Lerne, im Ernstfall ruhig und richtig zu helfen. Nach den Standards von First Response Training International (FRTI).</p>
     <div class="cover-choices"><a class="cta mint" href="{request}">Kurs anfragen</a><a class="plain" href="#ablauf">So läuft ein Kurs ab</a></div></div></header>
     <section class="aid-paths-section" aria-labelledby="aid-paths-title"><div class="wrap">
       <h2 id="aid-paths-title" class="aid-paths-title">Für wen ist der Kurs?</h2>
       <nav class="aid-paths" aria-label="Kursbereiche">{"".join(paths)}</nav></div></section>
     <section class="aid-how" id="ablauf" aria-labelledby="ablauf-title"><div class="wrap aid-how-layout">
-      <header class="aid-how-heading"><p class="kicker">Ablauf</p><h2 id="ablauf-title">So läuft ein Kurs ab</h2></header>
+      <div><p class="kicker">Ablauf</p><h2 id="ablauf-title">So läuft ein Kurs ab</h2></div>
       <ol class="step-list aid-how-steps">
         <li><strong>Theorie vorbereiten</strong><span>Per E-Learning oder mit dem Handbuch, in deinem Tempo. Du wählst eins davon.</span></li>
         <li><strong>Praxis mit Ausbilder</strong><span>Die praktischen Übungen und der Abschluss folgen mit einem Ausbilder. Die Kosten dafür kommen je nach Ort hinzu.</span></li>
-      </ol>
-      <p class="aid-how-note"><strong>Teilnahme ab 18 Jahren.</strong> Mit Zustimmung der Eltern kannst du schon ab 10 Jahren teilnehmen.</p>
-    </div></section>
+        <li><strong>Ab 18 Jahren</strong><span>Mit Zustimmung der Eltern kannst du schon ab 10 Jahren teilnehmen.</span></li>
+      </ol></div></section>
     {"".join(sections)}
     <section class="aid-more"><div class="wrap"><a class="aid-material" href="tauch-shop.html#erste-hilfe"><strong>Erste-Hilfe-Material</strong><span>Erste-Hilfe-Sets, Pflaster, Scheren und Diagnostikleuchten aus unserem Shop.</span><span class="path-action">Material ansehen</span></a></div></section>
     {closing_band("Bereit für den Ernstfall?", "Sag uns, welcher Kurs passt und wann du Zeit hast. Wir melden uns mit einem Termin.", request, "Kurs anfragen", "aid-closing")}'''

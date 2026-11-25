@@ -1170,16 +1170,10 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 .aid-path-copy > span:not(.program-chip) { color:var(--on-dark); font-size:.9375rem; }
 .aid-path:focus-visible { outline:3px solid var(--mint); outline-offset:3px; }
 
-.aid-how { background:var(--paper); padding-block:clamp(32px,4vw,56px); }
-.aid-how-layout { display:grid; grid-template-columns:minmax(0,1fr); gap:24px; }
-.aid-how-heading .kicker { margin:0 0 10px; }
-.aid-how h2 { font-size:clamp(1.75rem,2.8vw,2.25rem); line-height:1.15; }
-.aid-how-steps { grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px 40px; }
-.aid-how-steps li { grid-template-columns:32px minmax(0,1fr); gap:6px 14px; padding-top:18px; }
-.aid-how-steps li::before { grid-column:1; grid-row:1 / span 2; font:600 1rem/1.5 var(--sans); }
-.aid-how-steps strong,.aid-how-steps span { grid-column:2; font-size:1rem; line-height:1.6; }
-.aid-how-note { margin:0; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); font-size:1rem; line-height:1.6; }
-.aid-how-note strong { color:var(--ink); font-weight:600; }
+.aid-how { background:var(--paper); padding-block:clamp(56px,7vw,96px); }
+.aid-how-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2.2fr); gap:clamp(24px,5vw,72px); align-items:start; }
+.aid-how .kicker { margin-bottom:10px; }
+.aid-how h2 { font-size:var(--fs-h2); }
 
 .aid-group { padding-block:clamp(56px,7vw,96px); background:var(--paper); border-top:1px solid var(--line); }
 .aid-group-alt { background:var(--sage); border-top:0; }
@@ -1214,14 +1208,12 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 .aid-material span:not(.path-action) { color:var(--muted); font-size:.9375rem; }
 
 @media (max-width:900px) {
-  .aid-group-layout { grid-template-columns:1fr; }
+  .aid-how-layout,.aid-group-layout { grid-template-columns:1fr; }
   .aid-group-head { position:static; }
   .aid-paths { grid-template-columns:1fr; gap:12px; }
   .aid-path { min-height:0; aspect-ratio:16/8; }
 }
 @media (max-width:700px) {
-  .aid-how-layout { gap:20px; }
-  .aid-how-steps { grid-template-columns:minmax(0,1fr); gap:20px; }
   .aid-cover.aid-cover-v2 { background-image:linear-gradient(180deg,rgba(5,38,41,.86),rgba(5,38,41,.94)),url('assets/erste-hilfe-familie.webp'); }
   .aid-path { aspect-ratio:16/9; }
   .aid-path-copy { padding:16px 18px; }
@@ -1231,11 +1223,10 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
   .aid-material { grid-template-columns:1fr; padding:20px; }
 }
 @media (min-width:901px) {
-  .aid-group-layout { grid-template-columns:minmax(0,.8fr) minmax(0,2.4fr); }
   .aid-course-buy { min-width:180px; padding-left:24px; }
 }
 .aid-options span { white-space:nowrap; }
-@media (min-width:901px) { .aid-group-layout { grid-template-columns:minmax(270px,.9fr) minmax(0,2.4fr); } }
+@media (min-width:901px) { .aid-group-layout,.aid-how-layout { grid-template-columns:minmax(270px,.9fr) minmax(0,2.4fr); } }
 .aid-team-offer .path-action { white-space:nowrap; }
 
 /* ===== Tauchen lernen v2 ===== */
@@ -1362,9 +1353,9 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 }
 .page-head > div,.equip-head > div,.trip-head > div { min-width:0; width:100%; }
 .page-head .kicker,.equip-head .kicker,.trip-head .kicker,
-.aid-group-head .kicker,.dive-faq-layout > header .kicker { margin:0 0 10px; }
+.dive-faq-layout > header .kicker { margin:0 0 10px; }
 .page-head h2,.equip-head h2,.trip-head h2,.home-section-head h2,
-.aid-group-head h2,.dive-faq h2,.item-details h2,.item-related-head h2 {
+.dive-faq h2,.item-details h2,.item-related-head h2 {
   margin:0; max-width:none; font-size:var(--section-title-size); line-height:1.2;
 }
 .page-head > p,.equip-head > p,.trip-head > p {
@@ -1374,18 +1365,9 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 .page-head > p .path-action,.trip-head > p .path-action { margin-top:4px; }
 .page-head > .path-action,.equip-head > .path-action,.home-section-head > a,
 .item-related-head > a { margin:0; padding-block:4px; }
-.aid-group-layout,.dive-faq-layout,.item-details {
+.dive-faq-layout,.item-details {
   grid-template-columns:minmax(0,1fr); align-items:start; gap:24px;
 }
-.aid-group-head { position:static; gap:0; }
-.aid-group-head > p:not(.kicker) { max-width:65ch; margin:12px 0 0; font-size:1rem; line-height:1.65; }
-.aid-team-offer {
-  margin:0; display:grid; grid-template-columns:minmax(0,1fr) auto;
-  gap:6px 28px; padding:20px 24px;
-}
-.aid-team-offer h3,.aid-team-offer p { grid-column:1; }
-.aid-team-offer p { max-width:65ch; font-size:1rem; line-height:1.65; }
-.aid-team-offer .path-action { grid-column:2; grid-row:1 / span 2; align-self:center; margin:0; }
 .dive-faq { padding-block:clamp(32px,4vw,56px); }
 .dive-faq-layout > header { min-width:0; }
 .item-details { margin-top:40px; padding-top:28px; gap:20px; }
@@ -1396,9 +1378,7 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 .album-head h2 { margin:0; }
 @media(max-width:700px) {
   .page-head,.equip-head,.trip-head,.home-section-head,.item-related-head { gap:10px; margin-bottom:24px; }
-  .aid-group-layout,.dive-faq-layout { gap:20px; }
-  .aid-team-offer { grid-template-columns:minmax(0,1fr); padding:20px; }
-  .aid-team-offer .path-action { grid-column:1; grid-row:auto; justify-self:start; white-space:normal; }
+  .dive-faq-layout { gap:20px; }
   .item-details { margin-top:28px; padding-top:24px; gap:16px; }
   .item-related { margin-top:32px; padding-top:24px; }
 }
