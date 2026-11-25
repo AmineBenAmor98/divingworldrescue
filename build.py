@@ -160,7 +160,7 @@ def header(prefix, active=None, current=None):
 
 def inner(page):
     slug = page["slug"]
-    title = escape({"tauch-shop": "Ausrüstung & Verleih", "kurse": "Tauchen lernen & weiterkommen", "infos": "Tauchschule & Kontakt"}.get(slug, page["title"]))
+    title = escape({"tauch-shop": "Ausrüstung & Verleih", "kurse": "Tauchkurse", "infos": "Tauchschule & Kontakt"}.get(slug, page["title"]))
     section = section_for(slug)
     neutral = slug in {"uebersicht", "anfrage"}
     parent = "" if neutral or slug in HUBS else f' / <a href="{section}.html">{escape(HUBS[section])}</a>'
@@ -180,6 +180,12 @@ def inner(page):
         main = main.replace("{{special}}", chips(["Nachttauchen", "Wracktauchen", "Tarierung", "Unterwassernavigation", "Tieftauchen", "Trockentauchen", "Suchen und Bergen", "UW-Scooter"]))
         main = main.replace("{{closing}}", closing_band("Noch unsicher, welcher Kurs passt?", "Erzähl uns kurz, was du schon gemacht hast. Wir empfehlen dir den passenden Einstieg.", "anfrage.html?thema=Tauchkurs", "Beratung anfragen", "dive-closing"))
         return page_shell(title, main, section, slug)
+    if slug == "kurse":
+        fees = {course["name"]: course["price"] for course in BY_SLUG["preis-kurse"]["courses"]}
+        main = (SRC / "courses.html").read_text().replace("{{breadcrumb}}", crumb)
+        main = main.replace("{{trial_price}}", escape(fees["Schnuppertauchen"])).replace("{{aowd_price}}", escape(fees["Advanced Open Water Diver"]))
+        main = main.replace("{{closing}}", closing_band("Welcher Kurs passt zu dir?", "Erzähl uns kurz, was du schon gemacht hast. Wir empfehlen dir den passenden Einstieg.", "anfrage.html?thema=Tauchkurs", "Beratung anfragen", "hub-closing"))
+        return page_shell(escape("Tauchkurse in Düsseldorf"), main, section, slug)
     intro = f'<p class="cover-copy">{escape(INTRO[slug])}</p>' if slug in INTRO else ""
     if slug == "tauch-shop":
         intro += '<div class="cover-choices"><a class="cta mint" href="#ausruestung">Sortiment entdecken</a><a class="plain" href="equipment-verleih.html">Leihpreise ansehen</a></div>'
@@ -198,9 +204,8 @@ def inner(page):
         body = travel_archive(page)
     elif slug == "wir-suchen-dich":
         body = jobs()
-    elif slug in {"kurse", "infos"}:
-        template = "courses.html" if slug == "kurse" else "info.html"
-        body = (SRC / template).read_text()
+    elif slug == "infos":
+        body = (SRC / "info.html").read_text()
     else:
         body = f'<div class="wrap editorial-body">{content(page)}</div>' + (closing_band(*BANDS[slug]) if slug in BANDS else "")
     cover_class = "interior-cover shop-cover" if slug == "tauch-shop" else "interior-cover"

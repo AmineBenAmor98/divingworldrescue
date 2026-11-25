@@ -94,9 +94,9 @@ def first_aid(page, breadcrumb):
     {closing_band("Bereit für den Ernstfall?", "Sag uns, welcher Kurs passt und wann du Zeit hast. Wir melden uns mit einem Termin.", request, "Kurs anfragen", "aid-closing")}'''
 
 
-def image_gallery(blocks, title):
+def image_gallery(blocks, title, start=1):
     out = []
-    for i, b in enumerate(blocks, 1):
+    for i, b in enumerate(blocks, start):
         caption = escape(b.get("caption", ""))
         alt = caption or f'{escape(title)} · Abbildung {i}'
         src = "../" + escape(b["src"])
@@ -191,8 +191,16 @@ def albums(page):
         if b["type"] == "photo":
             groups.setdefault(b["album"], []).append(b)
     out = []
-    for label, photos in groups.items():
-        out.append(f'<section class="album"><h2>{escape(label)}</h2>{image_gallery(photos, label)}</section>')
+    for index, (label, photos) in enumerate(groups.items()):
+        certs = all(p.get("caption") for p in photos)
+        classes = "album" + (" album-certs" if certs else "") + (" album-latest" if index == 0 and len(photos) <= 4 else "")
+        count = (f'{len(photos)} Abschluss' if len(photos) == 1 else f'{len(photos)} Abschlüsse') if certs else f'{len(photos)} Fotos'
+        if index == 0 and len(photos) <= 4:
+            count = "Neueste Abschlüsse"
+        grid = image_gallery(photos, label)
+        if not certs and len(photos) > 12:
+            grid = image_gallery(photos[:12], label) + f'<details class="album-more"><summary>Alle {len(photos)} Fotos zeigen</summary>{image_gallery(photos[12:], label, 13)}</details>'
+        out.append(f'<section class="{classes}"><div class="album-head"><h2>{escape(label)}</h2><span>{count}</span></div>{grid}</section>')
     if "highlights" in page:
         out.append('<section class="reading"><h2>Reisen und Kurse im Rückblick</h2>')
         for year, events in page["highlights"].items():

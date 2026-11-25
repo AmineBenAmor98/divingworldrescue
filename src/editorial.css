@@ -1290,3 +1290,56 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
   .dive-option-actions .cta { flex:1; }
   .dive-specialties { grid-template-columns:1fr; padding:20px; }
 }
+
+/* Tauchkurse hub v2 */
+.aid-cover.hub-cover { background-image:linear-gradient(90deg,rgba(5,38,41,.96) 0%,rgba(5,38,41,.86) 40%,rgba(5,38,41,.4) 74%,rgba(5,38,41,.2) 100%),url('assets/reisen-rotes-meer.webp'); background-position:center 55%; }
+.aid-path.is-page .aid-path-copy strong::after { content:" →"; }
+.hub-scubility { padding-block:clamp(40px,5vw,64px) 0; }
+.hub-scubility .training-path { border-bottom:0; padding-block:0; }
+.hub-scubility .kicker { margin-bottom:6px; }
+.hub-plan { padding-block:clamp(48px,6vw,80px); }
+.hub-plan-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.hub-plan-grid a { display:grid; align-content:start; gap:6px; min-height:44px; padding:22px 24px; border:1px solid var(--line-strong); border-radius:var(--radius); background:var(--white); color:var(--ink); text-decoration:none; transition:border-color .2s ease, transform .2s ease; }
+.hub-plan-grid a:hover { border-color:var(--teal); transform:translateY(-2px); }
+.hub-plan-grid a:focus-visible { outline:3px solid var(--teal); outline-offset:3px; }
+.hub-plan-grid strong { font-size:1.0625rem; font-weight:600; }
+.hub-plan-grid strong::after { content:" →"; color:var(--teal); }
+.hub-plan-grid span { color:var(--muted); font-size:.9375rem; line-height:1.45; }
+@media (max-width:900px) { .hub-plan-grid { grid-template-columns:1fr; gap:10px; } }
+@media (max-width:700px) {
+  .aid-cover.hub-cover { background-image:linear-gradient(180deg,rgba(5,38,41,.84),rgba(5,38,41,.94)),url('assets/reisen-rotes-meer.webp'); }
+  .hub-plan-grid a { padding:18px 20px; }
+}
+@media (prefers-reduced-motion:reduce) { .hub-plan-grid a:hover { transform:none; } }
+
+/* Shop filters: keep the sort menu inside its column on phones */
+@media (max-width:850px) {
+  .catalogue-nav > * { min-width:0; }
+  .sort-order select { width:100%; min-width:0; }
+}
+
+/* Certificate and course-photo albums */
+.album-head { display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin:0 0 18px; padding-bottom:12px; border-bottom:1px solid var(--line-strong); }
+.album-head h2 { margin:0; font-size:var(--fs-h3); text-align:left; }
+.album-head span { color:var(--muted); font-size:.875rem; white-space:nowrap; }
+.album:first-of-type .album-grid img { object-fit:cover; background:none; }
+.album-certs .album-grid img,.album.album-certs:first-of-type .album-grid img { object-fit:contain; object-position:center; background:var(--white); padding:10px; }
+.album-certs .album-grid a { background:var(--white); border:1px solid var(--line); }
+.album-latest .album-grid { grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr)); gap:24px; }
+.album-latest .album-grid figcaption { font-family:var(--serif); font-size:1.25rem; color:var(--ink); margin-top:12px; }
+.album-more { margin-top:16px; }
+.album-more > summary { display:inline-flex; align-items:center; min-height:44px; padding:10px 22px; border:1px solid var(--line-strong); border-radius:999px; background:var(--white); color:var(--ink); font-weight:600; cursor:pointer; list-style:none; }
+.album-more > summary::-webkit-details-marker { display:none; }
+.album-more > summary:hover { border-color:var(--teal); }
+.album-more > summary:focus-visible { outline:3px solid var(--teal); outline-offset:3px; }
+.album-more[open] > summary { display:none; }
+.album-more .album-grid { margin-top:0; }
+@media (max-width:700px) { .album-latest .album-grid { grid-template-columns:1fr; } .album-more > summary { width:100%; justify-content:center; } }
+
+/* Guestbook sits inside the editorial column: avoid a second page gutter */
+.editorial-body .wrap { width:auto; margin-inline:0; }
+@media (max-width:700px) {
+  .album:not(.album-latest) .album-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  .album:not(.album-latest) .album-grid figcaption { font-size:.8125rem; }
+  .album-certs .album-grid img { padding:6px; }
+}
