@@ -126,7 +126,7 @@ def travel_archive(page):
             cards.append(f'<li class="moment"><span class="trip-kind kind-{slugify(kind)}">{kind}</span><h4>{escape(title.strip(" ,"))}</h4>{who}</li>')
         label = "Ohne Jahr" if not year[:1].isdigit() else year
         years.append(f'<section class="moment-year"><h3>{escape(label)}<small>{len(events)} Rückblick{"e" if len(events) != 1 else ""}</small></h3><ol class="moments">{"".join(cards)}</ol></section>')
-    picks = ["ba9e4421064b6920", "4affc21280160622", "d88380ee965ce574", "0b0901195a9a7b6c", "0eaa317a668bc7fa", "4223fcc09b4bdb38"]
+    picks = ["ba9e4421064b6920", "4affc21280160622", "d88380ee965ce574", "0b0901195a9a7b6c", "4223fcc09b4bdb38"]
     mosaic = "".join(f'<a href="glueckwuensche.html"><img src="../assets/media/{pid}.webp" alt="Foto aus einem Kurs oder einer Reise der Tauchschule" loading="lazy"></a>' for pid in picks)
     request = "anfrage.html?" + escape(urlencode({"thema": "Termine und Reisen"}))
     return f'''<section class="trip-section"><div class="wrap">{section_head("Unterwegs", "Wohin wir gemeinsam fahren", "Vom Hallenbad in der Nähe bis ans Rote Meer. Jeder ist willkommen, auch Begleitung ohne Tauchschein.")}
@@ -221,9 +221,17 @@ def dates(page):
 
 def guestbook(page):
     b = page["blocks"]
+    first, last = b[1]["text"], b[2]["text"]
     copy = ''.join(paragraphs(x['text']) for x in b[4:])
-    return f'''<article class="reading guest-entry"><h2>{escape(b[1]["text"])} {escape(b[2]["text"])}</h2>
-    <time datetime="2026-01-18">18. Januar 2026</time><blockquote>{copy}</blockquote><a class="dive-text-link" href="tauchen-lernen-kurse.html">Zur Tauchausbildung →</a></article>'''
+    initials = (first[:1] + last[:1]).upper()
+    return f'''<section class="guest-section"><div class="wrap">
+      <article class="guest-card">
+        <aside class="guest-author"><span class="guest-avatar" aria-hidden="true">{escape(initials)}</span>
+          <div><strong>{escape(first)} {escape(last)}</strong><time datetime="2026-01-18">18. Januar 2026</time></div>
+          <ul class="guest-tags"><li>Tauchausbildung</li><li>mit Sohn (12)</li></ul></aside>
+        <div class="guest-body"><p class="guest-pull">„Fachlich exzellent, menschlich großartig und mit einem klaren Fokus auf Sicherheit.“</p>
+          <blockquote>{copy}</blockquote></div>
+      </article></div></section>'''
 
 
 def jobs():

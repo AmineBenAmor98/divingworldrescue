@@ -868,3 +868,22 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 .album-grid { grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr)); }
 .album:first-of-type .album-grid img { object-fit:contain; background:var(--white); }
 .editorial-body > .album:first-child { margin-top:0; }
+
+/* Gästebuch review card */
+.guest-section { padding:var(--section) 0; }
+.guest-card { display:grid; grid-template-columns:240px minmax(0,1fr); gap:clamp(24px,4vw,56px); max-width:1080px; margin:0 auto; padding:clamp(24px,4vw,48px); background:var(--white); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); }
+.guest-author { display:grid; align-content:start; gap:14px; }
+.guest-avatar { display:grid; place-items:center; width:64px; height:64px; border-radius:50%; background:var(--mint); color:var(--teal-dark); font:600 1.375rem/1 var(--serif); }
+.guest-author strong { display:block; font-size:1.125rem; color:var(--ink); }
+.guest-author time { display:block; margin-top:2px; color:var(--muted); font-size:.875rem; }
+.guest-tags { display:flex; flex-wrap:wrap; gap:6px; margin:0; padding:0; list-style:none; }
+.guest-tags li { margin:0; padding:4px 10px; border-radius:999px; background:var(--sage); color:var(--teal-dark); font-size:.8125rem; font-weight:600; }
+.guest-pull { margin:0 0 24px; font:400 clamp(1.5rem,2.4vw,2rem)/1.25 var(--serif); color:var(--ink); }
+.guest-card blockquote { margin:0; padding:0 0 0 clamp(14px,2vw,24px); border-left:3px solid var(--mint); color:var(--muted); }
+.guest-card blockquote p { max-width:68ch; margin:0 0 1em; font-size:1rem; line-height:1.7; }
+.guest-card blockquote p:last-child { margin-bottom:0; }
+@media (max-width:860px) {
+  .guest-card { grid-template-columns:1fr; }
+  .guest-author { grid-template-columns:auto 1fr; align-items:center; }
+  .guest-tags { grid-column:1 / -1; }
+}
