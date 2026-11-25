@@ -260,12 +260,13 @@ def equipment_preview():
           <span class="equip-body"><strong>{escape(label)}</strong><span>{escape(description)}</span><small>{count} Artikel</small></span></a>''')
     chips = ''.join(f'<li><a href="pages/{slug}.html">{escape(label)}</a></li>' for slug, label in more if slug in BY_SLUG)
     return '''<section class="home-equipment" id="ausruestung"><div class="wrap">
-      <div class="equip-head"><div><p class="kicker">Ausrüstung kaufen</p><h2>Passend zu deinem Tauchgang.</h2></div>
-      <p>Wir beraten dich persönlich, welches Modell zu dir und deinem Tauchplatz passt.</p></div>
-      <div class="equip-grid">''' + ''.join(cards) + '''</div>
+      <div class="page-head"><div><p class="kicker">Ausrüstung</p><h2>Passend zu deinem Tauchgang.</h2></div>
+      <p>Kaufen oder leihen: Wir beraten dich persönlich, welches Modell zu dir und deinem Tauchplatz passt.</p></div>
+      <div class="equip-layout"><div class="equip-grid">''' + ''.join(cards) + '''</div>
+      <a class="equip-rent-tile" href="pages/equipment-verleih.html"><img src="assets/shop-cover.webp" width="764" height="508" loading="lazy" alt="">
+        <span class="equip-rent-copy"><span class="program-chip">Ausrüstung leihen</span><strong>Lieber erst einmal leihen?</strong><span>Atemregler, Computer, Jackets und Anzüge für einen Tag, ein Wochenende oder eine Woche.</span><em>ab 7 € pro Tag</em><small>Leihpreise ansehen</small></span></a></div>
       <div class="equip-foot"><nav aria-label="Weitere Kategorien"><span>Außerdem im Shop</span><ul>''' + chips + '''</ul></nav>
       <div class="equip-actions"><a class="cta" href="pages/tauch-shop.html">Zum gesamten Sortiment</a><a class="path-action" href="pages/sonderangebote.html">Sonderangebote</a></div></div>
-      <aside class="equip-rent"><div><p class="kicker">Ausrüstung leihen</p><strong>Lieber erst einmal leihen?</strong><span>Atemregler, Computer, Jackets und Anzüge für einen Tag, ein Wochenende oder eine Woche. Ab 7 € am Tag.</span></div><a class="path-action" href="pages/equipment-verleih.html">Leihpreise ansehen</a></aside>
     </div></section>'''
 
 
