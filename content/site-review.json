@@ -544,5 +544,28 @@
         "Published CSS version 186fed6969"
       ]
     }
+  },
+  "course_choice_review": {
+    "date": "2026-11-25",
+    "changes": [
+      "Three equal-width paths with aligned titles, descriptions, course choices and footers",
+      "Vertical course links with explicit enquiry action instead of wrapping plus chips",
+      "Rescue Diver, Divemaster and Assistant Instructor retain progression order",
+      "Specialties sorted alphabetically",
+      "Discover Scuba Diver moved into the introductory trial section"
+    ],
+    "checked_widths": [
+      360,
+      768,
+      1024,
+      1280
+    ],
+    "checks": [
+      "No horizontal overflow",
+      "Aligned desktop content rows",
+      "Course links at least 50 pixels tall",
+      "Specialty enquiry retained selected course",
+      "All local links, media, anchors and form destinations passed"
+    ]
   }
 }

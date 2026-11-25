@@ -105,3 +105,8 @@ Section introductions keep headings, descriptions and actions together above the
 All 131 pages were checked at 360, 768 and 1440 pixels for horizontal overflow and heading/content placement. Main-page wording was preserved. Static link/media/anchor/form checks passed; representative desktop and phone layouts, FAQ expansion and gallery loading were visually checked. Source changes are in commit f27be4b, pushed to the existing GitHub Pages deployment workflow.
 
 Deployment succeeded via the existing GitHub Pages workflow. The DuckDNS first-aid section and phone FAQ were checked live with the new shared CSS (186fed6969).
+
+
+## Ordered course choices — 25 November 2026
+
+The continuation section uses three equal-width course paths with aligned content rows, vertical enquiry links and matching price/action footers. Specialties are alphabetized in a regular two-column list, stacked on phones. Discover Scuba Diver belongs to the introductory trial section; the rescue/pro courses keep their progression order. No course fees or prerequisites were changed. Validated at 360, 768, 1024 and 1280 pixels, with 50px course links and contextual enquiry prefill.
