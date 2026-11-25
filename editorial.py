@@ -104,17 +104,48 @@ def trip_kind(text):
     return next((kind for keys, kind in TRIP_KINDS if any(k in text for k in keys)), "Ausflug")
 
 
-def travel_archive(page):
+def trip_tiles(page, href="termine.html#ziele", root="../"):
+    """Three destination tiles, shared by the travel page and the homepage."""
     highlights = page["highlights"]
-    entries = [(year, event) for year, events in highlights.items() for event in events]
-    counts = Counter(trip_kind(event) for _, event in entries)
+    counts = Counter(trip_kind(event) for events in highlights.values() for event in events)
     tiles = [
         ("Tauchreise", "Rotes Meer", "Safaga in Ägypten, mehrmals im Jahr mit Flug ab Düsseldorf.", slot("reisen-rotes-meer.webp", "tauchgang.webp")),
         ("Hallentauchen", "Tauchzentren", "TODI, Diveworld, Dive4Life und Monte Mare: tauchen bei jedem Wetter.", slot("reisen-hallenbad.webp", "tauchen.webp")),
         ("See", "Freiwasser", "Die Südsee in Xanten für Kurse, Refresher und Fun-Dives.", slot("reisen-see.webp", "see.webp")),
     ]
-    tile_html = "".join(f'''<a class="trip-tile" href="termine.html#ziele"><img src="{img}" alt="" loading="lazy"><span class="trip-tile-copy">
+    return "".join(f'''<a class="trip-tile" href="{href}"><img src="{img.replace("../", root, 1)}" alt="" loading="lazy"><span class="trip-tile-copy">
       <span class="trip-kind kind-{slugify(kind)}">{kind}</span><strong>{title}</strong><span>{text}</span><small>{counts[kind]} Rückblick{"e" if counts[kind] != 1 else ""}</small></span></a>''' for kind, title, text, img in tiles)
+
+
+def home_news(termine, glueck):
+    """Three short news items built from the site's own content."""
+    latest = termine["archive"][0]
+    venue, _, place = latest["name"].partition(" · ")
+    kind = VENUE_KIND.get(latest["name"], "Ausflug")
+    trip_photo = {"Tauchreise": "assets/media/ba9e4421064b6920.webp", "See": "assets/reisen-see.webp"}.get(kind, "assets/reisen-hallenbad.webp")
+    trip_title = f"Zurück aus {place}" if kind == "Tauchreise" else f"Zuletzt unterwegs: {venue}"
+    heading = next((b["text"] for b in glueck["blocks"] if b["type"] == "p"), "")
+    month = re.search(r"(Januar|Februar|März|April|Mai|Juni|Juli|August|September|Oktober|November|Dezember)\s+\d{4}", heading)
+    items = [
+        ("assets/media/c515206b12fed44e.webp", "Übergabe einer SDI-Urkunde", month[0] if month else "Tauchabschlüsse", "Tauchabschlüsse",
+         "Neue Brevets im Team", "Herzlichen Glückwunsch an Bernd zum Instructor und an Silvia zum Divemaster.", "pages/glueckwuensche.html", "Alle Tauchabschlüsse"),
+        (trip_photo, "", f'{latest["date"]} {latest["year"]}', kind,
+         trip_title, f"{venue} in {place}. Bilder und Berichte findest du im Rückblick.", "pages/bilder-reisen-event-s.html", "Zum Rückblick"),
+        ("assets/rettungsschwimmer.webp", "", "Mitarbeit", "Unterbacher See",
+         "Rettungsschwimmer gesucht", "Für die Badesaison am Unterbacher See, vor allem an Wochenenden und Feiertagen.", "pages/wir-suchen-dich.html", "Mehr erfahren"),
+    ]
+    cards = "".join(f'''<article class="news-item"><a href="{href}"><span class="news-photo"><img src="{img}" alt="{escape(alt)}" loading="lazy"></span>
+      <span class="news-meta"><time>{escape(when)}</time><span>{escape(tag)}</span></span><strong>{escape(title)}</strong><span class="news-text">{escape(text)}</span><span class="news-link">{label}</span></a></article>'''
+                    for img, alt, when, tag, title, text, href, label in items)
+    return f'''<section class="home-news" id="aktuelles" aria-labelledby="news-title"><div class="wrap">
+      <div class="page-head"><div><p class="kicker">Aktuelles</p><h2 id="news-title">Neues aus der Tauchschule</h2></div></div>
+      <div class="news-grid">{cards}</div></div></section>'''
+
+
+def travel_archive(page):
+    highlights = page["highlights"]
+    entries = [(year, event) for year, events in highlights.items() for event in events]
+    tile_html = trip_tiles(page)
     years = []
     for year, events in highlights.items():
         cards = []

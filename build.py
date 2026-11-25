@@ -6,7 +6,7 @@ import os
 from urllib.parse import urljoin, urlsplit
 from shop import category_photo, catalogue_items, category_products, product_detail, shop_directory
 from html import escape
-from editorial import albums, closing_band, course_link, dates, first_aid, guestbook, hud, jobs, legal, travel_archive
+from editorial import albums, closing_band, course_link, dates, first_aid, guestbook, home_news, hud, jobs, legal, travel_archive, trip_tiles
 from pathlib import Path
 from design import decorate
 
@@ -225,15 +225,14 @@ def page_shell(title, main, section, slug):
 
 def home_offers():
     courses = {course["name"]: course for course in BY_SLUG["preis-kurse"]["courses"]}
-    offers = [
-        ("Schnuppertauchen", "Erst einmal ausprobieren", "ausprobieren"),
-        ("Open Water Diver", "Dein erster Tauchschein", "tauchschein"),
-    ]
-    rows = []
-    for name, label, anchor in offers:
-        course = courses[name]
-        rows.append(f'<a href="pages/tauchen-lernen-kurse.html#{anchor}"><span>{label}</span><strong>{name}</strong><span class="home-course-fee">{escape(course["price"])}</span></a>')
-    return '<div class="home-course-choices">' + ''.join(rows) + '</div><p class="fee-context">Kursgebühr zzgl. Eintritt und Fahrtkosten. Beim Open Water Diver kommen Lehrmaterial und Zertifizierung hinzu. Einzelheiten beim Kurs.</p>'
+    offers = [("Schnuppertauchen", "Erst einmal ausprobieren", "ausprobieren"), ("Open Water Diver", "Dein erster Tauchschein", "tauchschein")]
+    rows = "".join(f'<li><a href="pages/tauchen-lernen-kurse.html#{anchor}"><span><small>{label}</small><strong>{name}</strong></span><em>{escape(courses[name]["price"])}</em></a></li>' for name, label, anchor in offers)
+    return f'<ul class="program-prices">{rows}</ul><p class="fee-context">Kursgebühr zzgl. Eintritt und Fahrtkosten.</p>'
+
+
+def hero_trust():
+    data = json.loads((ROOT / "content/google-reviews.json").read_text())
+    return f'''<ul class="hero-trust"><li><span class="review-stars" aria-hidden="true">★★★★★</span> {data["rating"]} bei Google</li><li>Ausbildung nach SDI/TDI, PSS &amp; FRTI</li></ul>'''
 
 
 def equipment_preview():
@@ -266,6 +265,7 @@ def equipment_preview():
       <div class="equip-grid">''' + ''.join(cards) + '''</div>
       <div class="equip-foot"><nav aria-label="Weitere Kategorien"><span>Außerdem im Shop</span><ul>''' + chips + '''</ul></nav>
       <div class="equip-actions"><a class="cta" href="pages/tauch-shop.html">Zum gesamten Sortiment</a><a class="path-action" href="pages/sonderangebote.html">Sonderangebote</a></div></div>
+      <aside class="equip-rent"><div><p class="kicker">Ausrüstung leihen</p><strong>Lieber erst einmal leihen?</strong><span>Atemregler, Computer, Jackets und Anzüge für einen Tag, ein Wochenende oder eine Woche. Ab 7 € am Tag.</span></div><a class="path-action" href="pages/equipment-verleih.html">Leihpreise ansehen</a></aside>
     </div></section>'''
 
 
@@ -325,7 +325,7 @@ def build():
     for name in ("main.css", "editorial.css", "home.js", "inquiry.js"):
         shutil.copyfile(SRC / name, DIST / name)
     home = HOME.replace("<!-- site-header -->", header("")).replace("<!-- site-footer -->", footer(""))
-    home = home.replace("<!-- course-preview -->", home_offers()).replace("<!-- equipment-preview -->", equipment_preview()).replace("<!-- google-reviews -->", google_reviews())
+    home = home.replace("<!-- hero-trust -->", hero_trust()).replace("<!-- home-news -->", home_news(BY_SLUG["termine"], BY_SLUG["glueckwuensche"])).replace("<!-- trip-tiles -->", trip_tiles(BY_SLUG["bilder-reisen-event-s"], "pages/termine.html#ziele", "")).replace("<!-- course-preview -->", home_offers()).replace("<!-- equipment-preview -->", equipment_preview()).replace("<!-- google-reviews -->", google_reviews())
     (DIST / "index.html").write_text(add_metadata(home, "index.html", "Tauchen und Erste Hilfe · Dive-World & Rescue", "Tauchkurse, Scubility, Erste Hilfe und Ausrüstung bei Dive-World & Rescue.", ""))
     for page in [*PAGES, {"slug":"kurse", "title":HUBS["kurse"]}, {"slug":"infos", "title":HUBS["infos"]}, {"slug":"anfrage", "title":"Anfrage stellen"}, {"slug":"uebersicht", "title":"Alle Seiten"}]:
         description = INTRO.get(page["slug"], page["title"] + " bei Dive-World & Rescue.")
