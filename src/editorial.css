@@ -1352,3 +1352,53 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
   .album:not(.album-latest) .album-grid figcaption { font-size:.8125rem; }
   .album-certs .album-grid img { padding:6px; }
 }
+
+/* Shared section flow: headings introduce the content immediately below them.
+   Product photography, price summaries and navigation retain their own layouts. */
+:root { --section-title-size:clamp(1.75rem,2.8vw,2.25rem); }
+.page-head,.equip-head,.trip-head,.home-section-head,.item-related-head,.album-head {
+  display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start;
+  gap:12px; margin-bottom:28px;
+}
+.page-head > div,.equip-head > div,.trip-head > div { min-width:0; width:100%; }
+.page-head .kicker,.equip-head .kicker,.trip-head .kicker,
+.aid-group-head .kicker,.dive-faq-layout > header .kicker { margin:0 0 10px; }
+.page-head h2,.equip-head h2,.trip-head h2,.home-section-head h2,
+.aid-group-head h2,.dive-faq h2,.item-details h2,.item-related-head h2 {
+  margin:0; max-width:none; font-size:var(--section-title-size); line-height:1.2;
+}
+.page-head > p,.equip-head > p,.trip-head > p {
+  margin:0; max-width:65ch; align-self:flex-start; justify-self:start;
+  font-size:1rem; line-height:1.65;
+}
+.page-head > p .path-action,.trip-head > p .path-action { margin-top:4px; }
+.page-head > .path-action,.equip-head > .path-action,.home-section-head > a,
+.item-related-head > a { margin:0; padding-block:4px; }
+.aid-group-layout,.dive-faq-layout,.item-details {
+  grid-template-columns:minmax(0,1fr); align-items:start; gap:24px;
+}
+.aid-group-head { position:static; gap:0; }
+.aid-group-head > p:not(.kicker) { max-width:65ch; margin:12px 0 0; font-size:1rem; line-height:1.65; }
+.aid-team-offer {
+  margin:0; display:grid; grid-template-columns:minmax(0,1fr) auto;
+  gap:6px 28px; padding:20px 24px;
+}
+.aid-team-offer h3,.aid-team-offer p { grid-column:1; }
+.aid-team-offer p { max-width:65ch; font-size:1rem; line-height:1.65; }
+.aid-team-offer .path-action { grid-column:2; grid-row:1 / span 2; align-self:center; margin:0; }
+.dive-faq { padding-block:clamp(32px,4vw,56px); }
+.dive-faq-layout > header { min-width:0; }
+.item-details { margin-top:40px; padding-top:28px; gap:20px; }
+.item-details-body { max-width:80ch; font-size:1rem; }
+.item-details-body ul { columns:1; }
+.item-related { margin-top:40px; padding-top:28px; }
+.album-head { gap:6px; margin-bottom:24px; }
+.album-head h2 { margin:0; }
+@media(max-width:700px) {
+  .page-head,.equip-head,.trip-head,.home-section-head,.item-related-head { gap:10px; margin-bottom:24px; }
+  .aid-group-layout,.dive-faq-layout { gap:20px; }
+  .aid-team-offer { grid-template-columns:minmax(0,1fr); padding:20px; }
+  .aid-team-offer .path-action { grid-column:1; grid-row:auto; justify-self:start; white-space:normal; }
+  .item-details { margin-top:28px; padding-top:24px; gap:16px; }
+  .item-related { margin-top:32px; padding-top:24px; }
+}

@@ -75,8 +75,8 @@ def first_aid(page, breadcrumb):
             extra = f'''<aside class="aid-team-offer"><h3>Für dein ganzes Team</h3><p>Wir schulen Firmen, Kindergärten und Schulklassen ab der ersten Klasse als Gruppe. Eine Ausbildung nach DGUV&nbsp;304&#8209;001 kannst du anfragen.</p>
               {course_link("Erste Hilfe", label="Gruppenkurs anfragen")}</aside>'''
         sections.append(f'''<section class="aid-group{' aid-group-alt' if i % 2 else ''}" id="{anchor}" aria-labelledby="{anchor}-title"><div class="wrap aid-group-layout">
-          <div class="aid-group-head"><p class="kicker">{count}</p><h2 id="{anchor}-title">{escape(group)}</h2><p>{escape(intro)}</p>{extra}</div>
-          <div class="aid-course-list">{"".join(aid_card(c) for c in courses)}</div></div></section>''')
+          <header class="aid-group-head"><p class="kicker">{count}</p><h2 id="{anchor}-title">{escape(group)}</h2><p>{escape(intro)}</p></header>
+          <div class="aid-course-list">{"".join(aid_card(c) for c in courses)}</div>{extra}</div></section>''')
     return f'''<header class="aid-cover aid-cover-v2"><div class="wrap">{breadcrumb}<h1>Erste-Hilfe-Kurse</h1><p>Vom Kindernotfall bis zum Tauchunfall: Lerne, im Ernstfall ruhig und richtig zu helfen. Nach den Standards von First Response Training International (FRTI).</p>
     <div class="cover-choices"><a class="cta mint" href="{request}">Kurs anfragen</a><a class="plain" href="#ablauf">So läuft ein Kurs ab</a></div></div></header>
     <section class="aid-paths-section" aria-labelledby="aid-paths-title"><div class="wrap">
