@@ -110,3 +110,8 @@ Deployment succeeded via the existing GitHub Pages workflow. The DuckDNS first-a
 ## Ordered course choices — 25 November 2026
 
 The continuation section uses three equal-width course paths with aligned content rows, vertical enquiry links and matching price/action footers. Specialties are alphabetized in a regular two-column list, stacked on phones. Discover Scuba Diver belongs to the introductory trial section; the rescue/pro courses keep their progression order. No course fees or prerequisites were changed. Validated at 360, 768, 1024 and 1280 pixels, with 50px course links and contextual enquiry prefill.
+
+
+## Course alignment correction — 25 November 2026
+
+The course-choice redesign was reverted at the user’s request. Original cards, colours, content, groupings and order are restored. The only visual change is resetting inherited list-item margins so wrapped course pills stay level, with 44px minimum link height.

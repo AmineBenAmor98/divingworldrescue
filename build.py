@@ -173,12 +173,11 @@ def inner(page):
         main = main.replace("{{owd_price}}", escape(fees["Open Water Diver"]))
         main = main.replace("{{trial_price}}", escape(fees["Schnuppertauchen"]))
         main = main.replace("{{scuba_price}}", escape(fees["Scuba Diver"])).replace("{{aowd_price}}", escape(fees["Advanced Open Water Diver"]))
-        def course_choices(names):
-            return '<ul class="dive-course-links">' + "".join(f'<li><a href="anfrage.html?{escape(urlencode({"thema": "Tauchkurs", "kurs": n}))}"><span>{escape(n)}</span><span class="course-choice-action" aria-hidden="true">Anfragen</span></a></li>' for n in names) + "</ul>"
-        main = main.replace("{{discover}}", '<a class="dive-text-link trial-discover" href="anfrage.html?thema=Tauchkurs&amp;kurs=Discover%20Scuba%20Diver">Discover Scuba Diver anfragen</a>')
-        main = main.replace("{{reentry}}", course_choices(["Auffrischungskurs", "Indoor Diver"]))
-        main = main.replace("{{pro}}", course_choices(["Rescue Diver", "Divemaster", "Assistant Instructor"]))
-        main = main.replace("{{special}}", course_choices(["Nachttauchen", "Suchen und Bergen", "Tarierung", "Tieftauchen", "Trockentauchen", "Unterwassernavigation", "UW-Scooter", "Wracktauchen"]))
+        def chips(names):
+            return '<ul class="dive-chips">' + "".join(f'<li><a href="anfrage.html?{escape(urlencode({"thema": "Tauchkurs", "kurs": n}))}">{escape(n)}</a></li>' for n in names) + "</ul>"
+        main = main.replace("{{reentry}}", chips(["Auffrischungskurs", "Indoor Diver", "Discover Scuba Diver"]))
+        main = main.replace("{{pro}}", chips(["Rescue Diver", "Divemaster", "Assistant Instructor"]))
+        main = main.replace("{{special}}", chips(["Nachttauchen", "Wracktauchen", "Tarierung", "Unterwassernavigation", "Tieftauchen", "Trockentauchen", "Suchen und Bergen", "UW-Scooter"]))
         main = main.replace("{{closing}}", closing_band("Noch unsicher, welcher Kurs passt?", "Erzähl uns kurz, was du schon gemacht hast. Wir empfehlen dir den passenden Einstieg.", "anfrage.html?thema=Tauchkurs", "Beratung anfragen", "dive-closing"))
         return page_shell(title, main, section, slug)
     if slug == "kurse":

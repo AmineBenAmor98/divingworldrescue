@@ -1403,49 +1403,8 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
   .item-related { margin-top:32px; padding-top:24px; }
 }
 
-/* Course choices follow a stable reading order, with one link per row. */
-.dive-next-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px 32px; }
-.dive-next-card {
-  display:grid; grid-template-rows:auto auto 1fr auto; align-content:start;
-  gap:16px; padding:24px 0 0; background:transparent; color:var(--ink);
-  border:0; border-top:2px solid var(--line-strong); border-radius:0;
-}
-@supports(grid-template-rows:subgrid) {
-  .dive-next-card { grid-row:span 4; grid-template-rows:subgrid; }
-}
-.dive-next-card header { display:grid; align-content:start; gap:8px; }
-.dive-next-card .dive-option-kicker { margin:0; color:var(--teal); font-size:.875rem; line-height:1.5; letter-spacing:.04em; }
-.dive-next-card h3 { margin:0; font:600 1.375rem/1.3 var(--sans); letter-spacing:-.015em; }
-.dive-next-card > p:not(.dive-option-kicker):not(.dive-option-price) { margin:0; color:var(--muted); font-size:1rem; line-height:1.65; }
-.dive-next-feature { border-top-color:var(--teal); }
-.dive-next-feature .dive-next-facts { list-style:disc; margin:0; padding:0 0 0 20px; display:block; }
-.dive-next-facts li { position:static; margin:0; padding:0; color:var(--muted); font-size:1rem; line-height:1.65; }
-.dive-next-facts li + li { margin-top:10px; }
-.dive-next-facts li::before { content:none; }
-.dive-course-links { display:grid; align-content:start; gap:0; list-style:none; margin:0; padding:0; }
-.dive-course-links li { min-width:0; margin:0; padding:0; }
-.dive-course-links a { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:50px; padding:12px 0; border-bottom:1px solid var(--line-strong); color:var(--ink); text-decoration:none; font-size:1rem; font-weight:600; line-height:1.5; }
-.dive-course-links a:hover { color:var(--teal); background:#ffffff66; }
-.dive-course-links a:focus-visible { outline:2px solid var(--teal); outline-offset:3px; }
-.course-choice-action { flex:none; color:var(--teal); font-size:.875rem; font-weight:400; }
-.dive-next-footer { display:flex; flex-direction:column; align-items:flex-start; gap:8px; padding-top:18px; border-top:1px solid var(--line-strong); }
-.dive-next-footer > span { display:flex; align-items:baseline; flex-wrap:wrap; gap:8px; color:var(--muted); font-size:1rem; line-height:1.6; }
-.dive-next-footer strong { color:var(--ink); font:600 1.5rem/1.2 var(--sans); }
-.dive-next-footer .dive-text-link { margin:0; min-height:44px; color:var(--teal); }
-.dive-specialties { display:block; margin-top:36px; padding:28px 0 0; border:0; border-top:1px solid var(--line-strong); border-radius:0; background:transparent; }
-.dive-specialties header { margin-bottom:18px; }
-.dive-specialties h3 { font-size:1.375rem; line-height:1.3; }
-.dive-specialties header p { max-width:65ch; margin:10px 0 0; color:var(--muted); font-size:1rem; }
-.dive-specialties .dive-course-links { grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:32px; }
-.trial-discover { display:flex; width:fit-content; margin-top:10px; }
-@media(max-width:980px) {
-  .dive-next-grid { grid-template-columns:minmax(0,1fr); gap:28px; }
-  .dive-next-card { grid-row:auto; grid-template-rows:auto; gap:16px; }
-  .dive-next-card h3 { font-size:1.25rem; }
-  .dive-next-footer { padding-top:14px; }
-}
-@media(max-width:700px) {
-  .dive-specialties .dive-course-links { grid-template-columns:minmax(0,1fr); }
-  .dive-specialties { margin-top:28px; padding-top:24px; }
-}
-.dive-next-footer .dive-text-link::after,.trial-discover::after { content:none; }
+
+/* Keep existing course pills level within each wrapped row. */
+.dive-chips { align-items:stretch; }
+.dive-chips li { display:flex; margin:0; }
+.dive-chips a { min-height:44px; height:100%; }
