@@ -302,5 +302,164 @@
     "Contact addresses varied between entry points. The primary address is now consistent, with the second original address retained on contact/legal pages.",
     "Returning browsers could show stale shared assets. CSS and script URLs now include content hashes.",
     "Homepage equipment previews used weak first-in-source images. Category previews now use selected original product photographs."
-  ]
+  ],
+  "visual_system_update": {
+    "scope": "All 131 generated HTML pages",
+    "changes": [
+      "Shared decorative SVG icon system for navigation, course and equipment destinations, school and contact methods",
+      "WhatsApp brand icon on every WhatsApp link and the WhatsApp enquiry button",
+      "Coordinated ocean, sage, coral, sand and lavender accents within the teal theme",
+      "Replaced underlined links with cards, category chips, buttons and hover/focus feedback",
+      "Two-column mobile illustrated offer cards and two-column mobile equipment category controls",
+      "Tablet navigation switches to the menu at 980 pixels"
+    ],
+    "checks": {
+      "viewport_widths": [
+        360,
+        768,
+        1440
+      ],
+      "pages": 131,
+      "equivalent_home_alias_checked": true,
+      "overflow": 0,
+      "underlined_visible_links": 0,
+      "missing_whatsapp_icons": 0,
+      "local_link_and_media_check": "passed",
+      "mobile_menu_open_and_escape": "passed"
+    }
+  },
+  "alignment_and_artwork_update": {
+    "date": "2026-11-25",
+    "scope": "Shared templates and all 131 generated HTML pages",
+    "generated_artwork": {
+      "count": 7,
+      "mode": "built-in image generator, generate mode, transparent background",
+      "optimized_assets": "public/assets/illustrated-icons/",
+      "originals": "artwork/originals/",
+      "prompts": "artwork/prompts.json",
+      "webp_total_bytes": 87586
+    },
+    "interface_icons": {
+      "set": "Phosphor regular",
+      "provenance": "artwork/ui-icons.json",
+      "license": "public/licenses/phosphor-icons.txt",
+      "brands": "Original WhatsApp and Google marks retained"
+    },
+    "layout_changes": [
+      "Centered section introductions, illustrated category cards and page covers",
+      "Balanced short copy and grouped actions with consistent spacing",
+      "Centered contact options and mobile team introduction",
+      "Longer text, forms and specifications retain readable left alignment"
+    ],
+    "validation": {
+      "build_and_local_links": "passed",
+      "pages_per_viewport": 131,
+      "viewport_widths": [
+        360,
+        768,
+        1440
+      ],
+      "horizontal_overflow": 0,
+      "single_main_h1": "passed on all pages",
+      "mobile_menu_open_close_escape": "passed",
+      "catalogue_image_recheck": "passed at 360 and 1440 after transient initial load",
+      "visual_checks": [
+        "Homepage offer cards at 360 and 1440",
+        "Mobile first-aid cover",
+        "Mobile school and instructor section",
+        "Mobile shop cover",
+        "Mobile contact and footer"
+      ]
+    }
+  },
+  "text_and_remaining_icons_update": {
+    "date": "2026-11-25",
+    "pages": 131,
+    "text_elements_audited": 1618,
+    "changes": [
+      "Grouped address and contact fields on Impressum",
+      "Joined arbitrary source line breaks and formatted real lists",
+      "Split long legal and product paragraphs at sentence boundaries while preserving abbreviations",
+      "Consistent paragraph spacing, readable line heights and restrained reading widths",
+      "Product descriptions separated from feature lists",
+      "Replaced all remaining decorative category SVGs and coloured icon boxes with matching generated artwork",
+      "Shared card padding and tighter title-description spacing",
+      "Photo-card captions kept clear of redundant icons"
+    ],
+    "illustrations": {
+      "total": 19,
+      "new": 12,
+      "directory": "public/assets/illustrated-icons/",
+      "originals": "artwork/originals/",
+      "prompts": "artwork/prompts.json",
+      "mode": "built-in image_gen, transparent generation",
+      "total_webp_bytes": 193674
+    },
+    "checks": {
+      "all_131_pages_at_widths": [
+        360,
+        768,
+        1440
+      ],
+      "horizontal_overflow": 0,
+      "broken_images": 0,
+      "main_h1_per_page": 1,
+      "paragraphs_over_650_characters": 0,
+      "old_coloured_category_icon_boxes": 0,
+      "remaining_svg_roles": [
+        "chat",
+        "mail",
+        "phone"
+      ],
+      "desktop_service_card_heights": [
+        217.984375,
+        217.984375,
+        217.984375
+      ],
+      "desktop_rental_travel_card_heights": [
+        305.4765625,
+        305.4765625
+      ],
+      "mobile_photo_caption_heights": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "source_paragraph_preservation": "passed",
+      "mobile_and_desktop_price_notes_16px": "passed",
+      "links_media_anchors_forms": "passed"
+    },
+    "scope_note": "Copied legal wording is reformatted, not legally updated or certified."
+  },
+  "team_and_enquiry_update": {
+    "date": "2026-11-25",
+    "changes": [
+      "Separated homepage team introduction from Google reviews",
+      "Centered team profiles with matching portrait sizes and aligned qualification rows",
+      "Compact enquiry cover and form card",
+      "Separate buying and rental topics with conditional interest and period fields",
+      "Grouped WhatsApp and email actions at equal 50px height",
+      "Preserved original course/product/rental enquiry links and typed drafts on topic changes"
+    ],
+    "checks": {
+      "pages_visually_checked": [
+        "index.html",
+        "pages/infos.html",
+        "pages/anfrage.html"
+      ],
+      "viewport_widths": [
+        360,
+        768,
+        1440
+      ],
+      "horizontal_overflow": 0,
+      "topic_states": 7,
+      "course_product_rental_prefill": "passed",
+      "draft_retention": "passed",
+      "message_format_and_channel_URLs": "passed without transmitting messages",
+      "team_qualification_alignment": "passed",
+      "all_131_page_links_media_anchors_forms": "passed"
+    }
+  }
 }

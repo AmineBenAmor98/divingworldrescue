@@ -1,0 +1,133 @@
+{
+  "mode": "built-in image_gen",
+  "transparent_background": true,
+  "generated_on": "2026-11-25",
+  "assets": [
+    {
+      "name": "diving",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: One elegant scuba diving mask, front three-quarter view, with a short snorkel tucked behind it. Clear readable mask silhouette.",
+      "original": "originals/diving.png",
+      "web_asset": "../public/assets/illustrated-icons/diving.webp"
+    },
+    {
+      "name": "inclusive",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: Two abstract human bust silhouettes together above a single flowing wave, suggesting supported inclusive diving. Dignified, no disability stereotype.",
+      "original": "originals/inclusive.png",
+      "web_asset": "../public/assets/illustrated-icons/inclusive.webp"
+    },
+    {
+      "name": "first-aid",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: One compact first-aid case, a simple plus symbol embossed on its front, neat handle.",
+      "original": "originals/first-aid.png",
+      "web_asset": "../public/assets/illustrated-icons/first-aid.webp"
+    },
+    {
+      "name": "equipment",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: One recognizable scuba buoyancy compensator vest with a small regulator hose, front three-quarter view.",
+      "original": "originals/equipment.png",
+      "web_asset": "../public/assets/illustrated-icons/equipment.webp"
+    },
+    {
+      "name": "rental",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: One scuba air cylinder with a subtle small clock medallion, representing equipment rental.",
+      "original": "originals/rental.png",
+      "web_asset": "../public/assets/illustrated-icons/rental.webp"
+    },
+    {
+      "name": "trips",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: One elegant nautical compass with a single wave beneath it, representing shared dives and trips.",
+      "original": "originals/trips.png",
+      "web_asset": "../public/assets/illustrated-icons/trips.webp"
+    },
+    {
+      "name": "school",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: One open training book with a graduation cap resting above it, representing a professional dive school.",
+      "original": "originals/school.png",
+      "web_asset": "../public/assets/illustrated-icons/school.webp"
+    },
+    {
+      "name": "offers",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: One elegant price tag with a small circular hole and a simple ivory star embossed on its center. A restrained teal tag and a short loop.",
+      "source": "/Users/emin/.codex/generated_images/01a20915-3075-7d22-8389-51e5eabb4dc3/exec-caa231aa-41f4-47c9-8b4e-e6b7ea3c9e0f.png",
+      "original": "originals/offers.png",
+      "web_asset": "../public/assets/illustrated-icons/offers.webp"
+    },
+    {
+      "name": "preowned",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: An open teal equipment shipping box with ivory interior and a small circular pair of seafoam curved arrows on its front face, indicating preowned equipment.",
+      "source": "/Users/emin/.codex/generated_images/01a20915-3075-7d22-8389-51e5eabb4dc3/exec-167640c4-25b4-4806-a5fb-132d7654140f.png",
+      "original": "originals/preowned.png",
+      "web_asset": "../public/assets/illustrated-icons/preowned.webp"
+    },
+    {
+      "name": "accessories",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: A compact pair of diving accessories: a teal carabiner with a small ivory diving tool neatly overlapping. Simple bold recognizable silhouettes.",
+      "source": "/Users/emin/.codex/generated_images/01a20915-3075-7d22-8389-51e5eabb4dc3/exec-2bcf8027-ff18-46b3-b8ae-bcb9842d819b.png",
+      "original": "originals/accessories.png",
+      "web_asset": "../public/assets/illustrated-icons/accessories.webp"
+    },
+    {
+      "name": "bags",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: One elegant upright teal diving travel bag with a handle and two small wheels, ivory piping, a small pocket. No logos.",
+      "source": "/Users/emin/.codex/generated_images/01a20915-3075-7d22-8389-51e5eabb4dc3/exec-c43a4cdc-d6ea-4c67-8f5d-259c0c4a3c55.png",
+      "original": "originals/bags.png",
+      "web_asset": "../public/assets/illustrated-icons/bags.webp"
+    },
+    {
+      "name": "clothing",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: One upright elegant long sleeve diving rashguard with teal body, seafoam side panels, ivory collar. No person, hanger, logos or text.",
+      "source": "/Users/emin/.codex/generated_images/01a20915-3075-7d22-8389-51e5eabb4dc3/exec-6b75c11e-a8b7-44aa-9bae-4862f4cdda41.png",
+      "original": "originals/clothing.png",
+      "web_asset": "../public/assets/illustrated-icons/clothing.webp"
+    },
+    {
+      "name": "jewelry",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: One silver and seafoam shark pendant on a short teal necklace loop. Compact, elegant recognizable shark silhouette.",
+      "source": "/Users/emin/.codex/generated_images/01a20915-3075-7d22-8389-51e5eabb4dc3/exec-19082dae-904d-4074-864a-bc5d5c2b32df.png",
+      "original": "originals/jewelry.png",
+      "web_asset": "../public/assets/illustrated-icons/jewelry.webp"
+    },
+    {
+      "name": "computer",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: One teal wrist-worn dive computer with a circular dark blank face, seafoam ring and ivory wrist band. A simple wave symbol on the display but no text, letters or numbers.",
+      "source": "/Users/emin/.codex/generated_images/01a20915-3075-7d22-8389-51e5eabb4dc3/exec-b6b5062e-8a7e-44f5-8e9d-80b81390f856.png",
+      "original": "originals/computer.png",
+      "web_asset": "../public/assets/illustrated-icons/computer.webp"
+    },
+    {
+      "name": "regulator",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: One compact scuba regulator first stage joined by a short curved hose to a round second stage, teal and ivory metal, simple silhouette.",
+      "source": "/Users/emin/.codex/generated_images/01a20915-3075-7d22-8389-51e5eabb4dc3/exec-9177cc1b-3e19-4c03-8dd2-e6aad590b8dd.png",
+      "original": "originals/regulator.png",
+      "web_asset": "../public/assets/illustrated-icons/regulator.webp"
+    },
+    {
+      "name": "legal",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: One upright ivory folded-corner document with a small teal balance scales symbol on its center, minimal, no written lines or text.",
+      "source": "/Users/emin/.codex/generated_images/01a20915-3075-7d22-8389-51e5eabb4dc3/exec-76954821-1016-40e8-9d0b-07cec77e382f.png",
+      "original": "originals/legal.png",
+      "web_asset": "../public/assets/illustrated-icons/legal.webp"
+    },
+    {
+      "name": "qualification",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: One elegant rolled ivory training certificate tied with a teal ribbon and a small teal circular seal, compact minimal silhouette.",
+      "source": "/Users/emin/.codex/generated_images/01a20915-3075-7d22-8389-51e5eabb4dc3/exec-bedf6e03-3bc4-4536-93a7-14ee2763bd05.png",
+      "original": "originals/qualification.png",
+      "web_asset": "../public/assets/illustrated-icons/qualification.webp"
+    },
+    {
+      "name": "reviews",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: Two overlapping speech bubbles, teal and seafoam, with one ivory star in the front bubble, refined and minimal.",
+      "source": "/Users/emin/.codex/generated_images/01a20915-3075-7d22-8389-51e5eabb4dc3/exec-a07a29b3-efc9-4400-921a-57b463287d79.png",
+      "original": "originals/reviews.png",
+      "web_asset": "../public/assets/illustrated-icons/reviews.webp"
+    },
+    {
+      "name": "rescue",
+      "prompt": "Create a premium custom website category icon illustration for Dive-World & Rescue. A single isolated object or compact symbolic composition, precisely centered with equal generous padding, occupying about 70 percent of a square canvas. Refined geometric editorial illustration with solid silhouettes, very subtle dimensional shading and crisp clean edges. Restrained deep ocean teal #113f42, muted turquoise #6db9a6, soft seafoam #c7e8dc, warm ivory #f4efe3 highlights. Sophisticated, professional, calm, minimal, visually legible at 64 to 88 pixels. Consistent upper-left lighting, same family of proportions and material. Transparent background, no tile, no border, no background rectangle, no ground plane, no text, no letters, no numbers, no watermark, no brand logos. Avoid childish cartoon, emoji, clay toys, rough hand-drawn lines, excessive tiny details, photorealism, neon colors. Subject: One compact teal and ivory life ring with a simple seafoam rope. Clean elegant minimal silhouette.",
+      "source": "/Users/emin/.codex/generated_images/01a20915-3075-7d22-8389-51e5eabb4dc3/exec-1d24a88e-d56c-44d4-9144-f19cb16a211a.png",
+      "original": "originals/rescue.png",
+      "web_asset": "../public/assets/illustrated-icons/rescue.webp"
+    }
+  ]
+}

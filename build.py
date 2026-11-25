@@ -8,6 +8,7 @@ from shop import category_photo, catalogue_items, category_products, product_det
 from html import escape
 from editorial import albums, course_link, dates, first_aid, guestbook, hud, jobs, legal
 from pathlib import Path
+from design import decorate
 
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "src"
@@ -125,7 +126,7 @@ INTRO = {
     "glueckwuensche": "Abschlüsse und persönliche Meilensteine aus der Tauchschule.",
     "frti-kurse--frti-glueckwuensche": "Einblicke in die abgeschlossenen Ausbildungen bei First Response Training International.",
     "bilder-reisen-event-s": "Gemeinsame Tauchgänge, Kurse und Reisen. Entdecke die bisherigen Ausflüge und Veranstaltungen der Schule.",
-    "anfrage": "Wähle dein Thema und schreib dem Team per WhatsApp oder E-Mail.",
+    "anfrage": "Kurs, Ausrüstung oder Ausflug: Schreib uns, was du vorhast.",
     "kurse": "Schnuppertauchen, Tauchschein, Scubility und Weiterbildung. Finde den passenden Einstieg und plane deinen nächsten Kurs.",
     "tauch-shop": "Entdecke Ausrüstung für deinen nächsten Tauchgang. Atemregler, Jackets und weitere Ausrüstung kannst du auch für einen Tag, ein Wochenende oder eine Woche leihen.",
     "infos": "Das Team hinter Dive-World & Rescue, Einblicke in die Tauchschule und der direkte Kontakt zu uns.",
@@ -187,6 +188,8 @@ def inner(page):
     else:
         body = f'<div class="wrap editorial-body">{content(page)}</div>' 
     cover_class = "interior-cover shop-cover" if slug == "tauch-shop" else "interior-cover"
+    if slug == "anfrage":
+        cover_class = "interior-cover request-cover"
     if slug.startswith("tauch-shop--") or page.get("catalogue"):
         cover_class = "interior-cover catalogue-cover"
     main = f'<div class="{cover_class}"><div class="wrap">{crumb}<h1>{title}</h1>{intro}</div></div>{body}'
@@ -227,7 +230,7 @@ def equipment_preview():
         page = BY_SLUG["tauch-shop--" + suffix]
         photo = category_photo(page).removeprefix("../")
         cards.append(f'<a href="pages/{page["slug"]}.html"><img src="{photo}" loading="lazy" alt=""><strong>{escape(label)}</strong></a>')
-    return '''<section class="home-equipment"><div class="wrap">
+    return '''<section class="home-equipment" id="ausruestung"><div class="wrap">
       <div class="landing-heading"><div><p class="kicker">Ausrüstung kaufen</p><h2>Passend zu deinem Tauchgang.</h2></div><a class="path-action" href="pages/tauch-shop.html">Zum gesamten Sortiment</a></div>
       <div class="home-equipment-grid">''' + ''.join(cards) + '''</div>
       <nav class="equipment-categories" aria-label="Weitere Ausrüstung"><a href="pages/tauch-shop--masken-flossenzubehoer.html">Masken &amp; Flossen</a><a href="pages/tauch-shop--koffer-taschen.html">Koffer &amp; Taschen</a><a href="pages/tauch-shop--zubehoer.html">Zubehör</a><a href="pages/tauch-shop--bekleidung.html">Bekleidung</a><a href="pages/tauch-shop--schmuck.html">Schmuck</a><a href="pages/hud.html">Head-up-Display</a></nav>
@@ -262,12 +265,12 @@ def google_reviews():
       <div class="google-review-grid">{"".join(cards)}</div>
       <div class="review-foot"><span>Auszüge aus Google-Rezensionen · Stand <time datetime="{data["checked_on"]}">{data["checked_label"]}</time></span>
       <a href="{url}" target="_blank" rel="noopener noreferrer">Alle Rezensionen auf Google <span aria-hidden="true">↗</span></a></div>
-      <div class="review-instructor"><img src="assets/profile-micha.jpg" width="52" height="60" alt="Micha Becker"><div><strong>Micha Becker</strong><p>Inhaber · Instructor für Tauchen, Scubility und FRTI</p></div><a class="path-action" href="pages/infos.html#team">Das Team kennenlernen <span aria-hidden="true">→</span></a></div>
     </div></section>'''
 
 
 
 def add_metadata(html, path, title, description, prefix, share_image="assets/tauchgang.webp"):
+    html = decorate(html, path)
     for asset in ("main.css", "home.js", "inquiry.js"):
         version = sha256((SRC / asset).read_bytes()).hexdigest()[:10]
         html = html.replace(f'"{prefix}{asset}"', f'"{prefix}{asset}?v={version}"')

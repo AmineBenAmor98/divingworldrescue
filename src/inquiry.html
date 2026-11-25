@@ -1,13 +1,21 @@
-<div class="request-layout"><section><h2>Deine Anfrage</h2><form id="inquiry" class="inquiry" action="https://wa.me/4917685639763" method="get">
-  <label for="topic">Wofür interessierst du dich?</label>
-  <select id="topic">
-    <option>Tauchkurs</option><option>Scubility</option><option>Erste Hilfe</option>
-    <option>Ausrüstung und Verleih</option><option>Termine und Reisen</option><option>Andere Frage</option>
-  </select>
-  <label for="message">Deine Nachricht</label>
-  <textarea id="message" name="text" rows="5" maxlength="1700" required placeholder="Hallo Micha, ich interessiere mich für …"></textarea>
-  <p>Wähle, wo du deinen Entwurf öffnen und selbst senden möchtest.</p>
-  <div class="actions"><button class="cta" type="submit" value="chat">In WhatsApp öffnen</button><button class="outline" type="submit" value="mail" hidden id="mail-button">In E-Mail öffnen</button></div>
-</form>
-</section><aside><h2>Lieber telefonieren?</h2><p>Mo.–Fr. ab 14 Uhr und Sa. ab 9 Uhr erreichst du das Team unter</p><a class="dive-text-link" href="tel:+4917685639763">0176 8563 9763</a><p>Oder schreib direkt an</p><a class="dive-text-link" href="mailto:dive-world@mail.de">dive-world@mail.de</a></aside></div>
+<div class="request-layout">
+  <section class="request-card" aria-labelledby="request-form-title">
+    <header class="request-card-heading"><h2 id="request-form-title">Worum geht’s?</h2><p>Wähle dein Thema und schreib uns deine Frage.</p></header>
+    <form id="inquiry" class="inquiry" action="https://wa.me/4917685639763" method="get">
+      <div class="request-field"><label for="topic">Dein Thema</label><select id="topic" required>
+        <option value="" disabled selected>Bitte wählen</option>
+        <option>Tauchkurs</option><option>Scubility</option><option>Erste Hilfe</option>
+        <option>Ausrüstung kaufen</option><option>Ausrüstung leihen</option>
+        <option>Termine und Reisen</option><option>Andere Frage</option>
+      </select></div>
+      <div class="request-context" id="request-context" hidden>
+        <div class="request-field" id="interest-field"><label for="interest"><span id="interest-label">Kurs oder Artikel</span> <small>optional</small></label><input id="interest" type="text" maxlength="160" placeholder="z. B. Open Water Diver"></div>
+        <div class="request-field" id="period-field"><label for="period"><span id="period-label">Wunschzeitraum</span> <small>optional</small></label><input id="period" type="text" maxlength="80" placeholder="z. B. im Juni oder am Wochenende"></div>
+      </div>
+      <div class="request-field"><label for="message">Deine Nachricht</label><textarea id="message" name="text" rows="4" maxlength="1700" required placeholder="Hallo, ich möchte gerne …"></textarea></div>
+      <div class="request-send"><p>Nachricht öffnen mit</p><div class="actions"><button class="cta" type="submit" value="chat">WhatsApp</button><button class="outline" type="submit" value="mail" hidden id="mail-button">E-Mail</button></div><small>Du prüfst deine Nachricht vor dem Senden.</small></div>
+    </form>
+  </section>
+  <aside class="request-direct" aria-labelledby="request-direct-title"><h2 id="request-direct-title">Lieber direkt sprechen?</h2><p>Ruf uns an. Wir helfen dir bei deiner Frage.</p><a class="request-phone" href="tel:+4917685639763">0176 8563 9763</a><p class="request-hours">Mo.–Fr. ab 14 Uhr<br>Sa. ab 9 Uhr</p><div class="request-email"><span>Direkt per E-Mail</span><a href="mailto:dive-world@mail.de">dive-world@mail.de</a></div></aside>
+</div>
 <script defer src="../inquiry.js"></script>

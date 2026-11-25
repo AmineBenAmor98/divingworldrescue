@@ -58,3 +58,28 @@ The latest deployable files are in dist. Shared CSS and scripts use content hash
 For advertising, link to the page that answers the advert's specific promise. Trial-diving and certification adverts have separate course anchors. Scubility leads to the inclusive training section. First-aid enquiries start from the appropriate programme; rentals lead to the rate table; model-specific equipment enquiries start on the product page. The destination mapping is recorded in content/site-review.json. No advertising campaign or tracking script has been added.
 
 The travel source contained flags and venue logos rather than trip photographs. These are no longer presented as a photo gallery. The page now communicates the dated trip and event archive; achievement galleries retain their original images. Approved real trip photographs can be added later.
+
+
+## Shared icons and colour system
+
+`design.py` supplies local decorative SVG icons across every generated page. The shared header/footer, contact methods, page covers, offer cards, category labels and enquiry actions use the same icon shapes and spacing. Ocean blue identifies diving, sage identifies inclusive diving, coral identifies first aid, sand identifies equipment and lavender identifies the school. The core teal identity and original logo are retained.
+
+The 19 category illustrations were created with the built-in image generator in generate mode, in a consistent teal, seafoam and ivory style. Transparent, optimized WebP assets are in `public/assets/illustrated-icons/`; original PNGs and the exact prompts are preserved in `artwork/originals/` and `artwork/prompts.json`. The same artwork family is used for large categories, smaller service cards, navigation and category chips. These illustrations describe services, rather than replacing real instructor portraits or product photography.
+
+Functional interface symbols such as phone, email, search and enquiry use local Phosphor SVGs, pinned to commit `2b75f3ad12b420c9504ef05df8d2564a28f8500e`. Their MIT license is included at `public/licenses/phosphor-icons.txt`, with provenance in `artwork/ui-icons.json`. The WhatsApp brand path is from the Simple Icons repository, stored at `public/assets/whatsapp.svg` (source https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/whatsapp.svg). No external icon script or font is loaded. Decorative icons are hidden from assistive technology and remain paired with visible labels. Link underlines have been replaced with cards, chips, buttons and contextual hover/focus treatments.
+
+Section introductions, category cards and action groups now share centered alignment, balanced short text and constrained reading widths. Longer descriptions, forms and product specifications retain a consistent left edge. The original logo, instructor portraits, product images and homepage video remain in use.
+
+## Imported text formatting
+
+`typography.py` groups source line fragments, formats product features as lists and splits long paragraphs at sentence boundaries. German abbreviations and the supplied wording are preserved. Product titles and prices already displayed in the page header are not repeated in the extra-description panel. The catalogue JSON remains unchanged.
+
+The legal page groups address lines and contact fields, uses real lists, and gives long text a restrained reading width and clear heading hierarchy. This is a formatting update to the copied source, not a legal-content review. Empty source headings with no accompanying information are omitted.
+
+Shared card spacing removes artificial blank title rows. Cards stretch consistently within their grid; titles, descriptions and actions use common spacing. Reading copy remains left aligned at a minimum 16px, with 17px legal text on desktop.
+
+## Enquiry and team layout
+
+The enquiry page has a compact cover and a single form card with conditional course/product and period fields. Buying and rental are separate topics. Existing `thema=Ausrüstung und Verleih` links map to buying when a product is supplied, otherwise rental. Course and product names are preserved in structured message drafts; changing topic preserves the visitor's message. WhatsApp and email open drafts for the visitor to review and send. No server submission was added.
+
+The homepage team introduction is a standalone section before the Google reviews. The team page centers the founder above four aligned profiles on desktop, two columns on tablet and one on narrow mobile screens. Original portraits and qualifications are retained.

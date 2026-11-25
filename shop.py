@@ -4,6 +4,7 @@ import json
 import unicodedata
 from html import escape
 from urllib.parse import urlencode
+from typography import product_copy
 
 
 def category_photo(page):
@@ -168,7 +169,7 @@ def product_detail(item, parent):
             if re.fullmatch(r"[0-9., –-]+€", text) or "Nur für die besten Taucher" in text:
                 continue
             paragraphs.append(text)
-    extra = "".join(f'<p>{escape(t)}</p>' for t in paragraphs)
+    extra = product_copy(paragraphs)
     if parent["slug"] == "tauch-shop--zubehoer":
         # The accessory specs are edited into label/value pairs. Retain longer
         # technical descriptions for items with functions or compatibility notes.

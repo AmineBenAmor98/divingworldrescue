@@ -3,6 +3,7 @@ from html import escape
 from itertools import groupby
 from urllib.parse import urlencode
 from shop import inquiry, slugify
+from typography import paragraphs
 
 
 def course_link(topic, course=None, label="Termin anfragen"):
@@ -88,16 +89,16 @@ def dates(page):
         for record in records:
             source = [page["blocks"][i]["text"].replace(" JANUAR 2025", "") for i in record["text_indices"]]
             more = ' '.join(source)
-            out.append(f'<li><span>{escape(record["date"])}</span><div><strong>{escape(record["name"])}</strong><details><summary>Damals ausgeschrieben</summary><p>{escape(more)}</p></details></div></li>')
+            out.append(f'<li><span>{escape(record["date"])}</span><div><strong>{escape(record["name"])}</strong><details><summary>Damals ausgeschrieben</summary>{paragraphs(more)}</details></div></li>')
         out.append('</ol></details>')
     return ''.join(out) + '</section>'
 
 
 def guestbook(page):
     b = page["blocks"]
-    paragraphs = ''.join(f'<p>{escape(x["text"])}</p>' for x in b[4:])
+    copy = ''.join(paragraphs(x['text']) for x in b[4:])
     return f'''<article class="reading guest-entry"><h2>{escape(b[1]["text"])} {escape(b[2]["text"])}</h2>
-    <time datetime="2026-01-18">18. Januar 2026</time><blockquote>{paragraphs}</blockquote><a class="dive-text-link" href="tauchen-lernen-kurse.html">Zur Tauchausbildung →</a></article>'''
+    <time datetime="2026-01-18">18. Januar 2026</time><blockquote>{copy}</blockquote><a class="dive-text-link" href="tauchen-lernen-kurse.html">Zur Tauchausbildung →</a></article>'''
 
 
 def jobs():
@@ -116,13 +117,51 @@ def hud(page):
 
 
 def legal(page):
-    parts = {}
-    for b in page["blocks"][1:]:
-        if "section" in b:
-            title = b["section"]
-            parts[title] = []
-        tag = "h3" if b["type"] == "heading" else "p"
-        parts[title].append(f'<{tag}>{escape(b["text"])}</{tag}>')
+    blocks = page["blocks"]
+    def source(start, end):
+        return ' '.join(b['text'] for b in blocks[start:end])
+    def address(start, end):
+        return '<address>' + '<br>'.join(escape(b['text']) for b in blocks[start:end]) + '</address>'
+    def row(label, value):
+        return f'<div><dt>{escape(label)}</dt><dd>{value}</dd></div>'
+    contact = [
+        row('Telefon', '<a href="tel:+4917685639763">+49 176 85639763</a>'),
+        row('Fax', '01805002068423'),
+        row('E-Mail', '<a href="mailto:dive-world@mail.de">dive-world@mail.de</a><br><a href="mailto:info@dive-world-rescue.de">info@dive-world-rescue.de</a>'),
+        row('Web', 'www.dive-world-rescue.de'),
+        row('Facebook', escape(blocks[15]['text'])),
+        row('Twitter', escape(blocks[17]['text'])),
+        row('Inhaber', 'Micha Becker'),
+        row('Gewerbe', escape(blocks[19]['text'])),
+    ]
+    provider = '<h3>Anschrift</h3>' + address(2,6) + '<h3>Kontakt</h3><dl class="legal-facts">' + ''.join(contact) + '</dl>'
+    provider += paragraphs(source(20,22))
+    # An empty source heading is omitted; it names no provider or service.
+    copyright = '<h3>Copyright / Urheberrecht</h3>' + paragraphs(source(24,26))
+    copyright += '<h3>Bildinhaber</h3>' + paragraphs(blocks[27]['text'])
+    copyright += '<h3>Dekoration</h3>' + paragraphs(source(29,31))
+    social = paragraphs(blocks[32]['text']) + '<ul>' + ''.join(f'<li>{escape(blocks[i]["text"])}</li>' for i in [33,34]) + '</ul>'
+    privacy = [paragraphs(blocks[35]['text'].removeprefix('DATENSCHUTZERKLÄRUNG '))]
+    i = 36
+    while i < len(blocks):
+        b = blocks[i]
+        if b['type'] == 'heading':
+            privacy.append(f'<h3 id="{slugify(b["text"])}">{escape(b["text"].rstrip(":"))}</h3>')
+            i += 1
+            if i == 37:
+                privacy.append(address(37,42))
+                i = 42
+        elif b['text'].startswith('– '):
+            items = []
+            while i < len(blocks) and blocks[i]['text'].startswith('– '):
+                items.append('<li>' + escape(blocks[i]['text'][2:]) + '</li>')
+                i += 1
+            privacy.append('<ul>' + ''.join(items) + '</ul>')
+        else:
+            privacy.append(paragraphs(b['text']))
+            i += 1
+    parts = {'Anbieter und Kontakt': provider, 'Urheberrecht und Produktbilder': copyright,
+             'Soziale Medien': social, 'Datenschutzerklärung': ''.join(privacy)}
     links = ''.join(f'<a href="#{slugify(t)}">{escape(t)}</a>' for t in parts)
-    text = ''.join(f'<section id="{slugify(t)}"><h2>{escape(t)}</h2>{"".join(blocks)}</section>' for t, blocks in parts.items())
+    text = ''.join(f'<section id="{slugify(t)}"><h2>{escape(t)}</h2>{body}</section>' for t, body in parts.items())
     return f'<div class="legal-layout"><nav aria-label="Abschnitte">{links}</nav><div class="legal-text">{text}</div></div>'
