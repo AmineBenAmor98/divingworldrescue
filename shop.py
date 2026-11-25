@@ -150,7 +150,7 @@ def category_products(items):
     <option value="desc">Preis absteigend</option></select></label></nav><div>{"".join(sections)}</div></div>'''
 
 
-def product_detail(item, parent):
+def product_detail(item, parent, siblings=()):
     name = escape(item["name"])
     photos = item["photos"]
     image = f'<a class="item-photo" href="{photos[0]}" aria-label="Produktfoto vergrößern: {name}"><img src="{photos[0]}" alt="{name}"></a>'
@@ -186,9 +186,16 @@ def product_detail(item, parent):
         }
         extra = ''.join(f'<p>{escape(t)}</p>' for t in supplemental.get(item["name"], []))
     if extra:
-        extra = f'<details class="item-extra"><summary>Weitere Produktangaben</summary>{extra}</details>'
+        extra = f'<section class="item-details" aria-labelledby="item-details-title"><h2 id="item-details-title">Details &amp; Ausstattung</h2><div class="item-details-body">{extra}</div></section>'
+    others = [x for x in siblings if x["slug"] != item["slug"] and x["photos"]]
+    others = sorted(others, key=lambda x: x["group"] != item["group"])[:4]
+    related = ''.join(f'''<a class="equip-card" href="{x["slug"]}.html"><span class="equip-stage"><img src="{escape(x["photos"][0])}" alt="" loading="lazy"></span>
+      <span class="equip-body"><strong>{escape(x["name"])}</strong><span>{escape(x["summary"])}</span><small>{escape(x["price"])}</small></span></a>''' for x in others)
+    if related:
+        related = f'<section class="item-related" aria-labelledby="related-title"><div class="item-related-head"><h2 id="related-title">Das könnte dich auch interessieren</h2><a class="path-action" href="tauch-shop.html">Zum gesamten Sortiment</a></div><div class="equip-grid">{related}</div></section>'
     spec_section = f'<h2>Produktdaten</h2><dl class="item-specs">{specs}</dl>' if specs else ""
     group_link = f'{parent["slug"]}.html#{slugify(item["group"])}'
+    next_links = f'<nav class="item-next" aria-label="Weiter im Sortiment"><a href="{group_link}">Weitere Artikel aus {escape(item["group"])}</a><a href="tauch-shop.html">Zum gesamten Sortiment</a></nav>'
     return f'''<div class="wrap item-page"><nav class="item-crumb" aria-label="Brotkrumennavigation">
     <a href="../index.html">Startseite</a> / <a href="tauch-shop.html">Tauchshop</a> / <a href="{group_link}">{escape(parent["title"])}</a></nav>
     <article class="item-layout">
@@ -197,5 +204,5 @@ def product_detail(item, parent):
     <div class="item-media">{image}{gallery}</div>
     <div class="item-info">
     <div class="item-purchase"><strong>{escape(item["price"])}</strong>{note}{inquiry(item["name"])}</div>
-    {spec_section}{extra}
-    </div></article><nav class="item-next" aria-label="Weiter im Sortiment"><a href="{group_link}">Weitere Artikel aus {escape(item["group"])}</a><a href="tauch-shop.html">Zum gesamten Sortiment</a></nav></div>'''
+    {spec_section}
+    </div></article>{extra}{related or next_links}</div>'''

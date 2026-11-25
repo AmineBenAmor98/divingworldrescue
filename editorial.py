@@ -7,6 +7,27 @@ from urllib.parse import urlencode
 from shop import inquiry, slugify
 from typography import paragraphs
 
+from pathlib import Path
+
+ASSETS = Path(__file__).parent / "public" / "assets"
+WHATSAPP = "https://wa.me/4917685639763"
+
+
+def slot(name, fallback):
+    """Use a commissioned image when it exists, otherwise a stand-in."""
+    return f"../assets/{name}" if (ASSETS / name).exists() else f"../assets/{fallback}"
+
+
+def closing_band(title, text, href, label, anchor="closing"):
+    return f'''<section class="landing-contact" aria-labelledby="{anchor}"><div class="wrap"><div><h2 id="{anchor}">{title}</h2><p>{text}</p></div>
+      <div class="closing-actions"><a class="cta mint" href="{href}">{label}</a><a class="plain" href="{WHATSAPP}">WhatsApp schreiben</a></div></div></section>'''
+
+
+def section_head(kicker, title, text="", anchor=""):
+    ident = f' id="{anchor}"' if anchor else ""
+    side = f"<p>{text}</p>" if text else ""
+    return f'<div class="page-head"><div><p class="kicker">{kicker}</p><h2{ident}>{title}</h2></div>{side}</div>'
+
 
 def course_link(topic, course=None, label="Termin anfragen"):
     params = {"thema": topic}
@@ -15,26 +36,48 @@ def course_link(topic, course=None, label="Termin anfragen"):
     return f'<a class="path-action" href="anfrage.html?{escape(urlencode(params))}">{escape(label)} <span aria-hidden="true">→</span></a>'
 
 
+AID_GROUPS = {
+    "Alltag & Familie": ("erste-hilfe-familie.webp", "erste-hilfe.webp", "Für Eltern, Großeltern, Betreuende und alle, die im Notfall sicher helfen möchten."),
+    "Beruf & Betrieb": ("erste-hilfe-beruf.webp", "erste-hilfe.webp", "Für Unternehmen, Betreuungspersonal und alle, die bei der Arbeit Verantwortung tragen."),
+    "Tauchsport": ("erste-hilfe-tauchen.webp", "tauchen.webp", "Für Taucher und Begleiter: richtig handeln, wenn beim Tauchen etwas passiert."),
+}
+
+
 def first_aid(page, breadcrumb):
     sections = []
     tabs = []
     for group, courses in groupby(page["programmes"], key=lambda c: c["group"]):
         anchor = slugify(group)
-        tabs.append(f'<a href="#{anchor}">{escape(group)} <span aria-hidden="true">↓</span></a>')
-        items = []
+        courses = list(courses)
+        tabs.append(f'<a href="#{anchor}">{escape(group)}<small>{len(courses)} Kurs{"e" if len(courses) != 1 else ""}</small></a>')
+        image, fallback, intro = AID_GROUPS.get(group, ("", "erste-hilfe.webp", ""))
+        cards = []
         for c in courses:
             if c["online"]:
-                fees = f'<h4 class="material-label">Lernmaterial · wahlweise</h4><dl class="format-fees"><div><dt>E-Learning</dt><dd>{c["online"]}</dd></div><div><dt>Handbuch</dt><dd>{c["book"]}</dd></div></dl><small>Die Praxisschulung kommt hinzu und kostet je nach Ort unterschiedlich viel.</small>'
+                fees = f'''<dl class="aid-prices"><div><dt>E-Learning</dt><dd>{c["online"]}</dd></div><div><dt>Handbuch</dt><dd>{c["book"]}</dd></div></dl>
+                <p class="aid-note">Lernmaterial wahlweise. Die Praxisschulung kommt je nach Ort hinzu.</p>'''
             else:
-                fees = '<p>Preis und Ablauf auf Anfrage.</p>'
-            items.append(f'''<article class="aid-course"><div><h3>{escape(c["name"])}</h3><p>{escape(c["summary"])}</p>
-              </div><div class="aid-fees">{fees}</div><div class="aid-enquire">{course_link("Erste Hilfe", c["name"], "Diesen Kurs anfragen")}</div></article>''')
-        sections.append(f'<section class="aid-group" id="{anchor}"><h2>{escape(group)}</h2><div>{"".join(items)}</div></section>')
-    return f'''<header class="aid-cover"><div class="wrap">{breadcrumb}<h1>Erste-Hilfe-Kurse</h1><p>Vom Kindernotfall bis zum Tauchunfall. Finde die Ausbildung von First Response Training International, die zu deinem Alltag passt.</p></div></header>
-    <nav class="dive-routes" aria-label="Kursbereiche"><div class="wrap">{"".join(tabs)}</div></nav>
-    <div class="wrap editorial-body">{"".join(sections)}
-    <section class="reader-panel"><div><h2>Teilnahme &amp; Ablauf</h2><p>Bei den Kursen mit Materialpreisen bereitest du die Theorie per E-Learning oder Handbuch vor. Die praktischen Übungen und der Abschluss folgen mit einem Ausbilder.</p><p>Für diese Kurse nennt die Schule 18 Jahre als Mindestalter, mit Zustimmung der Eltern 10 Jahre.</p></div>
-    <div><h3>Als Gruppe teilnehmen</h3><p>Es gibt auch Angebote für Firmen, Kindergärten und Schulklassen ab der ersten Klasse. Eine Ausbildung nach DGUV 304-001 kannst du anfragen.</p>{course_link("Erste Hilfe", label="Gruppenkurs anfragen")}<a class="dive-text-link" href="tauch-shop.html#erste-hilfe">Erste-Hilfe-Material ansehen</a></div></section></div>'''
+                fees = '<p class="aid-note aid-note-solo">Preis und Ablauf auf Anfrage.</p>'
+            cards.append(f'''<article class="aid-card"><h3>{escape(c["name"])}</h3><p>{escape(c["summary"])}</p>
+              <div class="aid-fees">{fees}</div>{course_link("Erste Hilfe", c["name"], "Diesen Kurs anfragen")}</article>''')
+        sections.append(f'''<section class="aid-section" id="{anchor}"><div class="wrap">
+          <div class="aid-intro"><img src="{slot(image, fallback)}" alt="" loading="lazy"><div><p class="kicker">Erste Hilfe</p><h2>{escape(group)}</h2><p>{escape(intro)}</p></div></div>
+          <div class="aid-cards">{"".join(cards)}</div></div></section>''')
+    request = "anfrage.html?" + escape(urlencode({"thema": "Erste Hilfe"}))
+    return f'''<header class="aid-cover"><div class="wrap">{breadcrumb}<h1>Erste-Hilfe-Kurse</h1><p>Vom Kindernotfall bis zum Tauchunfall. Finde die Ausbildung von First Response Training International, die zu deinem Alltag passt.</p>
+    <div class="cover-choices"><a class="cta mint" href="{request}">Kurs anfragen</a><a class="plain" href="#ablauf">So läuft ein Kurs ab</a></div></div></header>
+    <nav class="aid-tabs" aria-label="Kursbereiche"><div class="wrap">{"".join(tabs)}</div></nav>
+    {"".join(sections)}
+    <section class="aid-steps" id="ablauf"><div class="wrap">{section_head("Ablauf", "So läuft ein Kurs ab")}
+      <ol class="step-list">
+        <li><strong>Theorie vorbereiten</strong><span>Per E-Learning oder mit dem Handbuch, in deinem Tempo.</span></li>
+        <li><strong>Praxis mit Ausbilder</strong><span>Die praktischen Übungen und der Abschluss folgen mit einem Ausbilder.</span></li>
+        <li><strong>Teilnahme ab 18 Jahren</strong><span>Mit Zustimmung der Eltern schon ab 10 Jahren.</span></li>
+      </ol>
+      <aside class="aid-group-offer"><div><h3>Als Gruppe teilnehmen</h3><p>Angebote für Firmen, Kindergärten und Schulklassen ab der ersten Klasse. Eine Ausbildung nach DGUV 304-001 kannst du anfragen.</p></div>
+      <div class="aid-group-actions">{course_link("Erste Hilfe", label="Gruppenkurs anfragen")}<a class="path-action" href="tauch-shop.html#erste-hilfe">Erste-Hilfe-Material ansehen</a></div></aside>
+    </div></section>
+    {closing_band("Bereit für den Ernstfall?", "Sag uns, welcher Kurs passt und wann du Zeit hast. Wir melden uns mit einem Termin.", request, "Kurs anfragen", "aid-closing")}'''
 
 
 def image_gallery(blocks, title):
@@ -48,14 +91,51 @@ def image_gallery(blocks, title):
     return '<div class="album-grid">' + ''.join(out) + '</div>'
 
 
+TRIP_KINDS = [
+    (("Safaga", "Ägypten"), "Tauchreise"),
+    (("TODI", "Diveworld", "Dive4Life", "Monte Mare"), "Hallentauchen"),
+    (("Xanten", "Südsee"), "See"),
+    (("FRTI",), "Erste Hilfe"),
+    (("Messe",), "Messe"),
+]
+
+
+def trip_kind(text):
+    return next((kind for keys, kind in TRIP_KINDS if any(k in text for k in keys)), "Ausflug")
+
+
 def travel_archive(page):
+    highlights = page["highlights"]
+    entries = [(year, event) for year, events in highlights.items() for event in events]
+    counts = Counter(trip_kind(event) for _, event in entries)
+    tiles = [
+        ("Tauchreise", "Rotes Meer", "Safaga in Ägypten, mehrmals im Jahr mit Flug ab Düsseldorf.", slot("reisen-rotes-meer.webp", "tauchgang.webp")),
+        ("Hallentauchen", "Tauchzentren", "TODI, Diveworld, Dive4Life und Monte Mare: tauchen bei jedem Wetter.", slot("reisen-hallenbad.webp", "tauchen.webp")),
+        ("See", "Freiwasser", "Die Südsee in Xanten für Kurse, Refresher und Fun-Dives.", slot("reisen-see.webp", "see.webp")),
+    ]
+    tile_html = "".join(f'''<a class="trip-tile" href="termine.html#ziele"><img src="{img}" alt="" loading="lazy"><span class="trip-tile-copy">
+      <span class="trip-kind kind-{slugify(kind)}">{kind}</span><strong>{title}</strong><span>{text}</span><small>{counts[kind]} Rückblick{"e" if counts[kind] != 1 else ""}</small></span></a>''' for kind, title, text, img in tiles)
     years = []
-    for i, (year, events) in enumerate(page["highlights"].items()):
-        items = ''.join(f'<li>{escape(event)}</li>' for event in events)
-        opened = ' open' if i < 2 else ''
-        years.append(f'<details class="travel-year"{opened}><summary>{escape(year)}<small>{len(events)} Rückblick' + ('e' if len(events) != 1 else '') + f'</small></summary><ul>{items}</ul></details>')
-    return '''<section class="reader-panel"><div><h2>Gemeinsam unterwegs</h2><p>Vom Indoor-Tauchgang bis zur Reise nach Safaga. Hier findest du die bisherigen Ausflüge und Veranstaltungen unserer Schule.</p></div><div>''' + course_link("Termine und Reisen", label="Nächsten Ausflug anfragen") + '''<a class="dive-text-link" href="glueckwuensche.html">Tauchabschlüsse ansehen</a></div></section>
-    <section class="travel-archive" aria-labelledby="reise-archiv"><h2 id="reise-archiv">Reisen &amp; Veranstaltungen im Rückblick</h2>''' + ''.join(years) + '</section>'
+    for year, events in highlights.items():
+        cards = []
+        for event in events:
+            text = re.sub(r"\s{2,}", " ", event).strip()
+            title, _, people = text.partition(" mit ")
+            kind = trip_kind(text)
+            who = f'<p class="moment-people">mit {escape(people)}</p>' if people else ""
+            cards.append(f'<li class="moment"><span class="trip-kind kind-{slugify(kind)}">{kind}</span><h4>{escape(title.strip(" ,"))}</h4>{who}</li>')
+        label = "Ohne Jahr" if not year[:1].isdigit() else year
+        years.append(f'<section class="moment-year"><h3>{escape(label)}<small>{len(events)} Rückblick{"e" if len(events) != 1 else ""}</small></h3><ol class="moments">{"".join(cards)}</ol></section>')
+    picks = ["ba9e4421064b6920", "4affc21280160622", "d88380ee965ce574", "0b0901195a9a7b6c", "0eaa317a668bc7fa", "4223fcc09b4bdb38"]
+    mosaic = "".join(f'<a href="glueckwuensche.html"><img src="../assets/media/{pid}.webp" alt="Foto aus einem Kurs oder einer Reise der Tauchschule" loading="lazy"></a>' for pid in picks)
+    request = "anfrage.html?" + escape(urlencode({"thema": "Termine und Reisen"}))
+    return f'''<section class="trip-section"><div class="wrap">{section_head("Unterwegs", "Wohin wir gemeinsam fahren", "Vom Hallenbad in der Nähe bis ans Rote Meer. Jeder ist willkommen, auch Begleitung ohne Tauchschein.")}
+      <div class="trip-tiles">{tile_html}</div></div></section>
+    <section class="photo-section"><div class="wrap">{section_head("Eindrücke", "Echte Momente mit der Tauchschule", 'Vom Bootsdeck vor Safaga bis zum Abschluss im Hallenbad. <a class="path-action" href="glueckwuensche.html">Alle Fotos ansehen</a>')}
+      <div class="photo-mosaic">{mosaic}</div></div></section>
+    <section class="moments-section"><div class="wrap">{section_head("Rückblick", "Erlebt mit der Tauchschule", f'{len(entries)} Ausflüge, Kurse und Reisen. <a class="path-action" href="glueckwuensche.html">Tauchabschlüsse ansehen</a>')}
+      {"".join(years)}</div></section>
+    {closing_band("Beim nächsten Mal dabei sein?", "Sag uns, wohin du mitkommen möchtest. Wir melden uns mit Termin und Details.", request, "Ausflug anfragen", "travel-closing")}'''
 
 
 def albums(page):
@@ -74,13 +154,6 @@ def albums(page):
             items = ''.join(f'<li>{escape(e)}</li>' for e in events)
             out.append(f'<details class="archive-period"><summary>{escape(year)}</summary><ul>{items}</ul></details>')
         out.append('</section>')
-    if page["slug"] == "frti-kurse--frti-glueckwuensche":
-        target, heading, copy = "frti-kurse.html", "Selbst Erste Hilfe lernen", "Entdecke die Kurse für Familie, Beruf und Tauchsport."
-    elif page["slug"] == "glueckwuensche":
-        target, heading, copy = "tauchen-lernen-kurse.html", "Dein nächster Schritt", "Vom ersten Tauchgang bis zur Weiterbildung. Finde deinen Kurs."
-    else:
-        target, heading, copy = "termine.html", "Beim nächsten Mal dabei sein", "Frag das Team nach dem nächsten Tauchausflug oder deinem Wunschkurs."
-    out.append(f'<aside class="archive-next"><h2>{heading}</h2><p>{copy}</p><a class="path-action" href="{target}">Mehr erfahren</a></aside>')
     return ''.join(out)
 
 
@@ -154,11 +227,25 @@ def guestbook(page):
 
 
 def jobs():
-    return '''<article class="reader-panel"><div><h2>Rettungsschwimmer am Unterbacher See</h2><p>Du möchtest in der Badesaison am Unterbacher See mitarbeiten? Frag uns nach freien Einsätzen, vor allem an Wochenenden und Feiertagen.</p>
-    <h3>Deine Aufgaben</h3><ul><li>Badebetrieb beaufsichtigen und Badegäste betreuen</li><li>Rettungs- und Erste-Hilfe-Maßnahmen durchführen</li><li>Ausrüstung kontrollieren und das Team bei der Organisation unterstützen</li></ul>
-    <h3>Das bringst du mit</h3><p>Ein aktuelles Rettungsschwimmerabzeichen, einen höchstens zwei Jahre alten Erste-Hilfe-Nachweis, körperliche Fitness und Freude an der Arbeit im Team. Die Schule nennt 18 Jahre als Richtwert und nimmt auch Anfragen von Jüngeren entgegen.</p>
-    <p>Rettungsschwimmer- und Rescue-Diver-Ausbildung sowie Erste-Hilfe-Kurse und Auffrischungen sind bei der Schule möglich.</p></div>
-    <div><h3>Bewerbung &amp; Rückfragen</h3><p>Schick deine Unterlagen direkt an das Team oder ruf täglich ab 13 Uhr an.</p><a class="dive-text-link" href="mailto:dive-world@mail.de">dive-world@mail.de</a><a class="dive-text-link" href="tel:+4917685639763">0176 8563 9763</a></div></article>'''
+    mail = "mailto:dive-world@mail.de?subject=" + escape("Bewerbung Rettungsschwimmer Unterbacher See")
+    tasks = ["Badebetrieb beaufsichtigen und Badegäste betreuen", "Rettungs- und Erste-Hilfe-Maßnahmen durchführen", "Ausrüstung kontrollieren und das Team bei der Organisation unterstützen"]
+    needs = ["Aktuelles Rettungsschwimmabzeichen", "Erste-Hilfe-Nachweis, höchstens zwei Jahre alt", "Körperliche Fitness", "Freude an der Arbeit im Team"]
+    check = lambda items: "".join(f"<li>{escape(i)}</li>" for i in items)
+    return f'''<section class="job-intro"><div class="wrap">
+      <img class="job-photo" src="{slot("rettungsschwimmer.webp", "see.webp")}" alt="" loading="lazy">
+      <div class="job-copy"><p class="kicker">Wasserrettung · Unterbacher See</p><h2>Rettungsschwimmer gesucht</h2>
+      <p>Du möchtest in der Badesaison am Unterbacher See mitarbeiten? Frag uns nach freien Einsätzen, vor allem an Wochenenden und Feiertagen.</p>
+      <ul class="job-facts"><li>Badesaison</li><li>Wochenenden &amp; Feiertage</li><li>ab 18 Jahren (Richtwert)</li></ul>
+      <div class="job-actions"><a class="cta" href="{mail}">Jetzt bewerben</a><a class="path-action" href="tel:+4917685639763">0176 8563 9763</a></div></div>
+    </div></section>
+    <section class="job-details"><div class="wrap">
+      <article class="job-card"><h3>Deine Aufgaben</h3><ul class="check-list">{check(tasks)}</ul></article>
+      <article class="job-card"><h3>Das bringst du mit</h3><ul class="check-list">{check(needs)}</ul><p class="job-note">Die Schule nennt 18 Jahre als Richtwert und nimmt auch Anfragen von Jüngeren entgegen.</p></article>
+      <article class="job-card job-train"><h3>Wir bilden dich aus</h3><p>Rettungsschwimmer- und Rescue-Diver-Ausbildung, Erste-Hilfe-Kurse und Auffrischungen sind direkt bei uns möglich.</p>
+        <div class="job-links"><a class="path-action" href="frti-kurse.html">Erste-Hilfe-Kurse</a><a class="path-action" href="tauchen-lernen-kurse.html">Tauchausbildung</a></div></article>
+    </div></section>
+    <section class="landing-contact" aria-labelledby="job-closing"><div class="wrap"><div><h2 id="job-closing">Bewirb dich bei uns</h2><p>Schick deine Unterlagen per Mail oder ruf täglich ab 13 Uhr an.</p></div>
+      <div class="closing-actions"><a class="cta mint" href="{mail}">dive-world@mail.de</a><a class="plain" href="tel:+4917685639763">0176 8563 9763</a></div></div></section>'''
 
 
 def hud(page):

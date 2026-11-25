@@ -6,7 +6,7 @@ import os
 from urllib.parse import urljoin, urlsplit
 from shop import category_photo, catalogue_items, category_products, product_detail, shop_directory
 from html import escape
-from editorial import albums, course_link, dates, first_aid, guestbook, hud, jobs, legal
+from editorial import albums, closing_band, course_link, dates, first_aid, guestbook, hud, jobs, legal, travel_archive
 from pathlib import Path
 from design import decorate
 
@@ -185,11 +185,16 @@ def inner(page):
     elif slug == "termine":
         intro += '<div class="cover-choices"><a class="cta mint" href="anfrage.html?thema=Termine+und+Reisen">Nächsten Termin anfragen</a><a class="plain" href="#ziele">Tauchziele ansehen</a></div>'
         body = dates(page)
+    elif slug == "bilder-reisen-event-s":
+        intro += '<div class="cover-choices"><a class="cta mint" href="anfrage.html?thema=Termine+und+Reisen">Nächsten Ausflug anfragen</a><a class="plain" href="termine.html">Termine ansehen</a></div>'
+        body = travel_archive(page)
+    elif slug == "wir-suchen-dich":
+        body = jobs()
     elif slug in {"kurse", "infos"}:
         template = "courses.html" if slug == "kurse" else "info.html"
         body = (SRC / template).read_text()
     else:
-        body = f'<div class="wrap editorial-body">{content(page)}</div>' 
+        body = f'<div class="wrap editorial-body">{content(page)}</div>' + (closing_band(*BANDS[slug]) if slug in BANDS else "")
     cover_class = "interior-cover shop-cover" if slug == "tauch-shop" else "interior-cover"
     if slug == "anfrage":
         cover_class = "interior-cover request-cover"
@@ -197,6 +202,16 @@ def inner(page):
         cover_class = "interior-cover catalogue-cover"
     main = f'<div class="{cover_class}"><div class="wrap">{crumb}<h1>{title}</h1>{intro}</div></div>{body}'
     return page_shell(title, main, None if neutral else section, slug)
+
+
+BANDS = {
+    "glueckwuensche": ("Dein nächster Schritt", "Vom ersten Tauchgang bis zur Weiterbildung. Wir finden den passenden Kurs für dich.", "tauchen-lernen-kurse.html", "Tauchkurse ansehen"),
+    "frti-kurse--frti-glueckwuensche": ("Selbst Erste Hilfe lernen", "Kurse für Familie, Beruf und Tauchsport, mit Theorie in deinem Tempo.", "frti-kurse.html", "Erste-Hilfe-Kurse ansehen"),
+    "gaestebuch-bewertung": ("Selbst abtauchen?", "Probier es beim Schnuppertauchen aus oder starte direkt mit deinem Tauchschein.", "anfrage.html?thema=Tauchkurs&amp;kurs=Schnuppertauchen", "Schnuppertauchen anfragen"),
+    "hud": ("Interesse am Head-up-Display?", "Frag nach Preis und Verfügbarkeit. Wir beraten dich, ob es zu deiner Maske passt.", "anfrage.html?thema=Ausr%C3%BCstung+und+Verleih&amp;produkt=Da%C3%AFve+Head-up-Display", "Verfügbarkeit anfragen"),
+    "equipment-verleih": ("Ausrüstung für deinen Termin", "Sag uns, was du brauchst und wann. Wir legen alles bereit.", "anfrage.html?thema=Ausr%C3%BCstung+leihen", "Ausrüstung anfragen"),
+    "preis-kurse": ("Noch Fragen zum Kurs?", "Wir erklären dir Ablauf, Kosten und den nächsten freien Termin.", "anfrage.html?thema=Tauchkurs", "Kurs anfragen"),
+}
 
 
 def page_shell(title, main, section, slug):
@@ -317,8 +332,9 @@ def build():
         html = add_metadata(inner(page), "pages/" + page["slug"] + ".html", page["title"] + " · Dive-World & Rescue", description, "../")
         (DIST / "pages" / (page["slug"]+".html")).write_text(html)
         if page["slug"].startswith("tauch-shop--") or page.get("catalogue"):
-            for item in catalogue_items(page):
-                main = product_detail(item, page)
+            items = catalogue_items(page)
+            for item in items:
+                main = product_detail(item, page, items)
                 html = page_shell(escape(item["name"]), main, "tauch-shop", item["slug"])
                 html = add_metadata(html, "pages/" + item["slug"] + ".html", item["name"] + " · Dive-World & Rescue", item["summary"], "../", item["photos"][0].removeprefix("../"))
                 (DIST / "pages" / (item["slug"] + ".html")).write_text(html)
