@@ -96,3 +96,12 @@ Validation for this pass: all 131 pages loaded the layout layer and retained ide
 ## First-aid course flow — 25 November 2026
 
 The Ablauf section places its heading above two actual course stages, with age eligibility in a separate note. The heading and steps stay together in a compact single-column section; stages are side by side on larger screens and stack on phones. Verified at 360, 580, 768 and 1280 pixels without horizontal overflow. All 131 pages passed the static link, media, anchor and form checks. This local update does not publish the separate DuckDNS host.
+
+
+## Shared section flow — 25 November 2026
+
+Section introductions keep headings, descriptions and actions together above their content. First-aid course groups, the diving FAQ and product descriptions no longer reserve a separate heading column. Business group-course information follows the relevant courses. Gallery metadata sits under its heading. Product photographs, pricing and enquiry controls retain their functional layouts.
+
+All 131 pages were checked at 360, 768 and 1440 pixels for horizontal overflow and heading/content placement. Main-page wording was preserved. Static link/media/anchor/form checks passed; representative desktop and phone layouts, FAQ expansion and gallery loading were visually checked. Source changes are in commit f27be4b, pushed to the existing GitHub Pages deployment workflow.
+
+Deployment succeeded via the existing GitHub Pages workflow. The DuckDNS first-aid section and phone FAQ were checked live with the new shared CSS (186fed6969).

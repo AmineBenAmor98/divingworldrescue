@@ -509,5 +509,40 @@
         "Product detail"
       ]
     }
+  },
+  "section_flow_review": {
+    "date": "2026-11-25",
+    "scope": [
+      "Shared section introductions on the homepage, courses, travel and dates",
+      "First-aid programme groups and Ablauf",
+      "Diving FAQ",
+      "Product details and related products",
+      "Achievement gallery headings"
+    ],
+    "pages_checked": 131,
+    "viewport_widths": [
+      360,
+      768,
+      1440
+    ],
+    "checks": [
+      "No horizontal overflow at all three widths",
+      "Headings precede content in affected shared layouts",
+      "All main-page text preserved",
+      "FAQ expanded on mobile",
+      "Gallery lazy image verified after scroll",
+      "Static links, media, anchors and enquiry destinations passed"
+    ],
+    "deployment_commit": "f27be4beacf9d0bd803d8a87eb6411514c7bfb65",
+    "deployment": {
+      "status": "success",
+      "url": "https://abenamor.duckdns.org/",
+      "workflow_run": "https://github.com/AmineBenAmor98/divingworldrescue/actions/runs/45627847247",
+      "live_verified": [
+        "First-aid Ablauf and programme sections on desktop",
+        "Diving FAQ at 360px",
+        "Published CSS version 186fed6969"
+      ]
+    }
   }
 }
