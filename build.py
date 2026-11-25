@@ -392,6 +392,13 @@ def add_metadata(html, path, title, description, prefix, share_image="assets/tau
     for asset in ("main.css", "home.js", "inquiry.js"):
         version = sha256((SRC / asset).read_bytes()).hexdigest()[:10]
         html = html.replace(f'"{prefix}{asset}"', f'"{prefix}{asset}?v={version}"')
+    if 'class="album-grid"' in html:
+        css_version = sha256((SRC / "gallery.css").read_bytes()).hexdigest()[:10]
+        script_version = sha256((SRC / "gallery.js").read_bytes()).hexdigest()[:10]
+        html = html.replace("</head>", (
+            f'<link rel="stylesheet" href="{prefix}gallery.css?v={css_version}">'
+            f'<script defer src="{prefix}gallery.js?v={script_version}"></script></head>'
+        ))
     tags = [
         f'<meta name="description" content="{escape(description, quote=True)}">',
         '<meta property="og:type" content="website">',
@@ -427,7 +434,7 @@ def build():
     DIST.mkdir(exist_ok=True)
     (DIST / "pages").mkdir(exist_ok=True)
     shutil.copytree(ROOT / "public", DIST, dirs_exist_ok=True)
-    for name in ("main.css", "editorial.css", "home.js", "inquiry.js"):
+    for name in ("main.css", "editorial.css", "home.js", "inquiry.js", "gallery.css", "gallery.js"):
         shutil.copyfile(SRC / name, DIST / name)
     home = HOME.replace("<!-- site-header -->", header("")).replace("<!-- site-footer -->", footer(""))
     home = home.replace("<!-- hero-trust -->", hero_trust()).replace("<!-- home-news -->", home_news(BY_SLUG["termine"], BY_SLUG["glueckwuensche"])).replace("<!-- trip-tiles -->", trip_tiles(BY_SLUG["bilder-reisen-event-s"], "pages/termine.html#ziele", "")).replace("<!-- course-preview -->", home_offers()).replace("<!-- equipment-preview -->", equipment_preview()).replace("<!-- google-reviews -->", google_reviews())
