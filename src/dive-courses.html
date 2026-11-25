@@ -61,6 +61,7 @@
     <div><p class="kicker">Erst ausprobieren</p><h2 id="probe">Schnuppertauchen</h2><p>Du möchtest erst wissen, wie sich Tauchen anfühlt? Nach einer Einweisung gehst du mit einem Divemaster oder Instructor für ein bis zwei Tauchgänge ins Wasser. Bring Badezeug und ein Handtuch mit.</p>
       <p class="trial-price"><strong>{{trial_price}}</strong> zzgl. Eintritt und Fahrtkosten</p>
       <a class="cta" href="anfrage.html?thema=Tauchkurs&amp;kurs=Schnuppertauchen">Schnuppertauchen anfragen</a>
+      {{discover}}
     </div>
   </section>
 </div>
@@ -69,25 +70,26 @@
   <div class="page-head"><div><p class="kicker">Nach dem Tauchschein</p><h2 id="weitere-kurse">Wieder einsteigen &amp; weiterlernen</h2></div><p>Lange nicht getaucht oder bereit für den nächsten Schritt? Wähle einen Kurs aus, wir melden uns mit Termin und Ablauf.</p></div>
   <div class="dive-next-grid">
     <article class="dive-next-card dive-next-reentry">
-      <h3>Wieder einsteigen</h3>
+      <header><p class="dive-option-kicker">Nach einer Pause</p><h3>Wieder einsteigen</h3></header>
       <p>Nach einer längeren Pause frischst du deine Fertigkeiten mit einem Tauchlehrer auf, bevor es wieder ins Freiwasser geht.</p>
       {{reentry}}
+      <footer class="dive-next-footer"><span>Preis und Termin auf Anfrage</span><a class="dive-text-link" href="anfrage.html?thema=Tauchkurs&amp;kurs=Auffrischungskurs">Wiedereinstieg besprechen</a></footer>
     </article>
     <article class="dive-next-card dive-next-feature">
-      <p class="dive-option-kicker">Der nächste Tauchschein</p>
-      <h3>Advanced Open Water Diver</h3>
-      <p class="dive-option-price">{{aowd_price}}</p>
-      <ul><li>Ab 10 Jahren, Theorie im Unterricht oder per E-Learning</li><li>Tauchlektionen im Indoor-Center, See oder Meer</li><li>Einzelne Spezialkurse sind nur am Meer möglich</li></ul>
-      <div class="dive-option-actions"><a class="cta mint" href="anfrage.html?thema=Tauchkurs&amp;kurs=Advanced%20Open%20Water%20Diver">Anfragen</a></div>
+      <header><p class="dive-option-kicker">Kenntnisse erweitern</p><h3>Advanced Open Water Diver</h3></header>
+      <p>Tauchlektionen im Indoor-Center, See oder Meer.</p>
+      <ul class="dive-next-facts"><li>Ab 10 Jahren, Theorie im Unterricht oder per E-Learning</li><li>Einzelne Spezialkurse sind nur am Meer möglich</li></ul>
+      <footer class="dive-next-footer"><span>Kursgebühr <strong>{{aowd_price}}</strong></span><a class="dive-text-link" href="anfrage.html?thema=Tauchkurs&amp;kurs=Advanced%20Open%20Water%20Diver">Advanced-Kurs anfragen</a></footer>
     </article>
     <article class="dive-next-card">
-      <h3>Rettung &amp; Profi-Ausbildung</h3>
+      <header><p class="dive-option-kicker">Verantwortung übernehmen</p><h3>Rettung &amp; Profi-Ausbildung</h3></header>
       <p>Vom Rescue Diver bis zum Assistant Instructor: Lerne, anderen Tauchern zu helfen, und begleite selbst Kurse.</p>
       {{pro}}
+      <footer class="dive-next-footer"><span>Preis und Termin auf Anfrage</span><a class="dive-text-link" href="anfrage.html?thema=Tauchkurs">Ausbildung besprechen</a></footer>
     </article>
   </div>
   <div class="dive-specialties">
-    <h3>Spezialkurse</h3>
+    <header><h3>Spezialkurse</h3><p>Vertiefe einzelne Fertigkeiten. Die Kurse sind alphabetisch geordnet; wähle ein Thema für deine Anfrage.</p></header>
     {{special}}
   </div>
 </div></section>
