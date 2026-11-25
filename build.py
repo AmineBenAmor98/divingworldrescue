@@ -133,7 +133,7 @@ INTRO = {
     "hud": "Ein Tauchcomputer direkt an der Maske. Entdecke das Head-up-Display von Daïve und frag das Team nach dem Gerät.",
     "wir-suchen-dich": "Du möchtest die Wasserrettung am Unterbacher See unterstützen? Hier erfährst du mehr über Aufgaben und Voraussetzungen.",
     "gaestebuch-bewertung": "Persönliche Erfahrungen unserer Teilnehmer mit Dive-World & Rescue.",
-    "termine": "Frag nach dem nächsten Kurs oder Tauchausflug. Frühere Ausschreibungen findest du im Terminarchiv.",
+    "termine": "Hallentauchen, Seen und Reisen ans Rote Meer, mehrmals im Monat. Jeder ist willkommen.",
     "tauch-shop--computer": "Vergleiche die Modelle und frag direkt beim Team nach deinem Tauchcomputer.",
     "uebersicht": "Kurse, Ausrüstung und Informationen zur Tauchschule auf einen Blick.",
 }
@@ -182,6 +182,9 @@ def inner(page):
         if slug == "tauch-shop--computer":
             body += '<nav class="context-link wrap" aria-label="Weitere Tauchcomputer"><a href="hud.html">Tauchdaten in der Maske sehen · Zum Head-up-Display →</a></nav>' 
         intro += f'<p class="catalog-count">{len(items)} Artikel</p>'
+    elif slug == "termine":
+        intro += '<div class="cover-choices"><a class="cta mint" href="anfrage.html?thema=Termine+und+Reisen">Nächsten Termin anfragen</a><a class="plain" href="#ziele">Tauchziele ansehen</a></div>'
+        body = dates(page)
     elif slug in {"kurse", "infos"}:
         template = "courses.html" if slug == "kurse" else "info.html"
         body = (SRC / template).read_text()

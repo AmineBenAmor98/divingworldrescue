@@ -49,6 +49,7 @@ if (form) {
   const params = new URLSearchParams(location.search);
   const product = params.get('produkt');
   const course = params.get('kurs');
+  const destination = params.get('ziel');
   let selected = params.get('thema');
   // Preserve catalogue and rental links after separating the two enquiry topics.
   if (selected === 'Ausrüstung und Verleih') selected = product ? 'Ausrüstung kaufen' : 'Ausrüstung leihen';
@@ -60,6 +61,10 @@ if (form) {
   if (course && ['Tauchkurs', 'Erste Hilfe'].includes(selected)) {
     interest.value = course.slice(0, 160);
     message.value = 'Hallo, ich interessiere mich für diesen Kurs. Wann ist ein Termin möglich?';
+  }
+  if (destination && selected === 'Termine und Reisen') {
+    interest.value = destination.slice(0, 160);
+    message.value = 'Hallo, ich möchte beim nächsten Termin mitkommen. Wann geht es wieder los?';
   }
   updateFields();
   topic.addEventListener('change', updateFields);

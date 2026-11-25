@@ -1,4 +1,6 @@
 """Visitors' guides, galleries and reference pages for the German site."""
+import re
+from collections import Counter
 from html import escape
 from itertools import groupby
 from urllib.parse import urlencode
@@ -82,16 +84,66 @@ def albums(page):
     return ''.join(out)
 
 
+VENUES = [
+    ("TODI · Beringen", "Hallentauchen", "Belgien", "Freitagabend und Samstag tauchen, auf Wunsch mit Übernachtung im Hotel."),
+    ("Dive4Life · Siegburg", "Hallentauchen", "Deutschland", "Kurse und freies Tauchen, oft übers Wochenende mit Hotel."),
+    ("Diveworld · Enschede", "Hallentauchen", "Niederlande", "Freitagabend tauchen, Anreise ab 16 Uhr, Hotel möglich."),
+    ("Monte Mare · Rheinbach", "Hallentauchen", "Deutschland", "Schnuppertauchen, Open-Water-Kurs und Fun-Dive."),
+    ("Südsee · Xanten", "See", "Deutschland", "Refresher, Kurse und freies Tauchen im Freiwasser."),
+    ("Safaga · Ägypten", "Tauchreise", "Rotes Meer", "7 bis 10 Tauchtage, Flug ab Düsseldorf. Auch für Nichttaucher."),
+]
+VENUE_KIND = {name: kind for name, kind, _, _ in VENUES} | {"Unterbacher See · Düsseldorf": "See"}
+
+
+def notice(text):
+    text = re.sub(r"⚠+|!AUSGEBUCHT!", "", text)
+    text = re.sub(r"\s*,(\s*,)+", ",", text)
+    text = re.sub(r"^([A-Z]) ([a-z])", r"\1\2", text.strip())
+    return re.sub(r"\s{2,}", " ", text).strip(" ,")
+
+
 def dates(page):
-    out = ['<section class="reader-panel"><div><h2>Den nächsten Termin finden</h2><p>Du möchtest einen Kurs machen oder mittauchen? Nenne uns den Kurs oder Tauchplatz und deinen Wunschzeitraum.</p></div><div>' + course_link("Termine und Reisen") + '<a class="dive-text-link" href="bilder-reisen-event-s.html">Vergangene Ausflüge ansehen</a></div></section><section class="reading"><h2>Terminarchiv</h2>']
-    for year, records in groupby(page["archive"], key=lambda e: e["year"]):
-        out.append(f'<details class="archive-period"><summary>{year}</summary><ol class="event-log">')
+    archive = page["archive"]
+    counts = Counter(record["name"] for record in archive)
+    first_year = min(record["year"] for record in archive)
+    request = "anfrage.html?" + escape(urlencode({"thema": "Termine und Reisen"}))
+    cards = []
+    for name, kind, region, program in VENUES:
+        venue, place = name.split(" · ")
+        link = "anfrage.html?" + escape(urlencode({"thema": "Termine und Reisen", "ziel": name}))
+        cards.append(f'''<article class="trip-card"><p class="trip-meta"><span class="trip-kind kind-{slugify(kind)}">{kind}</span>{escape(region)}</p>
+          <h3>{escape(venue)}</h3><p class="trip-place">{escape(place)}</p><p>{escape(program)}</p>
+          <footer><span>{counts[name]} Termine seit {first_year}</span><a href="{link}">Mitkommen<span class="sr-only"> nach {escape(place)}</span></a></footer></article>''')
+    facts = [
+        ("Jeder ist willkommen", "Einsteiger, erfahrene Taucher und Begleitung. Melde dich per Mail, Telefon oder WhatsApp."),
+        ("Anmeldung vorab", "Meist bis etwa eine Woche vor dem Termin, bei Reisen früher."),
+        ("Übernachten möglich", "Bei Ausflügen nach Belgien, in die Niederlande und nach Siegburg auf Wunsch mit Hotel."),
+        ("Andere Termine auf Anfrage", "Du hast einen Wunschtermin oder suchst einen Kurs? Frag einfach nach."),
+    ]
+    years = []
+    for index, (year, records) in enumerate(groupby(archive, key=lambda e: e["year"])):
+        records = list(records)
+        rows = []
         for record in records:
-            source = [page["blocks"][i]["text"].replace(" JANUAR 2025", "") for i in record["text_indices"]]
-            more = ' '.join(source)
-            out.append(f'<li><span>{escape(record["date"])}</span><div><strong>{escape(record["name"])}</strong><details><summary>Damals ausgeschrieben</summary>{paragraphs(more)}</details></div></li>')
-        out.append('</ol></details>')
-    return ''.join(out) + '</section>'
+            venue, _, place = record["name"].partition(" · ")
+            text = [notice(page["blocks"][i]["text"].replace(" JANUAR 2025", "")) for i in record["text_indices"]]
+            kind = VENUE_KIND.get(record["name"], "Ausflug")
+            body = "".join(f"<p>{escape(t)}</p>" for t in text if t)
+            rows.append(f'''<li><details><summary><time>{escape(record["date"])}</time><span class="log-name"><strong>{escape(venue)}</strong> {escape(place)}</span><span class="trip-kind kind-{slugify(kind)}">{kind}</span><span class="log-toggle">Ausschreibung</span></summary>
+              <div class="log-notice">{body}</div></details></li>''')
+        open_attr = " open" if index == 0 else ""
+        years.append(f'''<details class="log-year"{open_attr}><summary><span>{year}</span><small>{len(records)} Termine</small></summary><ol class="trip-log">{"".join(rows)}</ol></details>''')
+    return f'''<section class="trip-section" id="ziele"><div class="wrap">
+      <div class="trip-head"><div><p class="kicker">Tauchziele</p><h2>Hier tauchen wir regelmäßig.</h2></div>
+      <p>Vom Hallenbad in der Nähe bis ans Rote Meer. Such dir ein Ziel aus, wir sagen dir den nächsten Termin.</p></div>
+      <div class="trip-grid">{"".join(cards)}</div></div></section>
+    <section class="trip-facts" aria-label="So funktioniert es"><div class="wrap"><ul>{"".join(f"<li><strong>{a}</strong><span>{b}</span></li>" for a, b in facts)}</ul></div></section>
+    <section class="trip-archive"><div class="wrap">
+      <div class="trip-head"><div><p class="kicker">Rückblick</p><h2>Bisherige Termine</h2></div>
+      <p>{len(archive)} Ausflüge, Kurse und Reisen seit Januar {first_year}. <a class="path-action" href="bilder-reisen-event-s.html">Bilder ansehen</a></p></div>
+      {"".join(years)}</div></section>
+    <section class="landing-contact" aria-labelledby="trip-closing"><div class="wrap"><div><h2 id="trip-closing">Beim nächsten Mal dabei sein?</h2><p>Sag uns, wohin du mitkommen möchtest. Wir melden uns mit Termin und Details.</p></div>
+      <div class="closing-actions"><a class="cta mint" href="{request}">Termin anfragen</a><a class="plain" href="https://wa.me/4917685639763">WhatsApp schreiben</a></div></div></section>'''
 
 
 def guestbook(page):

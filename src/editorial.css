@@ -634,3 +634,72 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
   .equip-actions .cta { justify-content:center; }
   .equip-actions .path-action { align-self:center; }
 }
+
+/* Termine & Tauchausflüge */
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+.trip-section,.trip-archive { padding-block:var(--section); }
+.trip-archive { padding-top:0; }
+.trip-head { display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); align-items:end; gap:16px 48px; margin-bottom:40px; }
+.trip-head .kicker { margin:0 0 14px; color:var(--teal); }
+.trip-head h2 { margin:0; }
+.trip-head > p { margin:0; color:var(--muted); font-size:1.125rem; max-width:44ch; justify-self:end; }
+.trip-head > p .path-action { display:flex; width:fit-content; margin-top:10px; }
+.trip-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.trip-card { display:flex; flex-direction:column; padding:28px 28px 22px; background:var(--white); border:1px solid var(--line); border-radius:var(--radius); }
+.trip-meta { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0; color:var(--muted); font-size:.875rem; }
+.trip-kind { display:inline-flex; align-items:center; min-height:26px; padding:2px 10px; border-radius:999px; background:var(--sage); color:var(--teal-dark); font-size:.8125rem; font-weight:600; white-space:nowrap; }
+.trip-kind.kind-see { background:#e8f2f8; color:#24617c; }
+.trip-kind.kind-tauchreise { background:#f5efdf; color:#77603b; }
+.trip-card h3 { margin:22px 0 0; font-family:var(--serif); font-weight:400; font-size:var(--fs-h3); line-height:1.1; letter-spacing:-.015em; }
+.trip-place { margin:4px 0 0; color:var(--muted); }
+.trip-card > p:not(.trip-meta):not(.trip-place) { margin:16px 0 24px; font-size:.9375rem; line-height:1.55; text-wrap:pretty; }
+.trip-card footer { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:auto; padding-top:16px; border-top:1px solid var(--line); font-size:.875rem; }
+.trip-card footer span { color:var(--muted); }
+.trip-card footer a { display:inline-flex; align-items:center; gap:6px; min-height:44px; color:var(--teal); font-weight:600; text-decoration:none; }
+.trip-card footer a::after { content:"→"; transition:transform .2s; }
+.trip-card footer a:hover::after { transform:translateX(3px); }
+.trip-facts { padding-bottom:var(--section); }
+.trip-facts ul { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:24px 32px; margin:0; padding:32px 0 0; list-style:none; border-top:1px solid var(--line-strong); }
+.trip-facts li { display:grid; align-content:start; gap:6px; margin:0; }
+.trip-facts strong { font-size:1rem; font-weight:600; color:var(--ink); }
+.trip-facts span { color:var(--muted); font-size:.9375rem; line-height:1.55; }
+.log-year { border-top:1px solid var(--line-strong); }
+.log-year:last-child { border-bottom:1px solid var(--line-strong); }
+.log-year > summary { min-height:72px; color:var(--ink); }
+.log-year > summary > span { font-family:var(--serif); font-weight:400; font-size:1.75rem; letter-spacing:-.01em; }
+.log-year > summary > small { margin-left:auto; margin-right:8px; color:var(--muted); font-size:.875rem; font-weight:600; }
+.log-year > summary::after { color:var(--teal); }
+.log-year:not([open]) > summary::after { content:"+"; }
+.log-year[open] > summary::after { content:"−"; }
+.trip-log { margin:0 0 24px; padding:0; list-style:none; }
+.trip-log li { margin:0; border-top:1px solid var(--line); }
+.trip-log summary { display:grid; grid-template-columns:9.5rem minmax(0,1fr) auto 8.5rem; align-items:center; gap:16px; min-height:56px; padding:8px 12px; margin-inline:-12px; border-radius:var(--radius-s); color:var(--ink); font-weight:400; }
+.trip-log summary:hover { background:var(--white); }
+.trip-log summary::after { display:none; }
+.trip-log time { font-weight:600; font-variant-numeric:tabular-nums; }
+.log-name { color:var(--muted); min-width:0; }
+.log-name strong { color:var(--ink); font-weight:600; margin-right:4px; }
+.log-toggle { justify-self:end; color:var(--teal); font-size:.875rem; font-weight:600; }
+.log-toggle::after { content:"+"; display:inline-block; width:1em; margin-left:6px; text-align:center; }
+.trip-log details[open] .log-toggle::after { content:"−"; }
+.log-notice { padding:0 0 20px 11.5rem; max-width:calc(70ch + 11.5rem); color:var(--muted); font-size:.9375rem; line-height:1.6; }
+.log-notice p { margin:0 0 6px; }
+@media (max-width:1080px) {
+  .trip-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .trip-facts ul { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:700px) {
+  .trip-head { grid-template-columns:1fr; margin-bottom:28px; }
+  .trip-head > p { justify-self:start; font-size:1rem; }
+  .trip-grid { grid-template-columns:1fr; gap:14px; }
+  .trip-card { padding:22px 20px 16px; }
+  .trip-card h3 { margin-top:16px; }
+  .trip-facts ul { grid-template-columns:1fr; gap:20px; padding-top:28px; }
+  .trip-log summary { grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"time kind" "name toggle"; gap:2px 12px; padding:12px 8px; margin-inline:-8px; }
+  .trip-log time { grid-area:time; font-size:.875rem; }
+  .trip-log .log-name { grid-area:name; }
+  .trip-log .trip-kind { grid-area:kind; justify-self:end; }
+  .trip-log .log-toggle { grid-area:toggle; font-size:0; }
+  .trip-log .log-toggle::after { font-size:1.25rem; margin:0; }
+  .log-notice { padding:0 0 16px; }
+}
