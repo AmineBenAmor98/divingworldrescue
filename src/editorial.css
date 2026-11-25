@@ -1448,3 +1448,4 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
   .dive-specialties .dive-course-links { grid-template-columns:minmax(0,1fr); }
   .dive-specialties { margin-top:28px; padding-top:24px; }
 }
+.dive-next-footer .dive-text-link::after,.trial-discover::after { content:none; }
