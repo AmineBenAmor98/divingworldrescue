@@ -4,7 +4,7 @@ import re
 from hashlib import sha256
 import shutil
 import os
-from urllib.parse import urljoin, urlsplit
+from urllib.parse import urlencode, urljoin, urlsplit
 from shop import category_photo, catalogue_items, category_products, product_detail, shop_directory
 from html import escape
 from editorial import albums, closing_band, course_link, dates, first_aid, guestbook, home_news, hud, jobs, legal, travel_archive, trip_tiles
@@ -172,6 +172,13 @@ def inner(page):
         main = (SRC / "dive-courses.html").read_text().replace("{{breadcrumb}}", crumb)
         main = main.replace("{{owd_price}}", escape(fees["Open Water Diver"]))
         main = main.replace("{{trial_price}}", escape(fees["Schnuppertauchen"]))
+        main = main.replace("{{scuba_price}}", escape(fees["Scuba Diver"])).replace("{{aowd_price}}", escape(fees["Advanced Open Water Diver"]))
+        def chips(names):
+            return '<ul class="dive-chips">' + "".join(f'<li><a href="anfrage.html?{escape(urlencode({"thema": "Tauchkurs", "kurs": n}))}">{escape(n)}</a></li>' for n in names) + "</ul>"
+        main = main.replace("{{reentry}}", chips(["Auffrischungskurs", "Indoor Diver", "Discover Scuba Diver"]))
+        main = main.replace("{{pro}}", chips(["Rescue Diver", "Divemaster", "Assistant Instructor"]))
+        main = main.replace("{{special}}", chips(["Nachttauchen", "Wracktauchen", "Tarierung", "Unterwassernavigation", "Tieftauchen", "Trockentauchen", "Suchen und Bergen", "UW-Scooter"]))
+        main = main.replace("{{closing}}", closing_band("Noch unsicher, welcher Kurs passt?", "Erzähl uns kurz, was du schon gemacht hast. Wir empfehlen dir den passenden Einstieg.", "anfrage.html?thema=Tauchkurs", "Beratung anfragen", "dive-closing"))
         return page_shell(title, main, section, slug)
     intro = f'<p class="cover-copy">{escape(INTRO[slug])}</p>' if slug in INTRO else ""
     if slug == "tauch-shop":
