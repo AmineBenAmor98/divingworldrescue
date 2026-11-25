@@ -220,20 +220,34 @@ def home_offers():
 
 def equipment_preview():
     entries = [
-        ("computer", "Tauchcomputer"),
-        ("atemregler-zubehoer", "Atemregler"),
-        ("jacket-bcd", "Jackets & Wings"),
-        ("neopren", "Anzüge & Neopren"),
+        ("computer", "Tauchcomputer", "Uhrenmodelle von Ratio, DiveBrain und SUNROAD."),
+        ("atemregler-zubehoer", "Atemregler", "Erste und zweite Stufen, Oktopusse und Sets."),
+        ("jacket-bcd", "Jackets & Wings", "Tarierjackets für Sport- und Reisetauchen."),
+        ("neopren", "Anzüge & Neopren", "Nass- und Trockenanzüge, Füßlinge, Handschuhe."),
+    ]
+    more = [
+        ("tauch-shop--masken-flossenzubehoer", "Masken & Flossen"),
+        ("tauch-shop--zubehoer", "Zubehör"),
+        ("tauch-shop--koffer-taschen", "Koffer & Taschen"),
+        ("tauch-shop--bekleidung", "Bekleidung"),
+        ("tauch-shop--schmuck", "Schmuck"),
+        ("hud", "Head-up-Display"),
     ]
     cards = []
-    for suffix, label in entries:
+    for suffix, label, description in entries:
         page = BY_SLUG["tauch-shop--" + suffix]
         photo = category_photo(page).removeprefix("../")
-        cards.append(f'<a href="pages/{page["slug"]}.html"><img src="{photo}" loading="lazy" alt=""><strong>{escape(label)}</strong></a>')
+        count = len(catalogue_items(page))
+        cards.append(f'''<a class="equip-card" href="pages/{page["slug"]}.html">
+          <span class="equip-stage"><img src="{photo}" loading="lazy" alt=""></span>
+          <span class="equip-body"><strong>{escape(label)}</strong><span>{escape(description)}</span><small>{count} Artikel</small></span></a>''')
+    chips = ''.join(f'<li><a href="pages/{slug}.html">{escape(label)}</a></li>' for slug, label in more if slug in BY_SLUG)
     return '''<section class="home-equipment" id="ausruestung"><div class="wrap">
-      <div class="landing-heading"><p class="kicker">Ausrüstung kaufen</p><h2>Passend zu deinem Tauchgang.</h2><p>Tauchcomputer, Atemregler, Jackets und Anzüge. Frag das Team, was zu dir und deinem Tauchplatz passt.</p></div>
-      <div class="home-equipment-grid">''' + ''.join(cards) + '''</div>
-      <div class="section-actions centered"><a class="cta" href="pages/tauch-shop.html">Zum gesamten Sortiment</a><a class="path-action" href="pages/sonderangebote.html">Sonderangebote</a></div>
+      <div class="equip-head"><div><p class="kicker">Ausrüstung kaufen</p><h2>Passend zu deinem Tauchgang.</h2></div>
+      <p>Wir beraten dich persönlich, welches Modell zu dir und deinem Tauchplatz passt.</p></div>
+      <div class="equip-grid">''' + ''.join(cards) + '''</div>
+      <div class="equip-foot"><nav aria-label="Weitere Kategorien"><span>Außerdem im Shop</span><ul>''' + chips + '''</ul></nav>
+      <div class="equip-actions"><a class="cta" href="pages/tauch-shop.html">Zum gesamten Sortiment</a><a class="path-action" href="pages/sonderangebote.html">Sonderangebote</a></div></div>
     </div></section>'''
 
 
