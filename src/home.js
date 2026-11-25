@@ -27,19 +27,58 @@ function setupFilm() {
     return;
   }
   const playback = document.querySelector('.playback');
+  const ring = playback.querySelector('.playback-ring circle');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const connection = navigator.connection || {};
+  const lightData = connection.saveData || /(^|-)2g$/.test(connection.effectiveType || '');
+  let chosenPause = reduced.matches || lightData;
+  let inView = true;
   film.muted = true;
   playback.hidden = false;
   function reflectPlayback() {
+    const label = film.paused ? 'Animation abspielen' : 'Animation pausieren';
     playback.classList.toggle('paused', film.paused);
-    playback.setAttribute('aria-label', film.paused ? 'Animation abspielen' : 'Animation pausieren');
+    playback.setAttribute('aria-label', label);
+    playback.title = label;
   }
-  function startFilm() { film.play().catch(reflectPlayback); }
+  function drawProgress() {
+    if (film.duration) ring.style.strokeDashoffset = String(100 - (film.currentTime / film.duration) * 100);
+    if (!film.paused) requestAnimationFrame(drawProgress);
+  }
+  function startFilm() { film.play().then(drawProgress).catch(reflectPlayback); }
   film.addEventListener('play', reflectPlayback);
   film.addEventListener('pause', reflectPlayback);
-  playback.addEventListener('click', () => { if (film.paused) startFilm(); else film.pause(); });
-  reduced.addEventListener('change', event => { if (event.matches) film.pause(); });
-  if (!reduced.matches) startFilm();
+  film.addEventListener('playing', () => film.classList.add('is-playing'), { once: true });
+  playback.addEventListener('click', () => {
+    chosenPause = !film.paused;
+    if (chosenPause) film.pause(); else startFilm();
+  });
+  let flashTimer;
+  function flash() {
+    playback.classList.add('is-flashing');
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(() => playback.classList.remove('is-flashing'), 1400);
+  }
+  playback.addEventListener('click', flash);
+  // Touch screens have no hover: a tap on the moving picture itself pauses or resumes it.
+  const hero = film.closest('.hero');
+  if (matchMedia('(hover: none)').matches) {
+    hero.addEventListener('click', event => {
+      if (event.target.closest('a, button, input, select, textarea')) return;
+      const scene = film.getBoundingClientRect();
+      if (event.clientY > scene.bottom) return;
+      playback.click();
+    });
+  }
+  reduced.addEventListener('change', event => { if (event.matches) { chosenPause = true; film.pause(); } });
+  // Stop decoding while the hero is scrolled away; resume unless the visitor paused it.
+  new IntersectionObserver(([entry]) => {
+    inView = entry.isIntersecting;
+    if (!inView) film.pause();
+    else if (!chosenPause) startFilm();
+  }, { threshold: 0.15 }).observe(film);
+  reflectPlayback();
+  if (!chosenPause) startFilm();
 }
 setupFilm();
 

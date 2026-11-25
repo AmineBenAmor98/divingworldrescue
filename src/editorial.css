@@ -1106,3 +1106,125 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 .program-feature::after { background:linear-gradient(180deg,rgba(6,34,36,0) 0%,rgba(6,34,36,.15) 25%,rgba(6,34,36,.82) 55%,rgba(6,34,36,.95) 100%); }
 .program-feature > img { object-position:center 20%; }
 .program-prices small::after { content:none !important; }
+
+/* ===== Polish pass ===== */
+/* Contact block: one left-aligned list under the WhatsApp button */
+.contact-options { max-width:440px; }
+.contact-options .contact-line { justify-content:flex-start; text-align:left; gap:16px; padding:12px 4px; }
+.contact-options .contact-line svg { margin-top:0; }
+.contact-options .contact-line span { display:grid; gap:2px; color:var(--white); font-size:1.0625rem; }
+.contact-options .contact-line .phone-hours { margin:0; font-size:.8125rem; color:var(--on-dark-muted); }
+.contact-options .contact-line:last-child { border-bottom:0; }
+.contact-options .contact-line:hover span { color:var(--mint); }
+.reader-panel { max-width:none; }
+.reader-panel .product-link { min-height:44px; align-items:center; }
+/* Contact links already carry an icon; no trailing arrow */
+.path-action[href^="tel:"]::after,.path-action[href^="mailto:"]::after,.path-action[href*="wa.me"]::after,
+.dive-text-link[href^="tel:"]::after,.dive-text-link[href^="mailto:"]::after,.dive-text-link[href*="wa.me"]::after { content:none; }
+@media (max-width:700px){ .legal-text dd .icon-link { padding-block:9px; } }
+@media (max-width:700px) {
+  /* Centre an orphaned last row of two team faces */
+  .home-team-preview .home-team-faces { grid-template-columns:repeat(6,minmax(0,1fr)); }
+  .home-team-preview .home-team-faces li { grid-column:span 2; }
+  .home-team-preview .home-team-faces li:nth-last-child(2):nth-child(3n+1) { grid-column:2 / span 2; }
+  /* Text on wide photo tiles sits over busier image areas: darken more */
+  .trip-tile::after,.program-tile::after { background:linear-gradient(180deg,rgba(6,34,36,.05) 15%,rgba(6,34,36,.55) 45%,rgba(6,34,36,.92) 100%); }
+}
+/* ===== Hero animation control ===== */
+.hero .playback { bottom:28px; right:var(--gutter); width:44px; height:44px; padding:0; border:0; border-radius:50%; background:rgba(4,30,33,.32); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); color:#fff; opacity:.72; cursor:pointer; transition:opacity .25s ease, background .25s ease, transform .25s ease; }
+.hero .playback:hover,.hero .playback:focus-visible { opacity:1; background:rgba(4,30,33,.55); }
+.hero .playback:active { transform:scale(.94); }
+.hero .playback:focus-visible { outline:2px solid var(--mint); outline-offset:3px; }
+.hero .playback svg { position:absolute; inset:0; margin:auto; }
+.hero .playback .playback-ring { width:44px; height:44px; transform:rotate(-90deg); fill:none; stroke-width:1.5; }
+.hero .playback { box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22); }
+.playback-ring circle { stroke:rgba(255,255,255,.9); stroke-dasharray:100; stroke-dashoffset:100; stroke-linecap:round; }
+.hero .playback .playback-glyph { width:16px; height:16px; fill:currentColor; }
+@media (max-width:700px) { .hero .playback { top:14px; bottom:auto; right:14px; } }
+@media (prefers-reduced-motion: reduce) { .hero .playback { transition:none; } }
+/* Control appears only when needed: hover or keyboard focus on desktop,
+   briefly after a tap on phones, and whenever the animation is paused. */
+.hero .playback { opacity:0; }
+@media (hover:hover) { .hero:hover .playback { opacity:.72; } }
+.hero .playback.paused,.hero .playback.is-flashing { opacity:.72; }
+.hero .playback:hover,.hero .playback:focus-visible { opacity:1; }
+
+/* ===== Erste-Hilfe page v2 ===== */
+.aid-cover.aid-cover-v2 { background-image:linear-gradient(90deg,rgba(5,38,41,.96) 0%,rgba(5,38,41,.88) 38%,rgba(5,38,41,.45) 72%,rgba(5,38,41,.25) 100%),url('assets/erste-hilfe-familie.webp'); background-size:cover; background-position:center 40%; }
+.aid-cover-v2 .wrap { text-align:left; padding-block:clamp(40px,6vw,88px); }
+.aid-cover-v2 h1 { margin-inline:0; }
+.aid-cover-v2 p { margin-inline:0; max-width:48ch; }
+.aid-cover-v2 .crumb { text-align:left; }
+.aid-cover-v2 .cover-choices { justify-content:flex-start; margin-top:28px; }
+
+.aid-paths-section { background:var(--paper); padding-block:clamp(48px,6vw,80px) 0; }
+.aid-paths-title { font-size:var(--fs-h3); margin-bottom:20px; }
+.aid-paths { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.aid-path { position:relative; display:grid; align-content:end; min-height:300px; overflow:hidden; border-radius:var(--radius); color:var(--white); text-decoration:none; isolation:isolate; }
+.aid-path img { position:absolute; inset:0; z-index:-2; width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
+.aid-path::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(6,34,36,0) 25%,rgba(6,34,36,.55) 55%,rgba(6,34,36,.92) 100%); }
+.aid-path:hover img { transform:scale(1.04); }
+.aid-path-copy { display:grid; gap:6px; padding:22px 24px; }
+.aid-path-copy strong { font-family:var(--serif); font-weight:400; font-size:clamp(1.5rem,2.2vw,1.875rem); line-height:1.15; }
+.aid-path-copy strong::after { content:" ↓"; font-family:var(--sans); font-size:.6em; opacity:.8; }
+.aid-path-copy > span:not(.program-chip) { color:var(--on-dark); font-size:.9375rem; }
+.aid-path:focus-visible { outline:3px solid var(--mint); outline-offset:3px; }
+
+.aid-how { background:var(--paper); padding-block:clamp(56px,7vw,96px); }
+.aid-how-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2.2fr); gap:clamp(24px,5vw,72px); align-items:start; }
+.aid-how h2 { font-size:var(--fs-h2); }
+
+.aid-group { padding-block:clamp(56px,7vw,96px); background:var(--paper); border-top:1px solid var(--line); }
+.aid-group-alt { background:var(--sage); border-top:0; }
+.aid-group-alt + .aid-group { border-top:0; }
+.aid-group-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2.2fr); gap:clamp(24px,5vw,72px); align-items:start; }
+.aid-group-head { position:sticky; top:24px; display:grid; gap:12px; }
+.aid-group-head h2 { font-size:var(--fs-h2); }
+.aid-group-head > p:not(.kicker) { color:var(--muted); max-width:36ch; }
+.aid-team-offer { margin-top:12px; padding:20px 22px; background:var(--white); border:1px solid var(--line); border-left:3px solid var(--teal); border-radius:var(--radius-s); display:grid; gap:8px; }
+.aid-team-offer h3 { font-family:var(--sans); font-size:1.0625rem; font-weight:600; letter-spacing:0; }
+.aid-team-offer p { color:var(--muted); font-size:.9375rem; margin:0; }
+.aid-team-offer .path-action { justify-self:start; min-height:44px; display:inline-flex; align-items:center; }
+
+.aid-course-list { display:grid; gap:16px; }
+.aid-course-row { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:28px; align-items:center; padding:26px 28px; background:var(--white); border:1px solid var(--line); border-radius:var(--radius); }
+.aid-course-copy h3 { font-family:var(--sans); font-size:1.1875rem; font-weight:600; line-height:1.3; letter-spacing:-.005em; }
+.aid-course-copy p { margin-top:8px; color:var(--muted); font-size:.9375rem; line-height:1.6; max-width:58ch; }
+.aid-course-buy { display:grid; justify-items:end; gap:4px; min-width:210px; padding-left:28px; border-left:1px solid var(--line); text-align:right; }
+.aid-from { display:grid; margin:0; }
+.aid-from small { color:var(--muted); font-size:.8125rem; }
+.aid-from strong { font-family:var(--serif); font-weight:400; font-size:1.875rem; line-height:1.1; color:var(--ink); }
+.aid-from .aid-ask { font-size:1.375rem; }
+.aid-options { margin:0; color:var(--muted); font-size:.8125rem; }
+.aid-course-buy .aid-request { margin-top:10px; min-height:44px; padding:10px 22px; }
+.aid-course-buy .aid-request::after { content:none; }
+
+.aid-more { background:var(--paper); padding-block:0 clamp(56px,7vw,96px); }
+.aid-group:last-of-type + .aid-more { padding-top:clamp(40px,5vw,64px); }
+.aid-material { display:grid; grid-template-columns:auto 1fr auto; gap:6px 24px; align-items:center; padding:22px 28px; border:1px solid var(--line-strong); border-radius:var(--radius); text-decoration:none; color:var(--ink); transition:background .2s ease; }
+.aid-material:hover { background:var(--white); }
+.aid-material strong { font-size:1.0625rem; font-weight:600; }
+.aid-material span:not(.path-action) { color:var(--muted); font-size:.9375rem; }
+
+@media (max-width:900px) {
+  .aid-how-layout,.aid-group-layout { grid-template-columns:1fr; }
+  .aid-group-head { position:static; }
+  .aid-paths { grid-template-columns:1fr; gap:12px; }
+  .aid-path { min-height:0; aspect-ratio:16/8; }
+}
+@media (max-width:700px) {
+  .aid-cover.aid-cover-v2 { background-image:linear-gradient(180deg,rgba(5,38,41,.86),rgba(5,38,41,.94)),url('assets/erste-hilfe-familie.webp'); }
+  .aid-path { aspect-ratio:16/9; }
+  .aid-path-copy { padding:16px 18px; }
+  .aid-course-row { grid-template-columns:1fr; gap:18px; padding:22px 20px; }
+  .aid-course-buy { grid-template-columns:1fr auto; align-items:end; justify-items:start; min-width:0; padding:18px 0 0; border-left:0; border-top:1px solid var(--line); text-align:left; }
+  .aid-course-buy .aid-request { grid-column:2; grid-row:1 / span 2; margin:0; align-self:center; }
+  .aid-material { grid-template-columns:1fr; padding:20px; }
+}
+@media (min-width:901px) {
+  .aid-group-layout,.aid-how-layout { grid-template-columns:minmax(0,.8fr) minmax(0,2.4fr); }
+  .aid-course-buy { min-width:180px; padding-left:24px; }
+}
+.aid-options span { white-space:nowrap; }
+@media (min-width:901px) { .aid-group-layout,.aid-how-layout { grid-template-columns:minmax(270px,.9fr) minmax(0,2.4fr); } }
+.aid-team-offer .path-action { white-space:nowrap; }

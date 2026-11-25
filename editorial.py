@@ -37,46 +37,60 @@ def course_link(topic, course=None, label="Termin anfragen"):
 
 
 AID_GROUPS = {
-    "Alltag & Familie": ("erste-hilfe-familie.webp", "erste-hilfe.webp", "Für Eltern, Großeltern, Betreuende und alle, die im Notfall sicher helfen möchten."),
-    "Beruf & Betrieb": ("erste-hilfe-beruf.webp", "erste-hilfe.webp", "Für Unternehmen, Betreuungspersonal und alle, die bei der Arbeit Verantwortung tragen."),
-    "Tauchsport": ("erste-hilfe-tauchen.webp", "tauchen.webp", "Für Taucher und Begleiter: richtig handeln, wenn beim Tauchen etwas passiert."),
+    "Alltag & Familie": ("erste-hilfe-familie.webp", "erste-hilfe.webp", "Für Eltern, Großeltern, Betreuende und alle, die im Notfall sicher helfen möchten.", "Eltern, Großeltern, Babysitter"),
+    "Beruf & Betrieb": ("erste-hilfe-beruf.webp", "erste-hilfe.webp", "Für Unternehmen, Betreuungspersonal und alle, die bei der Arbeit Verantwortung tragen.", "Firmen, Kitas, Schulen"),
+    "Tauchsport": ("erste-hilfe-tauchen.webp", "tauchen.webp", "Für Taucher und Begleiter: richtig handeln, wenn beim Tauchen etwas passiert.", "Taucher, Tauchprofis, Bootspersonal"),
 }
 
 
+def euro(value):
+    return float(value.replace("€", "").replace(".", "").replace(",", ".").strip())
+
+
+def aid_card(c):
+    """One course row: what it is on the left, what the material costs and the request on the right."""
+    request = course_link("Erste Hilfe", c["name"], "Anfragen").replace('class="path-action"', 'class="cta aid-request"')
+    if c["online"]:
+        cheapest = min((c["online"], c["book"]), key=euro)
+        price = f'''<p class="aid-from"><small>Lernmaterial ab</small><strong>{cheapest}</strong></p>
+          <p class="aid-options"><span>E-Learning {c["online"]}</span> · <span>Handbuch {c["book"]}</span></p>'''
+    else:
+        price = '<p class="aid-from"><small>Preis</small><strong class="aid-ask">auf Anfrage</strong></p>'
+    return f'''<article class="aid-course-row"><div class="aid-course-copy"><h3>{escape(c["name"])}</h3><p>{escape(c["summary"])}</p></div>
+      <div class="aid-course-buy">{price}{request}</div></article>'''
+
+
 def first_aid(page, breadcrumb):
-    sections = []
-    tabs = []
-    for group, courses in groupby(page["programmes"], key=lambda c: c["group"]):
-        anchor = slugify(group)
-        courses = list(courses)
-        tabs.append(f'<a href="#{anchor}">{escape(group)}<small>{len(courses)} Kurs{"e" if len(courses) != 1 else ""}</small></a>')
-        image, fallback, intro = AID_GROUPS.get(group, ("", "erste-hilfe.webp", ""))
-        cards = []
-        for c in courses:
-            if c["online"]:
-                fees = f'''<dl class="aid-prices"><div><dt>E-Learning</dt><dd>{c["online"]}</dd></div><div><dt>Handbuch</dt><dd>{c["book"]}</dd></div></dl>
-                <p class="aid-note">Lernmaterial wahlweise. Die Praxisschulung kommt je nach Ort hinzu.</p>'''
-            else:
-                fees = '<p class="aid-note aid-note-solo">Preis und Ablauf auf Anfrage.</p>'
-            cards.append(f'''<article class="aid-card"><h3>{escape(c["name"])}</h3><p>{escape(c["summary"])}</p>
-              <div class="aid-fees">{fees}</div>{course_link("Erste Hilfe", c["name"], "Diesen Kurs anfragen")}</article>''')
-        sections.append(f'''<section class="aid-section" id="{anchor}"><div class="wrap">
-          <div class="aid-intro"><img src="{slot(image, fallback)}" alt="" loading="lazy"><div><p class="kicker">Erste Hilfe</p><h2>{escape(group)}</h2><p>{escape(intro)}</p></div></div>
-          <div class="aid-cards">{"".join(cards)}</div></div></section>''')
     request = "anfrage.html?" + escape(urlencode({"thema": "Erste Hilfe"}))
-    return f'''<header class="aid-cover"><div class="wrap">{breadcrumb}<h1>Erste-Hilfe-Kurse</h1><p>Vom Kindernotfall bis zum Tauchunfall. Finde die Ausbildung von First Response Training International, die zu deinem Alltag passt.</p>
+    paths, sections = [], []
+    groups = [(g, list(cs)) for g, cs in groupby(page["programmes"], key=lambda c: c["group"])]
+    for i, (group, courses) in enumerate(groups):
+        anchor = slugify(group)
+        image, fallback, intro, audience = AID_GROUPS.get(group, ("", "erste-hilfe.webp", "", ""))
+        count = f'{len(courses)} Kurs{"e" if len(courses) != 1 else ""}'
+        paths.append(f'''<a class="aid-path" href="#{anchor}"><img src="{slot(image, fallback)}" alt="" loading="lazy">
+          <span class="aid-path-copy"><span class="program-chip">{count}</span><strong>{escape(group)}</strong><span>{escape(audience)}</span></span></a>''')
+        extra = ""
+        if group == "Beruf & Betrieb":
+            extra = f'''<aside class="aid-team-offer"><h3>Für dein ganzes Team</h3><p>Wir schulen Firmen, Kindergärten und Schulklassen ab der ersten Klasse als Gruppe. Eine Ausbildung nach DGUV&nbsp;304&#8209;001 kannst du anfragen.</p>
+              {course_link("Erste Hilfe", label="Gruppenkurs anfragen")}</aside>'''
+        sections.append(f'''<section class="aid-group{' aid-group-alt' if i % 2 else ''}" id="{anchor}" aria-labelledby="{anchor}-title"><div class="wrap aid-group-layout">
+          <div class="aid-group-head"><p class="kicker">{count}</p><h2 id="{anchor}-title">{escape(group)}</h2><p>{escape(intro)}</p>{extra}</div>
+          <div class="aid-course-list">{"".join(aid_card(c) for c in courses)}</div></div></section>''')
+    return f'''<header class="aid-cover aid-cover-v2"><div class="wrap">{breadcrumb}<h1>Erste-Hilfe-Kurse</h1><p>Vom Kindernotfall bis zum Tauchunfall: Lerne, im Ernstfall ruhig und richtig zu helfen. Nach den Standards von First Response Training International (FRTI).</p>
     <div class="cover-choices"><a class="cta mint" href="{request}">Kurs anfragen</a><a class="plain" href="#ablauf">So läuft ein Kurs ab</a></div></div></header>
-    <nav class="aid-tabs" aria-label="Kursbereiche"><div class="wrap">{"".join(tabs)}</div></nav>
+    <section class="aid-paths-section" aria-labelledby="aid-paths-title"><div class="wrap">
+      <h2 id="aid-paths-title" class="aid-paths-title">Für wen ist der Kurs?</h2>
+      <nav class="aid-paths" aria-label="Kursbereiche">{"".join(paths)}</nav></div></section>
+    <section class="aid-how" id="ablauf" aria-labelledby="ablauf-title"><div class="wrap aid-how-layout">
+      <div><p class="kicker">Ablauf</p><h2 id="ablauf-title">So läuft ein Kurs ab</h2></div>
+      <ol class="step-list aid-how-steps">
+        <li><strong>Theorie vorbereiten</strong><span>Per E-Learning oder mit dem Handbuch, in deinem Tempo. Du wählst eins davon.</span></li>
+        <li><strong>Praxis mit Ausbilder</strong><span>Die praktischen Übungen und der Abschluss folgen mit einem Ausbilder. Die Kosten dafür kommen je nach Ort hinzu.</span></li>
+        <li><strong>Ab 18 Jahren</strong><span>Mit Zustimmung der Eltern kannst du schon ab 10 Jahren teilnehmen.</span></li>
+      </ol></div></section>
     {"".join(sections)}
-    <section class="aid-steps" id="ablauf"><div class="wrap">{section_head("Ablauf", "So läuft ein Kurs ab")}
-      <ol class="step-list">
-        <li><strong>Theorie vorbereiten</strong><span>Per E-Learning oder mit dem Handbuch, in deinem Tempo.</span></li>
-        <li><strong>Praxis mit Ausbilder</strong><span>Die praktischen Übungen und der Abschluss folgen mit einem Ausbilder.</span></li>
-        <li><strong>Teilnahme ab 18 Jahren</strong><span>Mit Zustimmung der Eltern schon ab 10 Jahren.</span></li>
-      </ol>
-      <aside class="aid-group-offer"><div><h3>Als Gruppe teilnehmen</h3><p>Angebote für Firmen, Kindergärten und Schulklassen ab der ersten Klasse. Eine Ausbildung nach DGUV 304-001 kannst du anfragen.</p></div>
-      <div class="aid-group-actions">{course_link("Erste Hilfe", label="Gruppenkurs anfragen")}<a class="path-action" href="tauch-shop.html#erste-hilfe">Erste-Hilfe-Material ansehen</a></div></aside>
-    </div></section>
+    <section class="aid-more"><div class="wrap"><a class="aid-material" href="tauch-shop.html#erste-hilfe"><strong>Erste-Hilfe-Material</strong><span>Erste-Hilfe-Sets, Pflaster, Scheren und Diagnostikleuchten aus unserem Shop.</span><span class="path-action">Material ansehen</span></a></div></section>
     {closing_band("Bereit für den Ernstfall?", "Sag uns, welcher Kurs passt und wann du Zeit hast. Wir melden uns mit einem Termin.", request, "Kurs anfragen", "aid-closing")}'''
 
 

@@ -6,6 +6,8 @@ from urllib.parse import urlsplit, unquote, parse_qs
 import re
 
 DIST = Path(__file__).resolve().parent / "dist"
+CNAME = Path(__file__).resolve().parent / "CNAME"
+OWN_HOST = CNAME.read_text().strip() if CNAME.exists() else None
 
 
 class Document(HTMLParser):
@@ -33,6 +35,10 @@ class Document(HTMLParser):
         for key in ('src', 'poster', 'href', 'action'):
             if values.get(key):
                 self.urls.append(values[key])
+        if values.get('srcset'):
+            self.urls.extend(part.split()[0] for part in values['srcset'].split(','))
+        if tag == 'meta' and values.get('property') in ('og:url', 'og:image'):
+            self.urls.append(values['content'])
 
 
 def check():
@@ -47,6 +53,11 @@ def check():
         for url in doc.urls:
             parts = urlsplit(url)
             if parts.scheme in ('tel', 'mailto'):
+                continue
+            if OWN_HOST and parts.hostname == OWN_HOST:
+                assert parts.scheme == 'https', (path, url)
+                target = DIST / (unquote(parts.path).lstrip('/') or 'index.html')
+                assert target.is_file(), (path, url)
                 continue
             if parts.scheme or parts.netloc:
                 allowed = parts.hostname == 'wa.me' or (parts.hostname == 'www.google.com' and parts.path.startswith('/maps/place/'))
@@ -75,6 +86,10 @@ def check():
             seen.add(current)
             todo.extend(edges[current] - seen)
     assert seen == set(docs), set(docs) - seen
+    if OWN_HOST:
+        sitemap = (DIST / 'sitemap.xml').read_text()
+        listed = {DIST / (urlsplit(u).path.lstrip('/') or 'index.html') for u in re.findall(r'<loc>([^<]+)</loc>', sitemap)}
+        assert listed == set(docs), set(docs) ^ listed
     print(f'{len(docs)} pages reachable. Local links, media, anchors and form destinations passed.')
 
 

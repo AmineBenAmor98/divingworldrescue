@@ -1,5 +1,6 @@
 """Build the independent, offline-browsable German website with Python 3."""
 import json
+import re
 from hashlib import sha256
 import shutil
 import os
@@ -291,8 +292,89 @@ def google_reviews():
 
 
 
+# Search titles and descriptions. Visible page copy stays as written; these
+# only feed <title>, the meta description and social previews.
+SEO = {
+    "index.html": ("Tauchschule Düsseldorf: Tauchkurse & Erste Hilfe", "Tauchschule in Düsseldorf: Schnuppertauchen, Tauchschein nach SDI/TDI und PSS, inklusives Tauchen mit Scubility, Erste-Hilfe-Kurse nach FRTI sowie Tauchausrüstung zum Kaufen und Leihen."),
+    "kurse": ("Tauchkurse in Düsseldorf: Schnuppertauchen bis Divemaster", "Tauchkurse in Düsseldorf: Schnuppertauchen, Open Water Diver, Advanced, Rescue und Spezialkurse nach SDI/TDI und PSS. Finde den passenden Einstieg."),
+    "tauchen-lernen-kurse": ("Tauchen lernen in Düsseldorf: Tauchschein Open Water Diver", "Tauchen lernen in Düsseldorf: Mit dem Open Water Diver machst du deinen Tauchschein in Theorie, Hallenbad und Freiwasser. Auch Schnuppertauchen und Wiedereinstieg."),
+    "preis-kurse": ("Tauchkurs Preise: Schnuppertauchen, Tauchschein & Weiterbildung", "Was kostet ein Tauchkurs? Kursgebühren für Schnuppertauchen, Scuba Diver, Open Water und Advanced Open Water Diver mit allen enthaltenen Leistungen."),
+    "frti-kurse": ("Erste-Hilfe-Kurs Düsseldorf: Familie, Beruf & Tauchsport", "Erste-Hilfe-Kurse in Düsseldorf nach First Response Training International: für Eltern und Familie, für Betriebe und für Taucher mit Sauerstoffgabe."),
+    "tauch-shop": ("Tauchshop Düsseldorf: Tauchausrüstung kaufen & leihen", "Tauchausrüstung in Düsseldorf: Atemregler, Tauchcomputer, Jackets, Anzüge, Masken und Flossen mit persönlicher Beratung, auch zum Leihen."),
+    "equipment-verleih": ("Tauchausrüstung leihen in Düsseldorf: Leihpreise", "Tauchausrüstung leihen: Atemregler, Tauchcomputer, Jacket, Anzug und Flossen pro Tag, Wochenende oder Woche. Alle Leihpreise im Überblick."),
+    "termine": ("Tauchausflüge & Termine: Hallentauchen, See & Rotes Meer", "Gemeinsam tauchen: Hallentauchen im TODI, Diveworld, Dive4Life und Monte Mare, Seetauchen in Xanten und Tauchreisen nach Safaga am Roten Meer."),
+    "infos": ("Tauchschule Düsseldorf: Team & Kontakt", "Lerne das Team der Tauchschule Dive-World & Rescue in Düsseldorf kennen und nimm per Telefon, WhatsApp oder E-Mail Kontakt auf."),
+    "wir-suchen-dich": ("Rettungsschwimmer gesucht: Unterbacher See Düsseldorf", "Rettungsschwimmer für die Badesaison am Unterbacher See in Düsseldorf gesucht. Aufgaben, Voraussetzungen und Bewerbung."),
+    "anfrage": ("Anfrage: Tauchkurs, Erste Hilfe oder Ausrüstung", "Frag einen Tauchkurs, einen Erste-Hilfe-Kurs, Leihausrüstung oder einen Tauchausflug an. Antwort per WhatsApp oder E-Mail."),
+    "impressum": ("Impressum und Datenschutz", "Impressum und Datenschutzerklärung von Dive-World & Rescue, Tauchschule und Erste-Hilfe-Ausbildung in Düsseldorf."),
+}
+CATEGORY_SEO = "{name} kaufen bei Dive-World & Rescue in Düsseldorf: Modelle vergleichen und persönlich beraten lassen."
+SITEMAP = []
+
+
+def site_origin():
+    origin = os.environ.get("SITE_URL", "").strip()
+    if not origin and (ROOT / "CNAME").exists():
+        origin = "https://" + (ROOT / "CNAME").read_text().strip()
+    return origin.rstrip("/") + "/"
+
+
+def responsive_images(html, prefix):
+    """Offer the 640w/1024w copies of large photos so tiles don't load 1600px files."""
+    def swap(m):
+        tag, src = m[0], m[2]
+        if "srcset=" in tag or not src.endswith(".webp"):
+            return tag
+        local = ROOT / "public" / src.removeprefix(prefix)
+        width = re.search(r'\swidth="(\d+)"', tag)
+        sources = [(f"{src[:-5]}-{w}w.webp", w) for w in (640, 1024) if local.with_name(f"{local.stem}-{w}w.webp").exists()]
+        if not sources or not width:
+            return tag
+        srcset = ", ".join(f"{s} {w}w" for s, w in sources) + f", {src} {width[1]}w"
+        sizes = "auto, (max-width: 700px) 100vw, 50vw" if 'loading="lazy"' in tag else "(max-width: 700px) 100vw, 50vw"
+        return tag.replace(m[1], f'{m[1]} srcset="{srcset}" sizes="{sizes}"', 1)
+    return re.sub(r'<img\b[^>]*?(src="([^"]+)")[^>]*>', swap, html)
+
+
+def breadcrumb_ld(html, origin, path):
+    nav = re.search(r'<nav class="crumb"[^>]*>(.*?)</nav>', html, re.S)
+    if not nav:
+        return ""
+    items = [(urljoin(urljoin(origin, path), href), re.sub("<[^>]+>", "", text).strip()) for href, text in re.findall(r'<a href="([^"]+)"[^>]*>(.*?)</a>', nav[1])]
+    current = re.search(r'<h1[^>]*>(.*?)</h1>', html, re.S)
+    if current:
+        items.append((urljoin(origin, path), re.sub("<[^>]+>", " ", current[1]).split()))
+        items[-1] = (items[-1][0], " ".join(items[-1][1]))
+    items = [(origin if u == urljoin(origin, "index.html") else u, n) for u, n in items]
+    data = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": i + 1, "name": name.replace("&amp;", "&"), "item": url} for i, (url, name) in enumerate(items)]}
+    return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
+
+
+def business_ld(origin):
+    data = {
+        "@context": "https://schema.org", "@type": "SportsActivityLocation",
+        "name": "Dive-World & Rescue", "description": SEO["index.html"][1],
+        "url": origin, "logo": urljoin(origin, "assets/logo-mark.png"), "image": urljoin(origin, "assets/tauchgang.webp"),
+        "telephone": "+49 176 85639763", "email": "dive-world@mail.de",
+        "address": {"@type": "PostalAddress", "streetAddress": "Bebelstr. 1", "postalCode": "40627", "addressLocality": "Düsseldorf", "addressCountry": "DE"},
+        "areaServed": "Düsseldorf",
+    }
+    return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
+
+
 def add_metadata(html, path, title, description, prefix, share_image="assets/tauchgang.webp"):
+    slug = path.removeprefix("pages/").removesuffix(".html")
+    brand = " · Dive-World & Rescue"
+    if path in SEO or slug in SEO:
+        seo_title, description = SEO.get(path) or SEO[slug]
+        title = seo_title + brand
+    elif slug.startswith("tauch-shop--"):
+        description = CATEGORY_SEO.format(name=title.removesuffix(brand))
+        title = title.removesuffix(brand) + " kaufen" + brand
+    html = re.sub(r"<title>.*?</title>", f"<title>{escape(title)}</title>", html, count=1, flags=re.S)
     html = decorate(html, path)
+    html = responsive_images(html, prefix)
     editorial_version = sha256((SRC / "editorial.css").read_bytes()).hexdigest()[:10]
     html = html.replace('</head>', f'<link rel="stylesheet" href="{prefix}editorial.css?v={editorial_version}"></head>')
     for asset in ("main.css", "home.js", "inquiry.js"):
@@ -305,18 +387,28 @@ def add_metadata(html, path, title, description, prefix, share_image="assets/tau
         f'<meta property="og:description" content="{escape(description, quote=True)}">',
         f'<link rel="icon" type="image/png" sizes="64x64" href="{prefix}assets/favicon.png">',
     ]
-    origin = os.environ.get("SITE_URL", "").rstrip("/") + "/"
+    origin = site_origin()
     if origin != "/":
         parsed = urlsplit(origin)
         if parsed.scheme not in {"https", "http"} or not parsed.netloc or parsed.query or parsed.fragment:
             raise ValueError("SITE_URL must be an absolute website base URL.")
-        url = urljoin(origin, path)
+        url = origin if path == "index.html" else urljoin(origin, path)
         tags.extend([
             f'<link rel="canonical" href="{escape(url, quote=True)}">',
             f'<meta property="og:url" content="{escape(url, quote=True)}">',
             f'<meta property="og:image" content="{escape(urljoin(origin, share_image), quote=True)}">',
             f'<meta property="og:image:alt" content="{escape(title, quote=True)}">',
+            '<meta property="og:locale" content="de_DE">',
+            '<meta property="og:site_name" content="Dive-World &amp; Rescue">',
+            '<meta name="twitter:card" content="summary_large_image">',
         ])
+        if path == "index.html":
+            tags.append(business_ld(origin))
+            tags.append(f'<link rel="preload" as="image" href="assets/tauchgang.webp" fetchpriority="high">')
+        crumb = breadcrumb_ld(html, origin, path)
+        if crumb:
+            tags.append(crumb)
+        SITEMAP.append(url)
     return html.replace("</head>", "\n".join(tags) + "</head>")
 
 def build():
@@ -339,6 +431,12 @@ def build():
                 html = page_shell(escape(item["name"]), main, "tauch-shop", item["slug"])
                 html = add_metadata(html, "pages/" + item["slug"] + ".html", item["name"] + " · Dive-World & Rescue", item["summary"], "../", item["photos"][0].removeprefix("../"))
                 (DIST / "pages" / (item["slug"] + ".html")).write_text(html)
+
+    origin = site_origin()
+    if origin != "/":
+        urls = "".join(f"<url><loc>{escape(u)}</loc></url>" for u in SITEMAP)
+        (DIST / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n')
+        (DIST / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {urljoin(origin, 'sitemap.xml')}\n")
 
 
 if __name__ == "__main__":

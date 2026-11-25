@@ -12,7 +12,7 @@
 <!-- site-header -->
 <main id="inhalt">
 <section class="hero" aria-labelledby="headline">
-  <div class="scene"><video id="dive" muted loop playsinline preload="none" poster="assets/tauchgang.webp" aria-hidden="true"><source src="assets/tauchgang.mp4" type="video/mp4"></video></div>
+  <div class="scene"><video id="dive" muted loop playsinline preload="none" poster="assets/tauchgang.webp" aria-hidden="true"><source media="(max-width: 700px)" src="assets/tauchgang-960-av1.mp4" type='video/mp4; codecs="av01.0.04M.08"'><source media="(max-width: 700px)" src="assets/tauchgang-960.mp4" type="video/mp4"><source src="assets/tauchgang-av1.mp4" type='video/mp4; codecs="av01.0.08M.08"'><source src="assets/tauchgang.mp4" type="video/mp4"></video></div>
   <div class="hero-inner wrap"><div class="hero-copy">
     <p class="kicker">Dive-World &amp; Rescue · Düsseldorf</p>
     <h1 id="headline">Zusammen<em>abtauchen.</em></h1>
@@ -20,7 +20,7 @@
     <div class="actions"><a class="cta mint" href="pages/anfrage.html?thema=Tauchkurs&amp;kurs=Schnuppertauchen">Schnuppertauchen anfragen</a><a class="plain" href="pages/kurse.html">Alle Kurse ansehen</a></div>
     <!-- hero-trust -->
   </div></div>
-  <button hidden type="button" class="playback paused" aria-label="Animation abspielen" aria-controls="dive"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="pause" d="M6 4h4v16H6zm8 0h4v16h-4z"/><path class="play" d="M7 3l14 9-14 9z"/></svg></button>
+  <button hidden type="button" class="playback paused" aria-label="Animation abspielen" title="Animation abspielen" aria-controls="dive"><svg class="playback-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5" pathLength="100"/></svg><svg class="playback-glyph" viewBox="0 0 24 24" aria-hidden="true"><path class="pause" d="M7.5 5h3v14h-3zm6 0h3v14h-3z"/><path class="play" d="M8.5 5.5v13l10-6.5z"/></svg></button>
 </section>
 <section class="home-programs" id="angebote" aria-labelledby="angebote-title"><div class="wrap">
   <div class="page-head"><div><p class="kicker">Unsere Kurse</p><h2 id="angebote-title">Was hast du vor?</h2></div><p>Vom ersten Atemzug unter Wasser bis zum Notfall an Land. Such dir deinen Einstieg aus.</p></div>
