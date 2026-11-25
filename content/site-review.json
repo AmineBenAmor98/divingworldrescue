@@ -461,5 +461,53 @@
       "team_qualification_alignment": "passed",
       "all_131_page_links_media_anchors_forms": "passed"
     }
+  },
+  "sitewide_editorial_update": {
+    "date": "2026-11-25",
+    "direction": "Open editorial",
+    "scope": "All 131 generated HTML pages",
+    "stylesheet": "src/editorial.css",
+    "cache_busting": "content hash on every page",
+    "changes": [
+      "School information converted from four white cards to open illustration/copy/action rows",
+      "Homepage visitor goals use open rows",
+      "Equipment category and service links use open dividers",
+      "Trip highlight uses existing approved photography with a teal overlay",
+      "First-aid courses use open programme/fee/action rows",
+      "Reference panels, shop directories and legal navigation use open layouts",
+      "Secondary destination links no longer have decorative button boxes"
+    ],
+    "retained_surfaces": [
+      "Product photography",
+      "Customer reviews",
+      "Pricing decisions",
+      "Enquiry form and functional controls"
+    ],
+    "validation": {
+      "pages": 131,
+      "main_copy_preserved": true,
+      "viewport_widths": [
+        360,
+        768,
+        1440
+      ],
+      "horizontal_overflow": 0,
+      "broken_images": 0,
+      "single_main_h1_per_page": true,
+      "local_links_media_anchors_forms": "passed",
+      "shop_search": "passed",
+      "mobile_menu_and_escape": "passed",
+      "product_detail_expansion": "passed",
+      "legacy_prefilled_product_enquiry": "passed",
+      "visual_samples": [
+        "Homepage goals",
+        "Homepage equipment navigation",
+        "Homepage rental and photo-led trips",
+        "School editorial rows at desktop and mobile",
+        "First-aid programmes at desktop and mobile",
+        "Shop directory",
+        "Product detail"
+      ]
+    }
   }
 }

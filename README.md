@@ -66,9 +66,9 @@ The travel source contained flags and venue logos rather than trip photographs. 
 
 The 19 category illustrations were created with the built-in image generator in generate mode, in a consistent teal, seafoam and ivory style. Transparent, optimized WebP assets are in `public/assets/illustrated-icons/`; original PNGs and the exact prompts are preserved in `artwork/originals/` and `artwork/prompts.json`. The same artwork family is used for large categories, smaller service cards, navigation and category chips. These illustrations describe services, rather than replacing real instructor portraits or product photography.
 
-Functional interface symbols such as phone, email, search and enquiry use local Phosphor SVGs, pinned to commit `2b75f3ad12b420c9504ef05df8d2564a28f8500e`. Their MIT license is included at `public/licenses/phosphor-icons.txt`, with provenance in `artwork/ui-icons.json`. The WhatsApp brand path is from the Simple Icons repository, stored at `public/assets/whatsapp.svg` (source https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/whatsapp.svg). No external icon script or font is loaded. Decorative icons are hidden from assistive technology and remain paired with visible labels. Link underlines have been replaced with cards, chips, buttons and contextual hover/focus treatments.
+Functional interface symbols such as phone, email, search and enquiry use local Phosphor SVGs, pinned to commit `2b75f3ad12b420c9504ef05df8d2564a28f8500e`. Their MIT license is included at `public/licenses/phosphor-icons.txt`, with provenance in `artwork/ui-icons.json`. The WhatsApp brand path is from the Simple Icons repository, stored at `public/assets/whatsapp.svg` (source https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/whatsapp.svg). No external icon script or font is loaded. Decorative icons are hidden from assistive technology and remain paired with visible labels. Navigation uses clear teal links and open editorial rows, with buttons reserved for primary actions. Hover and focus treatments remain visible.
 
-Section introductions, category cards and action groups now share centered alignment, balanced short text and constrained reading widths. Longer descriptions, forms and product specifications retain a consistent left edge. The original logo, instructor portraits, product images and homepage video remain in use.
+Section introductions use centered alignment and constrained reading widths. Information and service destinations use open editorial rows with grouped copy and clear links. Longer descriptions, forms and product specifications retain a consistent left edge. The original logo, instructor portraits, product images and homepage video remain in use.
 
 ## Imported text formatting
 
@@ -76,10 +76,18 @@ Section introductions, category cards and action groups now share centered align
 
 The legal page groups address lines and contact fields, uses real lists, and gives long text a restrained reading width and clear heading hierarchy. This is a formatting update to the copied source, not a legal-content review. Empty source headings with no accompanying information are omitted.
 
-Shared card spacing removes artificial blank title rows. Cards stretch consistently within their grid; titles, descriptions and actions use common spacing. Reading copy remains left aligned at a minimum 16px, with 17px legal text on desktop.
+Shared row spacing keeps titles, descriptions and actions together without artificial blank title rows. Product imagery, reviews, pricing decisions and forms retain purposeful bounded surfaces. Reading copy remains left aligned at a minimum 16px, with 17px legal text on desktop.
 
 ## Enquiry and team layout
 
 The enquiry page has a compact cover and a single form card with conditional course/product and period fields. Buying and rental are separate topics. Existing `thema=Ausrüstung und Verleih` links map to buying when a product is supplied, otherwise rental. Course and product names are preserved in structured message drafts; changing topic preserves the visitor's message. WhatsApp and email open drafts for the visitor to review and send. No server submission was added.
 
 The homepage team introduction is a standalone section before the Google reviews. The team page centers the founder above four aligned profiles on desktop, two columns on tablet and one on narrow mobile screens. Original portraits and qualifications are retained.
+
+## Sitewide editorial design
+
+`src/editorial.css` is the shared final layout layer, loaded after `main.css` on every generated page with a content hash. It implements the chosen Open editorial direction: transparent information/service rows, thin rules, readable text groups and clear destinations. The school directory uses a reusable `editorial-row` structure with one leading illustration and separate action links. Homepage visitor goals, equipment service links, first-aid programmes, reference panels, shop browsing and legal navigation use the same principles.
+
+The homepage trip highlight uses an existing approved lake image with a dark teal overlay. Product photographs, customer reviews, price decisions and the enquiry form retain bounded surfaces where those help understanding. The real logo, instructor portraits, catalogue data, copied page text and destinations are retained.
+
+Validation for this pass: all 131 pages loaded the layout layer and retained identical main-page copy; local links/media/anchors/forms passed; all pages fit at 360, 768 and 1440 pixels without horizontal overflow or broken images. Representative pages were visually reviewed, and catalogue search, mobile menu, product expansion and prefilled enquiries were checked.

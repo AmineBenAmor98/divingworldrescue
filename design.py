@@ -101,6 +101,9 @@ def decorate(html, path):
     html=re.sub(r'<nav\b[^>]*class="(?:crumb|item-crumb|footer-groups)[^"]*"[^>]*>.*?</nav>',stash,html,flags=re.S)
     def link(m):
         attrs,body=m[1],m[2]
+        # Editorial rows already carry one leading illustration for the topic.
+        if 'editorial-link' in attrs:
+            return m[0]
         href_match=re.search(r'href="([^"]+)"',attrs)
         if not href_match:return m[0]
         href=unescape(href_match[1])
@@ -130,7 +133,8 @@ def decorate(html, path):
     html=re.sub(r'<button\b([^>]*)>(.*?)</button>',form_button,html,flags=re.S)
     # Add one coloured area marker to each inner-page cover.
     name,tone=route_visual(path)
-    if path!='index.html' and not path.rsplit('/',1)[-1].startswith('produkt-') and name in ARTWORK:
+    photo_course_pages = {'pages/tauchen-lernen-kurse.html', 'pages/frti-kurse.html'}
+    if path!='index.html' and path not in photo_course_pages and not path.rsplit('/',1)[-1].startswith('produkt-') and name in ARTWORK:
         html=re.sub(r'<h1\b',badge(name,tone,'page-mark',prefix=prefix)+'<h1',html,count=1)
     for i,value in enumerate(protected):html=html.replace(f'<!--design-protected-{i}-->',value)
     return html

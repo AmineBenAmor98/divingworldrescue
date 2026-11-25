@@ -6,36 +6,37 @@
   </div>
 </header>
 <nav class="dive-routes" aria-label="Dein Kursziel"><div class="wrap">
-  <a href="#tauchschein">Tauchschein machen <span aria-hidden="true">↓</span></a>
-  <a href="#ausprobieren">Erst ausprobieren <span aria-hidden="true">↓</span></a>
-  <a href="#weiterlernen">Wieder einsteigen &amp; weiterlernen <span aria-hidden="true">↓</span></a>
+  <a class="editorial-link" href="#tauchschein">Tauchschein machen</a>
+  <a class="editorial-link" href="#ausprobieren">Erst ausprobieren</a>
+  <a class="editorial-link" href="#weiterlernen">Wieder einsteigen &amp; weiterlernen</a>
 </div></nav>
 
 <div class="wrap dive-guide">
   <section class="dive-certificate" id="tauchschein" aria-labelledby="open-water">
-    <div>
+    <header class="dive-course-summary">
       <h2 id="open-water">Open Water Diver</h2>
       <p class="dive-lede">Dein Weg zum Tauchschein führt von der Theorie über die ersten Übungen bis zum Tauchgang im Freiwasser. Dein Tauchlehrer begleitet dich dabei.</p>
+    </header>
+    <aside class="dive-fee" aria-labelledby="owd-preis">
+      <div class="dive-fee-top"><h3 id="owd-preis">Kursgebühr</h3><strong class="dive-amount">{{owd_price}}</strong></div>
+      <dl><div><dt>Enthalten</dt><dd>Unterricht, Tauchlektionen und Versicherung.</dd></div>
+      <div><dt>Zusätzlich</dt><dd>Eintritt, Lehrmaterial, Zertifizierung, Brevet und Anfahrt zum Tauchplatz.</dd></div></dl>
+      <a class="cta" href="anfrage.html?thema=Tauchkurs&amp;kurs=Open%20Water%20Diver">Kurs anfragen</a>
+      <a class="dive-text-link" href="preis-kurse.html">Alle Kurspreise vergleichen</a>
+    </aside>
+    <div class="dive-syllabus"><h3 class="dive-subheading">So läuft die Ausbildung ab</h3>
       <ol class="dive-stages">
         <li><h3>Theorie</h3><p>Du lernst die Grundlagen des Gerätetauchens im Unterricht oder zu Hause per E-Learning.</p></li>
         <li><h3>Im geschützten Wasser üben</h3><p>Im Schwimmbad oder im begrenzten Wasser machst du dich mit Atemregler, Jacket und Tauchcomputer vertraut.</p></li>
         <li><h3>Ins Freiwasser</h3><p>Am Tauchplatz wendest du mit deinem Tauchlehrer an, was du zuvor geübt hast.</p></li>
       </ol>
     </div>
-    <aside class="dive-fee" aria-labelledby="owd-preis">
-      <h3 id="owd-preis">Kursgebühr · Open Water Diver</h3>
-      <strong class="dive-amount">{{owd_price}}</strong>
-      <dl><div><dt>Enthalten</dt><dd>Unterricht, Tauchlektionen und Versicherung.</dd></div>
-      <div><dt>Zusätzlich</dt><dd>Eintritt, Lehrmaterial, Zertifizierung, Brevet und Anfahrt zum Tauchplatz.</dd></div></dl>
-      <a class="cta" href="anfrage.html?thema=Tauchkurs&amp;kurs=Open%20Water%20Diver">Open Water Diver anfragen</a>
-      <a class="dive-text-link" href="preis-kurse.html">Alle Kurspreise vergleichen</a>
-    </aside>
   </section>
-  <div class="dive-questions">
+  <section class="dive-questions" aria-labelledby="course-questions"><h2 id="course-questions">Vor deiner Anmeldung</h2>
     <details><summary>Was gilt für Kinder und Jugendliche?</summary><p>Die Schule nennt ein Mindestalter von 8 Jahren und für das E-Learning 13 Jahre. Frag bei der Anmeldung, welcher Kurs und welche Lernform für dein Kind infrage kommen.</p></details>
     <details><summary>Was brauche ich für den Kurs?</summary><p>Du übst mit der Grundtauchausrüstung. Welche Ausrüstung du brauchst, hängt vom Tauchplatz ab. Für die Theorie gibt es Kursunterlagen zum Selbststudium oder E-Learning.</p><a href="equipment-verleih.html">Ausrüstung und Leihpreise ansehen</a></details>
     <details><summary>Ich habe schon einen Schnuppertauchgang gemacht. Zählt der?</summary><p>Fertigkeiten aus einem Discover-Scuba-Diving-Programm oder einem Resort-Kurs können eventuell angerechnet werden. Sag dem Team bei deiner Anfrage, was du bereits gemacht hast.</p></details>
-  </div>
+  </section>
   <section id="ausprobieren" class="dive-trial" aria-labelledby="probe">
     <img src="../assets/tauchen.webp" width="764" height="508" loading="lazy" alt="Tauchmaske und Atemregler am See">
     <div><h2 id="probe">Schnuppertauchen</h2><p>Du möchtest erst wissen, wie sich Tauchen anfühlt? Nach einer Einweisung gehst du mit einem Divemaster oder Instructor für ein bis zwei Tauchgänge ins Wasser. Bring Badezeug und ein Handtuch mit.</p>
@@ -46,10 +47,10 @@
   <section id="weiterlernen" class="dive-more" aria-labelledby="weitere-kurse">
     <h2 id="weitere-kurse">Weitere Tauchkurse</h2>
     <dl>
-      <div><dt>Einstieg &amp; Wiedereinstieg</dt><dd>Discover Scuba Diver, Scuba Diver, Indoor Diver und Auffrischungskurse.</dd></div>
-      <div><dt>Fortgeschrittene &amp; Ausbildung</dt><dd>Advanced Open Water Diver, Rescue Diver, Divemaster und Assistant Instructor.</dd></div>
-      <div><dt>Spezialkurse</dt><dd>Nachttauchen, Wracktauchen, Tarierung, Unterwassernavigation, Tieftauchen und spezielles Tieftauchen, Trockentauchen, Suchen und Bergen sowie UW-Scooter.</dd></div>
+      <div><dt>Einstieg &amp; Wiedereinstieg</dt><dd><ul><li>Discover Scuba Diver</li><li>Scuba Diver</li><li>Indoor Diver</li><li>Auffrischungskurse</li></ul></dd></div>
+      <div><dt>Fortgeschrittene &amp; Ausbildung</dt><dd><ul><li>Advanced Open Water Diver</li><li>Rescue Diver</li><li>Divemaster</li><li>Assistant Instructor</li></ul></dd></div>
+      <div><dt>Spezialkurse</dt><dd><ul><li>Nachttauchen</li><li>Wracktauchen</li><li>Tarierung</li><li>Unterwassernavigation</li><li>Tieftauchen und spezielles Tieftauchen</li><li>Trockentauchen</li><li>Suchen und Bergen</li><li>UW-Scooter</li></ul></dd></div>
     </dl>
-    <a class="dive-text-link" href="anfrage.html?thema=Tauchkurs">Zum passenden Kurs beraten lassen <span aria-hidden="true">→</span></a>
+    <a class="dive-text-link" href="anfrage.html?thema=Tauchkurs">Zum passenden Kurs beraten lassen</a>
   </section>
 </div>

@@ -271,6 +271,8 @@ def google_reviews():
 
 def add_metadata(html, path, title, description, prefix, share_image="assets/tauchgang.webp"):
     html = decorate(html, path)
+    editorial_version = sha256((SRC / "editorial.css").read_bytes()).hexdigest()[:10]
+    html = html.replace('</head>', f'<link rel="stylesheet" href="{prefix}editorial.css?v={editorial_version}"></head>')
     for asset in ("main.css", "home.js", "inquiry.js"):
         version = sha256((SRC / asset).read_bytes()).hexdigest()[:10]
         html = html.replace(f'"{prefix}{asset}"', f'"{prefix}{asset}?v={version}"')
@@ -299,7 +301,7 @@ def build():
     DIST.mkdir(exist_ok=True)
     (DIST / "pages").mkdir(exist_ok=True)
     shutil.copytree(ROOT / "public", DIST, dirs_exist_ok=True)
-    for name in ("main.css", "home.js", "inquiry.js"):
+    for name in ("main.css", "editorial.css", "home.js", "inquiry.js"):
         shutil.copyfile(SRC / name, DIST / name)
     home = HOME.replace("<!-- site-header -->", header("")).replace("<!-- site-footer -->", footer(""))
     home = home.replace("<!-- course-preview -->", home_offers()).replace("<!-- equipment-preview -->", equipment_preview()).replace("<!-- google-reviews -->", google_reviews())
