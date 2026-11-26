@@ -1393,3 +1393,21 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 .trip-card { scroll-margin-top:96px; }
 .trip-card:target { border-color:var(--teal); box-shadow:0 0 0 3px rgba(20,121,111,.18); }
 .trip-archive,.moments-section,.album { scroll-margin-top:24px; }
+
+/* Tauchschule hub: photo cover like the other section hubs */
+.interior-cover.school-cover { background-color:var(--deep); background-image:linear-gradient(90deg,rgba(5,38,41,.95) 0%,rgba(5,38,41,.84) 42%,rgba(5,38,41,.35) 78%,rgba(5,38,41,.2) 100%),url('assets/media/ba9e4421064b6920.webp'); background-size:cover; background-position:center 40%; }
+.school-cover .wrap { padding-block:clamp(40px,6vw,84px); }
+.school-cover .cover-choices { margin-top:26px; }
+@media (max-width:700px) {
+  .interior-cover.school-cover { background-image:linear-gradient(180deg,rgba(5,38,41,.84),rgba(5,38,41,.94)),url('assets/media/ba9e4421064b6920.webp'); }
+}
+
+/* 404 */
+.not-found .wrap { padding-block:clamp(48px,8vw,110px); }
+.not-found .kicker { color:var(--mint); margin-bottom:14px; }
+
+/* Phone menu: lines turn into a close icon while the menu is open */
+.menu svg path { transition:transform .2s ease; transform-origin:11px 9px; }
+.menu[aria-expanded="true"] .menu-line-a { transform:translateY(4px) rotate(45deg); }
+.menu[aria-expanded="true"] .menu-line-b { transform:translateY(-4px) rotate(-45deg); }
+@media (prefers-reduced-motion:reduce) { .menu svg path { transition:none; } }

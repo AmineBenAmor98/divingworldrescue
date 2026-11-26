@@ -196,7 +196,7 @@ def product_detail(item, parent, siblings=()):
     spec_section = f'<h2>Produktdaten</h2><dl class="item-specs">{specs}</dl>' if specs else ""
     group_link = f'{parent["slug"]}.html#{slugify(item["group"])}'
     next_links = f'<nav class="item-next" aria-label="Weiter im Sortiment"><a href="{group_link}">Weitere Artikel aus {escape(item["group"])}</a><a href="tauch-shop.html">Zum gesamten Sortiment</a></nav>'
-    return f'''<div class="wrap item-page"><nav class="item-crumb" aria-label="Brotkrumennavigation">
+    return re.sub(r"(\w) :", r"\1:", f'''<div class="wrap item-page"><nav class="item-crumb" aria-label="Brotkrumennavigation">
     <a href="../index.html">Startseite</a> / <a href="tauch-shop.html">Tauchshop</a> / <a href="{group_link}">{escape(parent["title"])}</a></nav>
     <article class="item-layout">
     <div class="item-heading"><a class="item-group" href="{group_link}">{escape(item["group"])}</a>
@@ -205,4 +205,4 @@ def product_detail(item, parent, siblings=()):
     <div class="item-info">
     <div class="item-purchase"><strong>{escape(item["price"])}</strong>{note}{inquiry(item["name"])}</div>
     {spec_section}
-    </div></article>{extra}{related or next_links}</div>'''
+    </div></article>{extra}{related or next_links}</div>''')

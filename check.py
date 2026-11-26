@@ -85,11 +85,12 @@ def check():
         if current not in seen:
             seen.add(current)
             todo.extend(edges[current] - seen)
-    assert seen == set(docs), set(docs) - seen
+    reachable = set(docs) - {DIST / "404.html"}  # GitHub Pages serves it for missing paths
+    assert seen == reachable, reachable - seen
     if OWN_HOST:
         sitemap = (DIST / 'sitemap.xml').read_text()
         listed = {DIST / (urlsplit(u).path.lstrip('/') or 'index.html') for u in re.findall(r'<loc>([^<]+)</loc>', sitemap)}
-        assert listed == set(docs), set(docs) ^ listed
+        assert listed == reachable, reachable ^ listed
     print(f'{len(docs)} pages reachable. Local links, media, anchors and form destinations passed.')
 
 

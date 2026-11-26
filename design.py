@@ -111,6 +111,8 @@ def decorate(html, path):
         if href.startswith('https://wa.me/'):
             body = re.sub(r'<svg\b.*?</svg>', '', body, flags=re.S).strip()
             return f'<a{classes(classes(attrs, "whatsapp-link"), "icon-link")}>{icon("whatsapp")}{body}</a>'
+        if href.startswith('https://www.google.com/maps/place/') and 'google-rating' not in attrs and '★' not in body:
+            return f'<a{classes(attrs, "icon-link")}>{icon("pin")}{body.strip()}</a>'
         if href.startswith(('mailto:', 'tel:')):
             name = 'mail' if href.startswith('mailto:') else 'phone'
             body = re.sub(r'<svg\b.*?</svg>', '', body, flags=re.S).strip()

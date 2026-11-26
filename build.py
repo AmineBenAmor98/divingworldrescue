@@ -188,6 +188,8 @@ def inner(page):
         main = main.replace("{{closing}}", closing_band("Welcher Kurs passt zu dir?", "Erzähl uns kurz, was du schon gemacht hast. Wir empfehlen dir den passenden Einstieg.", "anfrage.html?thema=Tauchkurs", "Beratung anfragen", "hub-closing"))
         return page_shell(escape("Tauchkurse in Düsseldorf"), main, section, slug)
     intro = f'<p class="cover-copy">{escape(INTRO[slug])}</p>' if slug in INTRO else ""
+    if slug == "infos":
+        intro += '<div class="cover-choices"><a class="cta mint" href="#kontakt">Kontakt aufnehmen</a><a class="plain" href="#team">Team kennenlernen</a></div>'
     if slug == "tauch-shop":
         intro += '<div class="cover-choices"><a class="cta mint" href="#ausruestung">Sortiment entdecken</a><a class="plain" href="equipment-verleih.html">Leihpreise ansehen</a></div>'
         body = shop_directory(BY_SLUG)
@@ -212,6 +214,8 @@ def inner(page):
     cover_class = "interior-cover shop-cover" if slug == "tauch-shop" else "interior-cover"
     if slug == "anfrage":
         cover_class = "interior-cover request-cover"
+    if slug == "infos":
+        cover_class = "interior-cover school-cover"
     if slug.startswith("tauch-shop--") or page.get("catalogue"):
         cover_class = "interior-cover catalogue-cover"
     main = f'<div class="{cover_class}"><div class="wrap">{crumb}<h1>{title}</h1>{intro}</div></div>{body}'
@@ -395,7 +399,7 @@ def add_metadata(html, path, title, description, prefix, share_image="assets/tau
         html = html.replace(f'"{prefix}{asset}"', f'"{prefix}{asset}?v={version}"')
     logo_version = sha256((ROOT / "public" / "assets" / "logo-mark.png").read_bytes()).hexdigest()[:10]
     html = html.replace('assets/logo-mark.png"', f'assets/logo-mark.png?v={logo_version}"')
-    if 'class="album-grid"' in html or 'class="photo-mosaic"' in html:
+    if 'class="album-grid"' in html or 'class="photo-mosaic"' in html or 'class="item-photo"' in html:
         css_version = sha256((SRC / "gallery.css").read_bytes()).hexdigest()[:10]
         script_version = sha256((SRC / "gallery.js").read_bytes()).hexdigest()[:10]
         html = html.replace("</head>", (
@@ -437,6 +441,28 @@ def add_metadata(html, path, title, description, prefix, share_image="assets/tau
         SITEMAP.append(url)
     return html.replace("</head>", "\n".join(tags) + "</head>")
 
+def write_not_found():
+    """Branded 404 for GitHub Pages. It is served at any missing path, so every link is absolute."""
+    origin = site_origin()
+    base = origin if origin != "/" else "/"
+    main = f'''<div class="interior-cover not-found"><div class="wrap"><p class="kicker">Fehler 404</p><h1>Diese Seite gibt es nicht mehr.</h1>
+      <p class="cover-copy">Vielleicht wurde sie verschoben, als wir die Website erneuert haben. Hier geht es weiter:</p>
+      <div class="cover-choices"><a class="cta mint" href="../index.html">Zur Startseite</a><a class="plain" href="uebersicht.html">Alle Seiten ansehen</a></div></div></div>
+      <section class="hub-plan"><div class="wrap"><h2 class="aid-paths-title">Beliebte Seiten</h2><nav class="hub-plan-grid" aria-label="Beliebte Seiten">
+        <a href="tauchen-lernen-kurse.html"><strong>Tauchen lernen</strong><span>Schnuppertauchen, Scuba Diver und Open Water Diver.</span></a>
+        <a href="frti-kurse.html"><strong>Erste-Hilfe-Kurse</strong><span>Für Familie, Beruf und Tauchsport.</span></a>
+        <a href="tauch-shop.html"><strong>Ausrüstung</strong><span>Shop, Verleih und Sonderangebote.</span></a>
+      </nav></div></section>'''
+    html = page_shell("Seite nicht gefunden", main, None, "404")
+    editorial_version = sha256((SRC / "editorial.css").read_bytes()).hexdigest()[:10]
+    html = html.replace("</head>", f'<link rel="stylesheet" href="../editorial.css?v={editorial_version}"><meta name="robots" content="noindex"><link rel="icon" href="../favicon.ico" sizes="48x48"></head>')
+    html = decorate(html, "pages/404.html")
+    # Rewrite every relative link to an absolute one so the page works at any depth.
+    html = re.sub(r'(href|src)="\.\./', lambda m: f'{m[1]}="{base}', html)
+    html = re.sub(r'(href|src)="(?!https?:|/|#|tel:|mailto:)([^"]+)"', lambda m: f'{m[1]}="{base}pages/{m[2]}"', html)
+    (DIST / "404.html").write_text(html)
+
+
 def build():
     DIST.mkdir(exist_ok=True)
     (DIST / "pages").mkdir(exist_ok=True)
@@ -458,6 +484,7 @@ def build():
                 html = add_metadata(html, "pages/" + item["slug"] + ".html", item["name"] + " · Dive-World & Rescue", item["summary"], "../", item["photos"][0].removeprefix("../"))
                 (DIST / "pages" / (item["slug"] + ".html")).write_text(html)
 
+    write_not_found()
     origin = site_origin()
     if origin != "/":
         urls = "".join(f"<url><loc>{escape(u)}</loc></url>" for u in SITEMAP)

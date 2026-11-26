@@ -217,3 +217,12 @@ function setupCategorySearch() {
   panel.hidden = false;
 }
 setupCategorySearch();
+
+// A link to a price entry (preis-kurse.html#scuba-diver) opens that entry's details.
+function openTargetDetails() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  const details = id && document.getElementById(id)?.querySelector(':scope > details');
+  if (details) details.open = true;
+}
+openTargetDetails();
+window.addEventListener('hashchange', openTargetDetails);

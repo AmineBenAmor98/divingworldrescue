@@ -1,8 +1,8 @@
 function setupGalleryViewer() {
   if (typeof HTMLDialogElement === 'undefined' || !HTMLDialogElement.prototype.showModal) return;
 
-  const albums = [...document.querySelectorAll('.album, .photo-mosaic')].map(album =>
-    [...album.querySelectorAll('.album-grid figure > a, .photo-mosaic > a')]
+  const albums = [...document.querySelectorAll('.album, .photo-mosaic, .item-page')].map(album =>
+    [...album.querySelectorAll('.album-grid figure > a, .photo-mosaic > a, a.item-photo, .item-gallery > a')]
   ).filter(photos => photos.length);
   if (!albums.length) return;
 
