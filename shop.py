@@ -143,6 +143,8 @@ def category_products(items):
               <span class="view-item">Zum Produkt</span></div>
             </a></article>''')
         sections.append(f'<section class="stock-family" id="{anchor}"><h2>{escape(label)}</h2>{"".join(rows)}</section>')
+    if len(items) < 8:
+        return f'<div class="wrap catalogue catalogue-small"><div>{"".join(sections)}</div></div>'
     return f'''<div class="wrap catalogue"><nav class="catalogue-nav" aria-label="Produktgruppen">
     <div class="category-search" hidden><label for="category-query">In dieser Kategorie suchen</label><input id="category-query" type="search" placeholder="Produkt oder Eigenschaft" autocomplete="off"><p role="status" aria-live="polite"></p></div><span class="field-label" aria-hidden="true">Springen zu</span><details class="stock-groups"><summary>Produktgruppen</summary>{"".join(navigation)}</details>
     <label class="sort-order" hidden>Sortierung je Gruppe<select>
@@ -197,7 +199,7 @@ def product_detail(item, parent, siblings=()):
     group_link = f'{parent["slug"]}.html#{slugify(item["group"])}'
     next_links = f'<nav class="item-next" aria-label="Weiter im Sortiment"><a href="{group_link}">Weitere Artikel aus {escape(item["group"])}</a><a href="tauch-shop.html">Zum gesamten Sortiment</a></nav>'
     return re.sub(r"(\w) :", r"\1:", f'''<div class="wrap item-page"><nav class="item-crumb" aria-label="Brotkrumennavigation">
-    <a href="../index.html">Startseite</a> / <a href="tauch-shop.html">Tauchshop</a> / <a href="{group_link}">{escape(parent["title"])}</a></nav>
+    <a href="../index.html">Startseite</a> / <a href="tauch-shop.html">Ausrüstung</a> / <a href="{group_link}">{escape(parent["title"])}</a></nav>
     <article class="item-layout">
     <div class="item-heading"><a class="item-group" href="{group_link}">{escape(item["group"])}</a>
     <h1>{name}</h1><p class="item-summary">{escape(item["summary"])}</p></div>

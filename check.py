@@ -4,6 +4,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit, unquote, parse_qs
 import re
+from xml.etree import ElementTree
 
 DIST = Path(__file__).resolve().parent / "dist"
 CNAME = Path(__file__).resolve().parent / "CNAME"
@@ -76,8 +77,12 @@ def check():
                 assert not parts.fragment or unquote(parts.fragment) in docs[target].ids, (path, url)
     for css in DIST.rglob('*.css'):
         for value in re.findall(r"url\(([^)]+)\)", css.read_text()):
-            resource = (css.parent / value.strip("'\" ")).resolve()
+            ref = urlsplit(value.strip("'\" "))
+            resource = (css.parent / unquote(ref.path)).resolve()
             assert resource.is_relative_to(DIST) and resource.is_file(), (css, value)
+            if resource.suffix == '.svg' and ref.fragment:
+                ids = {el.get('id') for el in ElementTree.parse(resource).iter()}
+                assert unquote(ref.fragment) in ids, (css, value)
     seen = set()
     todo = [DIST / 'index.html']
     while todo:

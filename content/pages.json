@@ -59,6 +59,11 @@
       {
         "type": "photo",
         "src": "assets/media/fdd692d8d817c39e.webp",
+        "alt": ""
+      },
+      {
+        "type": "photo",
+        "src": "assets/media/99c6bfb44d9f13c1.webp",
         "alt": "",
         "product": {
           "group": "Geschenke",
@@ -99,11 +104,6 @@
       {
         "type": "p",
         "text": "Leuchtbild: Manta, Walhai, Hai, MolaMola, Hammerhai"
-      },
-      {
-        "type": "photo",
-        "src": "assets/media/99c6bfb44d9f13c1.webp",
-        "alt": ""
       },
       {
         "type": "photo",
@@ -1485,7 +1485,7 @@
       }
     ],
     "notes": [
-      "Für Menschen mit Behinderung bietet die Schule Tauchkurse zu Sonderkonditionen an. Familien und Gruppen können nach Ermäßigungen fragen.",
+      "Für Menschen mit Behinderung bieten wir Tauchkurse zu Sonderkonditionen an. Familien und Gruppen können nach Ermäßigungen fragen.",
       "Für weitere Ausbildungen und Spezialkurse erfragst du den Preis direkt beim Team."
     ]
   },
@@ -1543,23 +1543,23 @@
       },
       {
         "type": "p",
-        "text": "BP&STA-Optionen: Edelstahl, Titan, Kohlefase r"
+        "text": "BP&STA-Optionen: Edelstahl, Titan, Kohlefaser"
       },
       {
         "type": "p",
-        "text": "32 IBS Aluminium BP&STA 540,25 €"
+        "text": "32 lbs Aluminium BP&STA 540,25 €"
       },
       {
         "type": "p",
-        "text": "32 IBS Stainless Steel BP&STA 571,47 €"
+        "text": "32 lbs Stainless Steel BP&STA 571,47 €"
       },
       {
         "type": "p",
-        "text": "32 IBS Titanium BP&STA 587,10 €"
+        "text": "32 lbs Titanium BP&STA 587,10 €"
       },
       {
         "type": "p",
-        "text": "32 IBS Carbon Fiber BP&STA 617,45 €"
+        "text": "32 lbs Carbon Fiber BP&STA 617,45 €"
       },
       {
         "type": "p",
@@ -3538,7 +3538,7 @@
         "product": {
           "name": "Transportbox",
           "price": "168,99 €",
-          "note": "Als ausverkauft gelistet.",
+          "note": "Derzeit ausverkauft.",
           "group": "Reisegepäck",
           "summary": "Hartschalenbox mit Rollen und ausziehbarem Griff.",
           "specs": {
@@ -3668,7 +3668,7 @@
             "Farben": "Rot oder Schwarz",
             "Ausstattung": "Aufhängeöse und Lüftungsöffnungen"
           },
-          "note": "Für die Artikel EB351 und EB352 sind zwei Preise gelistet (27,65 € und 29,65 €). Bitte den aktuellen Preis anfragen."
+          "note": "Je nach Artikel (EB351 oder EB352) 27,65 € oder 29,65 €."
         }
       },
       {
@@ -4136,7 +4136,7 @@
             "Farben": "Rot oder Schwarz",
             "Ausstattung": "Seitentasche, Öse und Lüftungsöffnungen"
           },
-          "note": "Für die Artikel EB351 und EB352 sind zwei Preise gelistet (27,65 € und 29,65 €). Bitte den aktuellen Preis anfragen."
+          "note": "Je nach Artikel (EB351 oder EB352) 27,65 € oder 29,65 €."
         }
       },
       {
@@ -4347,7 +4347,7 @@
             "Textilbesatz": "100 % Baumwolle",
             "Weitere Ausführung": "V-Ausschnitt mit Frontdruck, Baumwolle, S–3XL, 37,45 € (Art. OU99)."
           },
-          "note": "Für Art. 5018-8 sind 30,05 € und 32,05 € gelistet. Bitte den aktuellen Preis anfragen."
+          "note": "Je nach Ausführung 30,05 € oder 32,05 €."
         }
       },
       {
@@ -4450,7 +4450,7 @@
             "Fleece": "300 g/m²",
             "Größen": "XS bis 5XL"
           },
-          "note": "Für dieselbe Artikelbezeichnung stehen ab 59,25 € in der Bekleidung und 71,25 € beim FRTI-Material. Bitte Preis und Ausführung anfragen."
+          "note": "Je nach Ausführung ab 59,25 €."
         }
       },
       {
@@ -5968,7 +5968,7 @@
             "Farbe": "Marineblau",
             "Artikelnummer": "5018-8"
           },
-          "note": "Für Art. 5018-8 sind 30,05 € und 32,05 € gelistet. Bitte den aktuellen Preis anfragen."
+          "note": "Je nach Ausführung 30,05 € oder 32,05 €."
         }
       },
       {
@@ -6014,7 +6014,7 @@
             "Einsätze": "65 % Polyester, 35 % Baumwolle",
             "Artikelnummer": "EB-05045"
           },
-          "note": "Für dieselbe Artikelbezeichnung stehen ab 59,25 € in der Bekleidung und 71,25 € beim FRTI-Material. Bitte Preis und Ausführung anfragen."
+          "note": "Je nach Ausführung ab 59,25 €."
         }
       },
       {
@@ -8010,7 +8010,7 @@
       },
       {
         "type": "p",
-        "text": "Klein Gewerbe"
+        "text": "Kleingewerbe"
       },
       {
         "type": "p",
@@ -8140,10 +8140,6 @@
         "text": "– Sicherheitsmaßnahmen."
       },
       {
-        "type": "p",
-        "text": "– Reichweitenmessung/Marketing"
-      },
-      {
         "type": "heading",
         "text": "Verwendete Begrifflichkeiten"
       },
@@ -8169,7 +8165,7 @@
       },
       {
         "type": "heading",
-        "text": "Sicherheitsmaßnahmen"
+        "text": "Änderungen dieser Datenschutzerklärung"
       },
       {
         "type": "p",
@@ -8193,7 +8189,7 @@
       },
       {
         "type": "p",
-        "text": "Sofern wir Daten in einem Drittland (d.h. außerhalb der Europäischen Union (EU) oder des Europäischen Wirtschaftsraums (EWR)) verarbeiten oder dies im Rahmen der Inanspruchnahme von Diensten Dritter oder Offenlegung, bzw. Übermittlung von Daten an Dritte geschieht, erfolgt dies nur, wenn es zur Erfüllung unserer (vor)vertraglichen Pflichten, auf Grundlage Ihrer Einwilligung, aufgrund einer rechtlichen Verpflichtung oder auf Grundlage unserer berechtigten Interessen geschieht. Vorbehaltlich gesetzlicher oder vertraglicher Erlaubnisse, verarbeiten oder lassen wir die Daten in einem Drittland nur beim Vorliegen der besonderen Voraussetzungen der Art. 44 ff. DSGVO verarbeiten. D.h. die Verarbeitung erfolgt z.B. auf Grundlage besonderer Garantien, wie der offiziell anerkannten Feststellung eines der EU entsprechenden Datenschutzniveaus (z.B. für die USA durch das „Privacy Shield“) oder Beachtung offiziell anerkannter spezieller vertraglicher Verpflichtungen (so genannte „Standardvertragsklauseln“)."
+        "text": "Sofern wir Daten in einem Drittland (d.h. außerhalb der Europäischen Union (EU) oder des Europäischen Wirtschaftsraums (EWR)) verarbeiten oder dies im Rahmen der Inanspruchnahme von Diensten Dritter oder Offenlegung, bzw. Übermittlung von Daten an Dritte geschieht, erfolgt dies nur, wenn es zur Erfüllung unserer (vor)vertraglichen Pflichten, auf Grundlage Ihrer Einwilligung, aufgrund einer rechtlichen Verpflichtung oder auf Grundlage unserer berechtigten Interessen geschieht. Vorbehaltlich gesetzlicher oder vertraglicher Erlaubnisse, verarbeiten oder lassen wir die Daten in einem Drittland nur beim Vorliegen der besonderen Voraussetzungen der Art. 44 ff. DSGVO verarbeiten. D.h. die Verarbeitung erfolgt z.B. auf Grundlage besonderer Garantien, wie der offiziell anerkannten Feststellung eines der EU entsprechenden Datenschutzniveaus (z.B. für die USA auf Grundlage des EU-US Data Privacy Framework) oder Beachtung offiziell anerkannter spezieller vertraglicher Verpflichtungen (so genannte „Standardvertragsklauseln“)."
       },
       {
         "type": "heading",
@@ -8269,7 +8265,7 @@
       },
       {
         "type": "heading",
-        "text": "Hosting (trifft hier bei uns nicht zu)"
+        "text": "Hosting"
       },
       {
         "type": "p",
@@ -8293,6 +8289,22 @@
       },
       {
         "type": "heading",
+        "text": "Kontaktaufnahme per E-Mail, Telefon und WhatsApp"
+      },
+      {
+        "type": "p",
+        "text": "Wenn Sie uns per E-Mail, Telefon oder WhatsApp kontaktieren, verarbeiten wir Ihre Angaben (z.B. Name, Kontaktdaten und den Inhalt Ihrer Nachricht) zur Bearbeitung Ihrer Anfrage gem. Art. 6 Abs. 1 lit. b DSGVO (Anfragen zu Kursen, Ausrüstung oder Verleih) bzw. Art. 6 Abs. 1 lit. f DSGVO (allgemeine Anfragen). Die Daten werden gelöscht, sobald sie für die Bearbeitung nicht mehr erforderlich sind; gesetzliche Aufbewahrungspflichten bleiben unberührt."
+      },
+      {
+        "type": "p",
+        "text": "Das Anfrageformular auf dieser Website speichert und versendet keine Daten selbst. Es öffnet mit Ihren Eingaben Ihr E-Mail-Programm oder WhatsApp; erst wenn Sie die Nachricht dort absenden, wird sie an uns übermittelt."
+      },
+      {
+        "type": "p",
+        "text": "WhatsApp wird von der WhatsApp Ireland Limited, Merrion Road, Dublin 4, D04 X2K5, Irland, betrieben. Bei der Nutzung von WhatsApp können Daten auch an die Meta Platforms, Inc. in den USA übermittelt werden; die Übermittlung erfolgt auf Grundlage des EU-US Data Privacy Framework bzw. der Standardvertragsklauseln der EU-Kommission. Für die Datenverarbeitung durch WhatsApp gilt dessen Datenschutzrichtlinie. Wenn Sie WhatsApp nicht nutzen möchten, erreichen Sie uns auch per E-Mail oder Telefon."
+      },
+      {
+        "type": "heading",
         "text": "Erbringung unserer satzungs- und geschäftsgemäßen Leistungen"
       },
       {
@@ -8306,18 +8318,6 @@
       {
         "type": "p",
         "text": "Wir löschen Daten, die zur Erbringung unserer satzungs- und geschäftsmäßigen Zwecke nicht mehr erforderlich sind. Dies bestimmt sich entsprechend der jeweiligen Aufgaben und vertraglichen Beziehungen. Im Fall geschäftlicher Verarbeitung bewahren wir die Daten so lange auf, wie sie zur Geschäftsabwicklung, als auch im Hinblick auf etwaige Gewährleistungs- oder Haftungspflichten relevant sein können. Die Erforderlichkeit der Aufbewahrung der Daten wird alle drei Jahre überprüft; im Übrigen gelten die gesetzlichen Aufbewahrungspflichten."
-      },
-      {
-        "type": "heading",
-        "text": "Registrierfunktion"
-      },
-      {
-        "type": "p",
-        "text": "Nutzer können optional ein Nutzerkonto anlegen. Im Rahmen der Registrierung werden die erforderlichen Pflichtangaben den Nutzern mitgeteilt. Die im Rahmen der Registrierung eingegebenen Daten werden für die Zwecke der Nutzung des Angebotes verwendet. Die Nutzer können über angebots- oder registrierungsrelevante Informationen, wie Änderungen des Angebotsumfangs oder technische Umstände per E-Mail informiert werden. Wenn Nutzer ihr Nutzerkonto gekündigt haben, werden deren Daten im Hinblick auf das Nutzerkonto gelöscht, vorbehaltlich deren Aufbewahrung ist aus handels- oder steuerrechtlichen Gründen entspr. Art. 6 Abs. 1 lit. c DSGVO notwendig. Es obliegt den Nutzern, ihre Daten bei erfolgter Kündigung vor dem Vertragsende zu sichern. Wir sind berechtigt, sämtliche während der Vertragsdauer gespeicherten Daten des Nutzers unwiederbringlich zu löschen."
-      },
-      {
-        "type": "p",
-        "text": "Im Rahmen der Inanspruchnahme unserer Registrierungs- und Anmeldefunktionen sowie der Nutzung der Nutzerkontos, speichern wird die IP-Adresse und den Zeitpunkt der jeweiligen Nutzerhandlung. Die Speicherung erfolgt auf Grundlage unserer berechtigten Interessen, als auch der Nutzer an Schutz vor Missbrauch und sonstiger unbefugter Nutzung. Eine Weitergabe dieser Daten an Dritte erfolgt grundsätzlich nicht, außer sie ist zur Verfolgung unserer Ansprüche erforderlich oder es besteht hierzu besteht eine gesetzliche Verpflichtung gem. Art. 6 Abs. 1 lit. c DSGVO. Die IP-Adressen werden spätestens nach 7 Tagen anonymisiert oder gelöscht."
       }
     ]
   }

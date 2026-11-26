@@ -1299,11 +1299,10 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 }
 @media (prefers-reduced-motion:reduce) { .hub-plan-grid a:hover { transform:none; } }
 
-/* Shop filters: keep the sort menu inside its column on phones */
-@media (max-width:850px) {
-  .catalogue-nav > * { min-width:0; }
-  .sort-order select { width:100%; min-width:0; }
-}
+/* Keep the native select inside its grid track at sidebar and phone widths. */
+.catalogue-nav > * { min-width:0; }
+.sort-order { grid-template-columns:minmax(0,1fr); }
+.sort-order select { width:100%; min-width:0; }
 
 /* Certificate and course-photo albums */
 .album-head { display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin:0 0 18px; padding-bottom:12px; border-bottom:1px solid var(--line-strong); }
@@ -1529,7 +1528,7 @@ img { height:auto; }
 @media (max-width:640px) {
   .ziele,.ziel-row { gap:14px; }
   .ziel-facts { grid-template-columns:1fr; gap:8px; }
-  .ziel-facts li { flex-direction:row; align-items:center; gap:12px; padding:10px 12px; }
+  .ziele .ziel-facts li { flex-direction:row; align-items:center; gap:12px; padding:10px 12px; }
   .ziel-feature .ziel-body,.ziel-lake .ziel-body { padding:22px 20px; }
   .ziel-button { width:100%; justify-content:center; }
   .ziel-pools-head { grid-template-columns:1fr; }
@@ -1539,4 +1538,87 @@ img { height:auto; }
   .ziel-pool { padding:18px 20px 10px; }
   .ziel-pool:nth-child(odd) { border-right:0; }
   .ziel-pool:not(:last-child) { border-bottom:1px solid var(--line); }
+}
+
+/* ===== Review fixes (Nov 2026) ===== */
+/* A global "main li + li" gap pushed every card after the first one down. */
+.review-cards > li + li,.dive-compare li + li { margin-top:0; }
+/* Multi-line serif headings need more air than 1.04: descenders touched the next line. */
+main h2:not(#_) { line-height:1.12; }
+/* Reviews: keep the summary above the cards until there is room for a real side column. */
+@media (max-width:1240px) {
+  .review-layout { grid-template-columns:1fr; }
+  .review-summary { display:grid; grid-template-columns:minmax(0,1fr) auto; column-gap:32px; align-items:end; }
+  .review-summary .kicker,.review-summary h2 { grid-column:1 / -1; }
+  .review-score { grid-row:span 2; }
+  .review-cta { margin-top:0; justify-self:start; }
+}
+@media (max-width:760px) { .review-summary { display:block; } .review-cta { margin-top:20px; } }
+/* Home equipment tiles: smaller photo column on narrow laptops so titles fit. */
+@media (max-width:1240px) and (min-width:761px) {
+  .home-equipment .equip-card { grid-template-columns:88px minmax(0,1fr); gap:14px; }
+  .home-equipment .equip-body strong { font-size:1.1875rem; }
+}
+/* Course cards: stack the two actions so every card ends the same way. */
+@media (max-width:1240px) and (min-width:761px) {
+  .dive-option-actions { flex-direction:column; align-items:flex-start; gap:12px; }
+}
+/* Team: left-aligned headings like the rest of the site; meta row aligned across cards. */
+.team-intro,.team-intro p { text-align:left; margin-left:0; }
+.team-layout { justify-items:stretch; }
+.school-guide > h2 { text-align:left; }
+.school-guide > .editorial-links { max-width:none; }
+.people .person > div { display:flex; flex-direction:column; flex:1; }
+.people .person { justify-content:flex-start; }
+.people .person .person-meta { margin-top:auto; }
+@media (max-width:640px) {
+  .people { grid-template-columns:repeat(2,minmax(0,1fr)); max-width:none; gap:16px; }
+  .people .person { padding:16px 4px 0; }
+  .people .person h3 { font-size:1rem; }
+  .people .person p { font-size:.875rem; }
+}
+/* Reading pages (prices, rental, legal) start on the same left edge as their heading. */
+.editorial-body > .reading { margin-inline:0; }
+/* Small categories: no search or sort, just a readable list. */
+.catalogue.catalogue-small { display:block; }
+.catalogue-small > div { max-width:860px; }
+/* Footer: brand and contact in one row, five link groups below. */
+@media (min-width:761px) {
+  .footer-main { display:grid; grid-template-columns:auto minmax(0,1fr); grid-template-rows:auto; align-items:center; gap:28px 48px; }
+  .footer-brand { grid-column:1; grid-row:1; }
+  .footer-contact { grid-column:2; grid-row:1; display:flex; flex-wrap:wrap; justify-content:flex-end; align-items:center; gap:8px 24px; }
+  .footer-groups { grid-column:1 / -1; grid-row:2; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:18px; padding-top:28px; border-top:1px solid var(--line); }
+  .footer-brand strong { white-space:nowrap; }
+}
+@media (min-width:761px) and (max-width:1000px) { .footer-groups { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+/* Header with five sections: hamburger up to 1080px, logo text never wraps. */
+.brand-name { white-space:nowrap; }
+@media (max-width:1180px) and (min-width:1081px) { .nav { gap:0; } .nav a { padding-inline:10px; } }
+@media (max-width:1080px) {
+  .nav { display:none; }
+  .menu { display:block; }
+  .drawer:not([hidden]) { display:grid; grid-template-columns:1fr; gap:0; padding:0 var(--gutter) 12px; border-bottom:1px solid var(--line); }
+  .drawer a { display:flex; align-items:center; min-height:52px; padding:12px 0; justify-content:space-between; border-top:1px solid var(--line); }
+  .drawer a::after { content:"→"; color:var(--teal); font-weight:400; }
+  .mast:not(.menu-ready) .nav { display:flex; flex-wrap:wrap; order:3; width:100%; }
+  .mast:not(.menu-ready) .bar { flex-wrap:wrap; }
+}
+@media (min-width:701px) and (max-width:1080px) { .drawer .drawer-contact { display:none; } }
+
+/* One neutral mount for catalogue photos, including cards shown outside the shop. */
+:root { --product-photo-surface: #fff; }
+.equip-card .equip-stage,
+.equip-card:hover .equip-stage,
+.home-equipment .equip-card .equip-stage,
+.item-related .equip-card .equip-stage,
+.stock-thumb, .item-photo, .item-gallery a,
+.department-item img, .shop-offer img, .shop-result > img {
+  background: var(--product-photo-surface);
+}
+.equip-stage img { mix-blend-mode: normal; }
+
+/* These four supplier photos use the same navy background. Keep the zoom originals. */
+main img:is([src$="e04d19ac13beb405.webp"], [src$="cab0c131ea1904d4.webp"],
+       [src$="bbb7d1676d207914.webp"], [src$="45bc9d2be2a1fc3d.webp"]) {
+  filter: url("assets/catalogue-backdrop.svg#navy-to-white");
 }

@@ -380,11 +380,11 @@ def jobs():
     </div></section>
     <section class="job-details"><div class="wrap">
       <article class="job-card"><h3>Deine Aufgaben</h3><ul class="check-list">{check(tasks)}</ul></article>
-      <article class="job-card"><h3>Das bringst du mit</h3><ul class="check-list">{check(needs)}</ul><p class="job-note">Die Schule nennt 18 Jahre als Richtwert und nimmt auch Anfragen von Jüngeren entgegen.</p></article>
+      <article class="job-card"><h3>Das bringst du mit</h3><ul class="check-list">{check(needs)}</ul><p class="job-note">18 Jahre sind ein Richtwert, wir freuen uns auch über Anfragen von Jüngeren.</p></article>
       <article class="job-card job-train"><h3>Wir bilden dich aus</h3><p>Rettungsschwimmer- und Rescue-Diver-Ausbildung, Erste-Hilfe-Kurse und Auffrischungen sind direkt bei uns möglich.</p>
         <div class="job-links"><a class="path-action" href="frti-kurse.html">Erste-Hilfe-Kurse</a><a class="path-action" href="tauchen-lernen-kurse.html#weiterlernen">Rescue Diver</a></div></article>
     </div></section>
-    <section class="landing-contact" aria-labelledby="job-closing"><div class="wrap"><div><h2 id="job-closing">Bewirb dich bei uns</h2><p>Schick deine Unterlagen per Mail oder ruf täglich ab 13 Uhr an.</p></div>
+    <section class="landing-contact" aria-labelledby="job-closing"><div class="wrap"><div><h2 id="job-closing">Bewirb dich bei uns</h2><p>Schick deine Unterlagen per Mail oder ruf uns an.</p></div>
       <div class="closing-actions"><a class="cta mint" href="{mail}">dive-world@mail.de</a><a class="plain" href="tel:+4917685639763">0176 8563 9763</a></div></div></section>'''
 
 
@@ -414,7 +414,8 @@ def legal(page):
         row('Gewerbe', escape(blocks[19]['text'])),
     ]
     provider = '<h3>Anschrift</h3>' + address(2,6) + '<h3>Kontakt</h3><dl class="legal-facts">' + ''.join(contact) + '</dl>'
-    provider += paragraphs(source(20,22))
+    # The EU ODR platform (block 20) closed on 20 July 2025, so only the e-mail line stays.
+    provider += paragraphs(blocks[21]['text'])
     # An empty source heading is omitted; it names no provider or service.
     copyright = '<h3>Copyright / Urheberrecht</h3>' + paragraphs(source(24,26))
     copyright += '<h3>Bildinhaber</h3>' + paragraphs(blocks[27]['text'])

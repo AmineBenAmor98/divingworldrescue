@@ -11,7 +11,7 @@ drawer.addEventListener('click', event => { if (event.target.closest('a')) setMe
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && !drawer.hidden) { setMenu(false); menu.focus(); }
 });
-matchMedia('(min-width:981px)').addEventListener('change', () => setMenu(false));
+matchMedia('(min-width:1081px)').addEventListener('change', () => setMenu(false));
 
 function setupFilm() {
   const film = document.querySelector('#dive');

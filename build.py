@@ -26,13 +26,16 @@ def link(slug, label=None):
 
 def overview():
     groups = [
-        ("Tauchen und Erste Hilfe", [
+        ("Tauchkurse und Erste Hilfe", [
             "kurse",
             "tauchen-lernen-kurse",
-            "frti-kurse",
             "preis-kurse",
-            "termine",
+            "frti-kurse",
             "anfrage",
+        ]),
+        ("Termine und Reisen", [
+            "termine",
+            "bilder-reisen-event-s",
         ]),
         ("Shop und Verleih", [
             "tauch-shop",
@@ -54,13 +57,12 @@ def overview():
             "tauch-shop--bekleidung",
             "tauch-shop--schmuck",
         ]),
-        ("Rund um die Schule", [
+        ("Über uns", [
             "infos",
-            "bilder-reisen-event-s",
             "glueckwuensche",
             "frti-kurse--frti-glueckwuensche",
-            "wir-suchen-dich",
             "gaestebuch-bewertung",
+            "wir-suchen-dich",
             "impressum",
         ]),
     ]
@@ -116,7 +118,7 @@ def footer(prefix):
     return (SRC / "footer.html").read_text().replace("{{root}}", prefix)
 
 
-HUBS = {"kurse": "Tauchen", "frti-kurse": "Erste Hilfe", "tauch-shop": "Ausrüstung", "infos": "Tauchschule"}
+HUBS = {"kurse": "Tauchkurse", "frti-kurse": "Erste Hilfe", "termine": "Termine & Reisen", "tauch-shop": "Ausrüstung", "infos": "Über uns"}
 INTRO = {
     "preis-kurse": "Vergleiche Kursgebühren, enthaltene Leistungen und zusätzliche Kosten für deine Tauchausbildung.",
     "equipment-verleih": "Leihpreise pro Tag, Wochenende oder Woche. Frag das Team, ob die Ausrüstung für deinen Termin verfügbar ist.",
@@ -145,7 +147,9 @@ def section_for(slug):
         return "tauch-shop"
     if slug in {"frti-kurse", "frti-kurse--frti-glueckwuensche"}:
         return "frti-kurse"
-    if slug in {"kurse", "preis-kurse", "termine", "tauchen-lernen-kurse"}:
+    if slug in {"termine", "bilder-reisen-event-s"}:
+        return "termine"
+    if slug in {"kurse", "preis-kurse", "tauchen-lernen-kurse"}:
         return "kurse"
     return "infos"
 
@@ -160,7 +164,7 @@ def header(prefix, active=None, current=None):
 
 def inner(page):
     slug = page["slug"]
-    title = escape({"tauch-shop": "Ausrüstung & Verleih", "kurse": "Tauchkurse", "infos": "Tauchschule & Kontakt"}.get(slug, page["title"]))
+    title = escape({"tauch-shop": "Ausrüstung & Verleih", "kurse": "Tauchkurse", "infos": "Über uns"}.get(slug, page["title"]))
     section = section_for(slug)
     neutral = slug in {"uebersicht", "anfrage"}
     parent = "" if neutral or slug in HUBS else f' / <a href="{section}.html">{escape(HUBS[section])}</a>'
