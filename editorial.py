@@ -1,6 +1,5 @@
 """Visitors' guides, galleries and reference pages for the German site."""
 import re
-from collections import Counter
 from html import escape
 from itertools import groupby
 from urllib.parse import urlencode
@@ -122,7 +121,7 @@ def trip_tiles(page, base="termine.html", root="../"):
     """Three destination tiles, shared by the travel page and the homepage. Each opens its own destination on the dates page."""
     tiles = [
         ("Tauchreise", "Rotes Meer", "Safaga in Ägypten, mehrmals im Jahr mit Flug ab Düsseldorf.", slot("reisen-rotes-meer.webp", "tauchgang.webp"), "#ziel-safaga", "Zur Reise nach Safaga"),
-        ("Hallentauchen", "Tauchzentren", "TODI, Diveworld, Dive4Life und Monte Mare: tauchen bei jedem Wetter.", slot("reisen-hallenbad.webp", "tauchen.webp"), "#ziele", "Zu den 4 Tauchzentren"),
+        ("Hallentauchen", "Tauchzentren", "TODI, Diveworld, Dive4Life und Monte Mare: tauchen bei jedem Wetter.", slot("reisen-hallenbad.webp", "tauchen.webp"), "#ziel-hallentauchen", "Zu den 4 Tauchzentren"),
         ("See", "Freiwasser", "Die Südsee in Xanten für Kurse, Refresher und Fun-Dives.", slot("reisen-see.webp", "see.webp"), "#ziel-sudsee", "Zum See in Xanten"),
     ]
     return "".join(f'''<a class="trip-tile" href="{base}{anchor}"><img src="{img.replace("../", root, 1)}" alt="" loading="lazy"><span class="trip-tile-copy">
@@ -247,18 +246,79 @@ def flag(country):
     return f'<svg class="flag" viewBox="0 0 30 20" width="21" height="14" aria-hidden="true">{rects}</svg>'
 
 
+# How often each destination comes round, read from the dates archive (2025 and 2026).
+VENUE_RHYTHM = {
+    "Safaga · Ägypten": ("Dreimal im Jahr", "Meist im März, im Juni/Juli und im Herbst"),
+    "Südsee · Xanten": ("Jeden Sommer", "Im Juli und August"),
+    "TODI · Beringen": ("4–5× im Jahr", ""),
+    "Dive4Life · Siegburg": ("Etwa 4× im Jahr", ""),
+    "Monte Mare · Rheinbach": ("Mehrmals im Jahr", ""),
+    "Diveworld · Enschede": ("2× im Jahr", ""),
+}
+CALENDAR = '<svg width="{0}" height="{0}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>'
+FACT_ICONS = {
+    "sun": '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    "plane": '<path d="M16 10h4a2 2 0 0 1 0 4h-4l-4 7h-3l2-7H7l-2 2H2l2-4-2-4h3l2 2h4L9 3h3z"/>',
+    "people": '<circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2M16 3.1a4 4 0 0 1 0 7.8M21 21v-2a4 4 0 0 0-3-3.9"/>',
+}
+
+
+def destinations():
+    """Safaga as the feature card, the lake beside one panel that groups the four pools."""
+    venues = {name: (kind, region, program) for name, kind, region, program in VENUES}
+
+    def ask(name):
+        return "anfrage.html?" + escape(urlencode({"thema": "Termine und Reisen", "ziel": name}))
+
+    def country(name):
+        _, region, _ = venues[name]
+        place = name.split(" · ")[1]
+        label = place if flag(place) else region
+        return f'<span class="trip-country">{flag(label)}{escape(label)}</span>'
+
+    def when(name):
+        title, detail = VENUE_RHYTHM[name]
+        return f'<p class="ziel-when">{CALENDAR.format(18)}<span><strong>{title}</strong>{escape(detail)}</span></p>'
+
+    note = '<span class="ziel-here" aria-hidden="true">Du bist hier</span>'
+    safaga = "Safaga · Ägypten"
+    facts = [("sun", "7 bis 10", "Tauchtage"), ("plane", "Flug", "ab Düsseldorf"), ("people", "Auch", "für Nichttaucher")]
+    fact_items = "".join(f'<li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{FACT_ICONS[i]}</svg><span><strong>{a}</strong> {b}</span></li>' for i, a, b in facts)
+    feature = f'''<article class="ziel ziel-feature" id="ziel-safaga">{note}
+        <div class="ziel-photo"><img src="{slot("reisen-rotes-meer.webp", "tauchgang.webp")}" alt="Taucher auf dem Deck eines Tauchboots vor der Küste bei Safaga" loading="lazy"><span class="ziel-badge">Unsere große Reise</span></div>
+        <div class="ziel-body"><p class="trip-meta"><span class="trip-kind kind-tauchreise">Tauchreise</span>{country(safaga)}</p>
+          <div><h3>Safaga</h3><p class="trip-place">Rotes Meer</p></div>
+          <p class="ziel-desc">Unsere gemeinsame Tauchreise ans Rote Meer. Jeder ist willkommen, auch Begleitung ohne Tauchschein.</p>
+          <ul class="ziel-facts">{fact_items}</ul>
+          {when(safaga)}
+          <p class="ziel-actions"><a class="ziel-link ziel-button" href="{ask(safaga)}">Reise anfragen<span class="sr-only"> nach Safaga</span></a><a class="ziel-more" href="bilder-reisen-event-s.html">Bilder vergangener Reisen</a></p></div></article>'''
+    lake_name = "Südsee · Xanten"
+    lake = f'''<article class="ziel ziel-lake" id="ziel-sudsee">{note}
+        <div class="ziel-photo"><img src="{slot("reisen-see.webp", "see.webp")}" alt="Zwei Taucher bereiten am Seeufer ihre Ausrüstung vor" loading="lazy"></div>
+        <div class="ziel-body"><p class="trip-meta"><span class="trip-kind kind-see">See</span>{country(lake_name)}</p>
+          <div><h3>Südsee</h3><p class="trip-place">Xanten</p></div>
+          <p class="ziel-desc">{escape(venues[lake_name][2])}</p>
+          {when(lake_name)}
+          <a class="ziel-link" href="{ask(lake_name)}">Termin anfragen<span class="sr-only"> für die Südsee in Xanten</span></a></div></article>'''
+    pools = []
+    for name in ("TODI · Beringen", "Dive4Life · Siegburg", "Monte Mare · Rheinbach", "Diveworld · Enschede"):
+        venue, place = name.split(" · ")
+        program = venues[name][2].replace("auf Wunsch mit Übernachtung im Hotel", "auf Wunsch mit Hotel")
+        pools.append(f'''<article class="ziel-pool" id="ziel-{slugify(venue)}">
+          <div class="ziel-pool-top"><h4>{escape(venue)}</h4>{country(name)}</div><span class="trip-place">{escape(place)}</span>
+          <p>{escape(program)}</p>
+          <div class="ziel-pool-foot"><span class="ziel-freq">{CALENDAR.format(15)}{VENUE_RHYTHM[name][0]}</span><a class="ziel-link" href="{ask(name)}">Anfragen<span class="sr-only"> für {escape(venue)} in {escape(place)}</span></a></div></article>''')
+    panel = f'''<section class="ziel-pools" id="ziel-hallentauchen" aria-labelledby="ziel-hallen-title">{note}
+        <div class="ziel-pools-head"><div class="ziel-photo"><img src="{slot("reisen-hallenbad.webp", "tauchen.webp")}" alt="" loading="lazy"></div>
+          <div><span class="trip-kind">Hallentauchen</span><h3 id="ziel-hallen-title">Bei jedem Wetter</h3><p>Vier Tauchzentren in der Region: zum Üben, für Kurse und Fun-Dives, auch im Winter.</p></div></div>
+        <div class="ziel-pool-grid">{"".join(pools)}</div></section>'''
+    return f'<div class="ziele">{feature}<div class="ziel-row">{lake}{panel}</div></div>'
+
+
 def dates(page):
     archive = page["archive"]
-    counts = Counter(record["name"] for record in archive)
     first_year = min(record["year"] for record in archive)
     request = "anfrage.html?" + escape(urlencode({"thema": "Termine und Reisen"}))
-    cards = []
-    for name, kind, region, program in VENUES:
-        venue, place = name.split(" · ")
-        link = "anfrage.html?" + escape(urlencode({"thema": "Termine und Reisen", "ziel": name}))
-        cards.append(f'''<article class="trip-card" id="ziel-{slugify(venue)}"><p class="trip-meta"><span class="trip-kind kind-{slugify(kind)}">{kind}</span><span class="trip-country">{flag(region) or flag(place)}{escape(region)}</span></p>
-          <h3>{escape(venue)}</h3><p class="trip-place">{escape(place)}</p><p>{escape(program)}</p>
-          <footer><span>{counts[name]} Termine seit {first_year}</span><a href="{link}">Mitkommen<span class="sr-only"> nach {escape(place)}</span></a></footer></article>''')
     facts = [
         ("Jeder ist willkommen", "Einsteiger, erfahrene Taucher und Begleitung. Melde dich per Mail, Telefon oder WhatsApp."),
         ("Anmeldung vorab", "Meist bis etwa eine Woche vor dem Termin, bei Reisen früher."),
@@ -281,7 +341,7 @@ def dates(page):
     return f'''<section class="trip-section" id="ziele"><div class="wrap">
       <div class="trip-head"><div><p class="kicker">Tauchziele</p><h2>Hier tauchen wir regelmäßig.</h2></div>
       <p>Vom Hallenbad in der Nähe bis ans Rote Meer. Such dir ein Ziel aus, wir sagen dir den nächsten Termin.</p></div>
-      <div class="trip-grid">{"".join(cards)}</div></div></section>
+      {destinations()}</div></section>
     <section class="trip-facts" aria-label="So funktioniert es"><div class="wrap"><ul>{"".join(f"<li><strong>{a}</strong><span>{b}</span></li>" for a, b in facts)}</ul></div></section>
     <section class="trip-archive" id="archiv"><div class="wrap">
       <div class="trip-head"><div><p class="kicker">Rückblick</p><h2>Bisherige Termine</h2></div>

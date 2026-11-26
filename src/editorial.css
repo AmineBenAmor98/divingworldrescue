@@ -644,20 +644,11 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 .trip-head h2 { margin:0; }
 .trip-head > p { margin:0; color:var(--muted); font-size:1.125rem; max-width:44ch; justify-self:end; }
 .trip-head > p .path-action { display:flex; width:fit-content; margin-top:10px; }
-.trip-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
-.trip-card { display:flex; flex-direction:column; padding:28px 28px 22px; background:var(--white); border:1px solid var(--line); border-radius:var(--radius); }
 .trip-meta { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0; color:var(--muted); font-size:.875rem; }
 .trip-kind { display:inline-flex; align-items:center; min-height:26px; padding:2px 10px; border-radius:999px; background:var(--sage); color:var(--teal-dark); font-size:.8125rem; font-weight:600; white-space:nowrap; }
 .trip-kind.kind-see { background:#e8f2f8; color:#24617c; }
 .trip-kind.kind-tauchreise { background:#f5efdf; color:#77603b; }
-.trip-card h3 { margin:22px 0 0; font-family:var(--serif); font-weight:400; font-size:var(--fs-h3); line-height:1.1; letter-spacing:-.015em; }
 .trip-place { margin:4px 0 0; color:var(--muted); }
-.trip-card > p:not(.trip-meta):not(.trip-place) { margin:16px 0 24px; font-size:.9375rem; line-height:1.55; text-wrap:pretty; }
-.trip-card footer { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:auto; padding-top:16px; border-top:1px solid var(--line); font-size:.875rem; }
-.trip-card footer span { color:var(--muted); }
-.trip-card footer a { display:inline-flex; align-items:center; gap:6px; min-height:44px; color:var(--teal); font-weight:600; text-decoration:none; }
-.trip-card footer a::after { content:"→"; transition:transform .2s; }
-.trip-card footer a:hover::after { transform:translateX(3px); }
 .trip-facts { padding-bottom:var(--section); }
 .trip-facts ul { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:24px 32px; margin:0; padding:32px 0 0; list-style:none; border-top:1px solid var(--line-strong); }
 .trip-facts li { display:grid; align-content:start; gap:6px; margin:0; }
@@ -685,15 +676,11 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 .log-notice { padding:0 0 20px 11.5rem; max-width:calc(70ch + 11.5rem); color:var(--muted); font-size:.9375rem; line-height:1.6; }
 .log-notice p { margin:0 0 6px; }
 @media (max-width:1080px) {
-  .trip-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .trip-facts ul { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
 @media (max-width:700px) {
   .trip-head { grid-template-columns:1fr; margin-bottom:28px; }
   .trip-head > p { justify-self:start; font-size:1rem; }
-  .trip-grid { grid-template-columns:1fr; gap:14px; }
-  .trip-card { padding:22px 20px 16px; }
-  .trip-card h3 { margin-top:16px; }
   .trip-facts ul { grid-template-columns:1fr; gap:20px; padding-top:28px; }
   .trip-log summary { grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"time kind" "name toggle"; gap:2px 12px; padding:12px 8px; margin-inline:-8px; }
   .trip-log time { grid-area:time; font-size:.875rem; }
@@ -1390,8 +1377,6 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 .dive-chips a { min-height:44px; height:100%; }
 
 /* Destination cards reached from a trip tile */
-.trip-card { scroll-margin-top:96px; }
-.trip-card:target { border-color:var(--teal); box-shadow:0 0 0 3px rgba(20,121,111,.18); }
 .trip-archive,.moments-section,.album { scroll-margin-top:24px; }
 
 /* Tauchschule hub: photo cover like the other section hubs */
@@ -1468,3 +1453,90 @@ img { height:auto; }
 
 /* Breadcrumb links: at least 24px tall to tap (WCAG 2.2 target size) without moving the text. */
 .crumb a,.item-crumb a { display:inline-block; padding:4px 3px; margin:-4px -3px; }
+
+/* Termine: destinations. Safaga as the feature, the lake beside one panel for the four pools.
+   Each card is clickable through its own link (stretched with ::before); "Bilder" sits above it. */
+.ziele { --ziel-shadow:0 1px 2px rgba(16,47,50,.04),0 8px 24px rgba(16,47,50,.07); display:grid; gap:20px; }
+.ziel,.ziel-pools { position:relative; border:1px solid var(--line); border-radius:14px; background:#fff; box-shadow:var(--ziel-shadow); overflow:hidden; scroll-margin-top:96px; transition:border-color .2s,box-shadow .2s,transform .2s; }
+.ziel { display:flex; }
+.ziel:hover { border-color:var(--teal); box-shadow:0 2px 4px rgba(16,47,50,.06),0 14px 32px rgba(16,47,50,.12); transform:translateY(-2px); }
+.ziel:has(.ziel-link:focus-visible),.ziel-pool:has(.ziel-link:focus-visible) { outline:3px solid var(--teal); outline-offset:2px; }
+.ziel-photo { position:relative; overflow:hidden; background:var(--sage); }
+.ziel-photo img { width:100%; height:100%; object-fit:cover; }
+.ziel-body { display:flex; flex-direction:column; gap:16px; }
+.ziel h3,.ziel-pools h3 { margin:0; font:400 clamp(1.625rem,2.2vw,2rem)/1.1 var(--serif); letter-spacing:-.01em; }
+.ziele .trip-place { margin:4px 0 0; color:var(--muted); font-size:.9375rem; }
+.ziele .trip-country { color:var(--muted); font-size:.875rem; }
+.ziel-desc { margin:0; font-size:.9375rem; line-height:1.55; }
+.ziel-when { display:flex; align-items:flex-start; gap:10px; margin:0; padding:12px 14px; border-radius:10px; background:var(--paper); font-size:.875rem; line-height:1.4; }
+.ziel-when svg { flex:none; margin-top:1px; color:var(--teal); }
+.ziel-when span { color:var(--muted); }
+.ziel-when strong { display:block; color:var(--ink); font-weight:600; }
+.ziel-link,.ziel-more { display:inline-flex; align-items:center; gap:8px; min-height:44px; color:var(--teal); font-weight:600; font-size:.9375rem; text-decoration:none; }
+.ziel-link::after,.ziel-more::after { content:"→"; font-weight:400; transition:transform .2s; }
+.ziel-link::before { content:""; position:absolute; inset:0; z-index:1; }
+.ziel:hover .ziel-link::after,.ziel-pool:hover .ziel-link::after,.ziel-more:hover::after { transform:translateX(3px); }
+.ziel-more { position:relative; z-index:2; }
+.ziel-more:hover { text-decoration:underline; text-underline-offset:3px; }
+.ziel-here { display:none; position:absolute; z-index:3; top:14px; left:14px; padding:4px 10px; border-radius:999px; background:var(--mint); color:var(--teal-dark); font-size:.75rem; font-weight:700; line-height:1.4; }
+.ziel:target,.ziel-pools:target { border-color:var(--teal); box-shadow:0 0 0 3px rgba(0,104,95,.18),var(--ziel-shadow); }
+.ziel:target > .ziel-here,.ziel-pools:target > .ziel-here { display:block; }
+
+.ziel-feature { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); }
+.ziel-feature .ziel-photo { min-height:420px; }
+.ziel-badge { position:absolute; left:20px; bottom:20px; padding:8px 14px; border-radius:999px; background:rgba(11,52,55,.82); color:#fff; font-size:.8125rem; font-weight:600; backdrop-filter:blur(6px); }
+.ziel-feature .ziel-body { gap:18px; padding:clamp(24px,3.2vw,44px); }
+.ziel-feature h3 { font-size:clamp(2.25rem,3.4vw,3rem); }
+.ziel-facts { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:0; padding:0; list-style:none; }
+.ziele .ziel-facts li { display:flex; flex-direction:column; gap:6px; margin:0; padding:14px; border:1px solid var(--line); border-radius:10px; font-size:.875rem; line-height:1.35; }
+.ziel-facts svg { flex:none; color:var(--teal); }
+.ziel-facts strong { font-weight:600; }
+.ziel-actions { display:flex; align-items:center; gap:8px 24px; flex-wrap:wrap; margin:auto 0 0; }
+.ziel-button { min-height:48px; padding:12px 20px; border-radius:6px; background:var(--deep); color:#fff; }
+.ziel-feature:hover .ziel-button { background:var(--teal-dark); }
+
+.ziel-row { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:20px; }
+.ziel-lake { flex-direction:column; }
+.ziel-lake .ziel-photo { aspect-ratio:16/10; }
+.ziel-lake .ziel-body { flex:1; gap:14px; padding:24px; }
+.ziel-lake .ziel-link { margin-top:auto; }
+
+.ziel-pools { display:flex; flex-direction:column; }
+.ziel-pools-head { display:grid; grid-template-columns:200px minmax(0,1fr); border-bottom:1px solid var(--line); }
+.ziel-pools-head .ziel-photo { min-height:140px; }
+.ziel-pools-head > div:last-child { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:8px; padding:20px 24px; }
+.ziel-pools-head h3 { font-size:1.75rem; }
+.ziel-pools-head p { margin:0; color:var(--muted); font-size:.9375rem; line-height:1.5; }
+.ziel-pool-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); flex:1; }
+.ziel-pool { position:relative; display:flex; flex-direction:column; gap:8px; padding:20px 24px 12px; scroll-margin-top:96px; transition:background .2s; }
+.ziel-pool:nth-child(odd) { border-right:1px solid var(--line); }
+.ziel-pool:nth-child(-n+2) { border-bottom:1px solid var(--line); }
+.ziel-pool:hover,.ziel-pool:target { background:#f2f8f4; }
+.ziel-pool:target { box-shadow:inset 3px 0 0 var(--teal); }
+.ziel-pool-top { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+.ziel-pool h4 { margin:0; font:400 1.5rem/1.1 var(--serif); letter-spacing:-.01em; }
+.ziel-pool .trip-place { margin:0; font-size:.875rem; }
+.ziel-pool p { margin:0; color:var(--muted); font-size:.9rem; line-height:1.5; }
+.ziel-pool-foot { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:auto; font-size:.8125rem; }
+.ziel-freq { display:inline-flex; align-items:center; gap:6px; font-weight:600; }
+.ziel-freq svg { color:var(--teal); }
+.ziel-pool .ziel-link { font-size:.875rem; }
+@media (prefers-reduced-motion:reduce) { .ziel,.ziel:hover { transition:none; transform:none; } }
+@media (max-width:980px) {
+  .ziel-feature,.ziel-row { grid-template-columns:1fr; }
+  .ziel-feature .ziel-photo { min-height:0; aspect-ratio:16/9; }
+}
+@media (max-width:640px) {
+  .ziele,.ziel-row { gap:14px; }
+  .ziel-facts { grid-template-columns:1fr; gap:8px; }
+  .ziel-facts li { flex-direction:row; align-items:center; gap:12px; padding:10px 12px; }
+  .ziel-feature .ziel-body,.ziel-lake .ziel-body { padding:22px 20px; }
+  .ziel-button { width:100%; justify-content:center; }
+  .ziel-pools-head { grid-template-columns:1fr; }
+  .ziel-pools-head .ziel-photo { min-height:0; aspect-ratio:16/7; }
+  .ziel-pools-head > div:last-child { padding:20px; }
+  .ziel-pool-grid { grid-template-columns:1fr; }
+  .ziel-pool { padding:18px 20px 10px; }
+  .ziel-pool:nth-child(odd) { border-right:0; }
+  .ziel-pool:not(:last-child) { border-bottom:1px solid var(--line); }
+}
