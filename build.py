@@ -5,9 +5,9 @@ from hashlib import sha256
 import shutil
 import os
 from urllib.parse import urlencode, urljoin, urlsplit
-from shop import category_photo, catalogue_items, category_products, product_detail, shop_directory
+from shop import category_photo, catalogue_items, category_products, product_detail, shop_directory, slugify
 from html import escape
-from editorial import albums, closing_band, course_link, dates, first_aid, guestbook, home_news, hud, jobs, legal, travel_archive, trip_tiles
+from editorial import albums, closing_band, slot, course_link, dates, first_aid, guestbook, home_news, hud, jobs, legal, travel_archive, trip_tiles
 from pathlib import Path
 from design import decorate
 
@@ -80,7 +80,7 @@ def content(page):
         for c in page["courses"]:
             items = ''.join(f'<li>{escape(t)}</li>' for t in c['details'][:-1])
             supplement = escape(c['details'][-1])
-            cards.append(f'<section class="course-rate"><div class="rate"><h2>{escape(c["name"])}</h2><strong>{escape(c["price"])}</strong></div><p class="fee-supplement">{supplement}</p><details><summary>Ablauf und Leistungen</summary><ul>{items}</ul></details>{course_link("Tauchkurs", c["name"], "Kurs anfragen")}</section>')
+            cards.append(f'<section class="course-rate" id="{slugify(c["name"])}"><div class="rate"><h2>{escape(c["name"])}</h2><strong>{escape(c["price"])}</strong></div><p class="fee-supplement">{supplement}</p><details><summary>Ablauf und Leistungen</summary><ul>{items}</ul></details>{course_link("Tauchkurs", c["name"], "Kurs anfragen")}</section>')
         return '<div class="reading fees-list">' + ''.join(cards) + notes(page) + '</div>'
     if "rates" in page:
         durations = ("Tag", "Wochenende", "Woche")
@@ -183,6 +183,7 @@ def inner(page):
     if slug == "kurse":
         fees = {course["name"]: course["price"] for course in BY_SLUG["preis-kurse"]["courses"]}
         main = (SRC / "courses.html").read_text().replace("{{breadcrumb}}", crumb)
+        main = re.sub(r"\{\{img:([\w.-]+)\|([\w.-]+)\}\}", lambda m: slot(m[1], m[2]), main)
         main = main.replace("{{trial_price}}", escape(fees["Schnuppertauchen"])).replace("{{aowd_price}}", escape(fees["Advanced Open Water Diver"]))
         main = main.replace("{{closing}}", closing_band("Welcher Kurs passt zu dir?", "Erzähl uns kurz, was du schon gemacht hast. Wir empfehlen dir den passenden Einstieg.", "anfrage.html?thema=Tauchkurs", "Beratung anfragen", "hub-closing"))
         return page_shell(escape("Tauchkurse in Düsseldorf"), main, section, slug)
@@ -437,7 +438,7 @@ def build():
     for name in ("main.css", "editorial.css", "home.js", "inquiry.js", "gallery.css", "gallery.js"):
         shutil.copyfile(SRC / name, DIST / name)
     home = HOME.replace("<!-- site-header -->", header("")).replace("<!-- site-footer -->", footer(""))
-    home = home.replace("<!-- hero-trust -->", hero_trust()).replace("<!-- home-news -->", home_news(BY_SLUG["termine"], BY_SLUG["glueckwuensche"])).replace("<!-- trip-tiles -->", trip_tiles(BY_SLUG["bilder-reisen-event-s"], "pages/termine.html#ziele", "")).replace("<!-- course-preview -->", home_offers()).replace("<!-- equipment-preview -->", equipment_preview()).replace("<!-- google-reviews -->", google_reviews())
+    home = home.replace("<!-- hero-trust -->", hero_trust()).replace("<!-- home-news -->", home_news(BY_SLUG["termine"], BY_SLUG["glueckwuensche"])).replace("<!-- trip-tiles -->", trip_tiles(BY_SLUG["bilder-reisen-event-s"], "pages/termine.html", "")).replace("<!-- course-preview -->", home_offers()).replace("<!-- equipment-preview -->", equipment_preview()).replace("<!-- google-reviews -->", google_reviews())
     (DIST / "index.html").write_text(add_metadata(home, "index.html", "Tauchen und Erste Hilfe · Dive-World & Rescue", "Tauchkurse, Scubility, Erste Hilfe und Ausrüstung bei Dive-World & Rescue.", ""))
     for page in [*PAGES, {"slug":"kurse", "title":HUBS["kurse"]}, {"slug":"infos", "title":HUBS["infos"]}, {"slug":"anfrage", "title":"Anfrage stellen"}, {"slug":"uebersicht", "title":"Alle Seiten"}]:
         description = INTRO.get(page["slug"], page["title"] + " bei Dive-World & Rescue.")

@@ -118,17 +118,15 @@ def trip_kind(text):
     return next((kind for keys, kind in TRIP_KINDS if any(k in text for k in keys)), "Ausflug")
 
 
-def trip_tiles(page, href="termine.html#ziele", root="../"):
-    """Three destination tiles, shared by the travel page and the homepage."""
-    highlights = page["highlights"]
-    counts = Counter(trip_kind(event) for events in highlights.values() for event in events)
+def trip_tiles(page, base="termine.html", root="../"):
+    """Three destination tiles, shared by the travel page and the homepage. Each opens its own destination on the dates page."""
     tiles = [
-        ("Tauchreise", "Rotes Meer", "Safaga in Ägypten, mehrmals im Jahr mit Flug ab Düsseldorf.", slot("reisen-rotes-meer.webp", "tauchgang.webp")),
-        ("Hallentauchen", "Tauchzentren", "TODI, Diveworld, Dive4Life und Monte Mare: tauchen bei jedem Wetter.", slot("reisen-hallenbad.webp", "tauchen.webp")),
-        ("See", "Freiwasser", "Die Südsee in Xanten für Kurse, Refresher und Fun-Dives.", slot("reisen-see.webp", "see.webp")),
+        ("Tauchreise", "Rotes Meer", "Safaga in Ägypten, mehrmals im Jahr mit Flug ab Düsseldorf.", slot("reisen-rotes-meer.webp", "tauchgang.webp"), "#ziel-safaga", "Zur Reise nach Safaga"),
+        ("Hallentauchen", "Tauchzentren", "TODI, Diveworld, Dive4Life und Monte Mare: tauchen bei jedem Wetter.", slot("reisen-hallenbad.webp", "tauchen.webp"), "#ziele", "Zu den 4 Tauchzentren"),
+        ("See", "Freiwasser", "Die Südsee in Xanten für Kurse, Refresher und Fun-Dives.", slot("reisen-see.webp", "see.webp"), "#ziel-sudsee", "Zum See in Xanten"),
     ]
-    return "".join(f'''<a class="trip-tile" href="{href}"><img src="{img.replace("../", root, 1)}" alt="" loading="lazy"><span class="trip-tile-copy">
-      <span class="trip-kind kind-{slugify(kind)}">{kind}</span><strong>{title}</strong><span>{text}</span><small>{counts[kind]} Rückblick{"e" if counts[kind] != 1 else ""}</small></span></a>''' for kind, title, text, img in tiles)
+    return "".join(f'''<a class="trip-tile" href="{base}{anchor}"><img src="{img.replace("../", root, 1)}" alt="" loading="lazy"><span class="trip-tile-copy">
+      <span class="trip-kind kind-{slugify(kind)}">{kind}</span><strong>{title}</strong><span>{text}</span><small>{label}</small></span></a>''' for kind, title, text, img, anchor, label in tiles)
 
 
 def home_news(termine, glueck):
@@ -144,7 +142,7 @@ def home_news(termine, glueck):
         ("assets/media/c515206b12fed44e.webp", "Übergabe einer SDI-Urkunde", month[0] if month else "Tauchabschlüsse", "Tauchabschlüsse",
          "Neue Brevets im Team", "Herzlichen Glückwunsch an Bernd zum Instructor und an Silvia zum Divemaster.", "pages/glueckwuensche.html", "Alle Tauchabschlüsse"),
         (trip_photo, "", f'{latest["date"]} {latest["year"]}', kind,
-         trip_title, f"{venue} in {place}. Bilder und Berichte findest du im Rückblick.", "pages/bilder-reisen-event-s.html", "Zum Rückblick"),
+         trip_title, f"{venue} in {place}. Alle bisherigen Ausflüge und Reisen findest du im Rückblick.", "pages/bilder-reisen-event-s.html#rueckblick", "Zum Rückblick"),
         ("assets/rettungsschwimmer.webp", "", "Mitarbeit", "Unterbacher See",
          "Rettungsschwimmer gesucht", "Für die Badesaison am Unterbacher See, vor allem an Wochenenden und Feiertagen.", "pages/wir-suchen-dich.html", "Mehr erfahren"),
     ]
@@ -172,13 +170,13 @@ def travel_archive(page):
         label = "Ohne Jahr" if not year[:1].isdigit() else year
         years.append(f'<section class="moment-year"><h3>{escape(label)}<small>{len(events)} Rückblick{"e" if len(events) != 1 else ""}</small></h3><ol class="moments">{"".join(cards)}</ol></section>')
     picks = ["ba9e4421064b6920", "4affc21280160622", "d88380ee965ce574", "0b0901195a9a7b6c", "4223fcc09b4bdb38"]
-    mosaic = "".join(f'<a href="glueckwuensche.html"><img src="../assets/media/{pid}.webp" alt="Foto aus einem Kurs oder einer Reise der Tauchschule" loading="lazy"></a>' for pid in picks)
+    mosaic = "".join(f'<a href="../assets/media/{pid}.webp" aria-label="Foto vergrößern"><img src="../assets/media/{pid}.webp" alt="Foto aus einem Kurs oder einer Reise der Tauchschule" loading="lazy"></a>' for pid in picks)
     request = "anfrage.html?" + escape(urlencode({"thema": "Termine und Reisen"}))
     return f'''<section class="trip-section"><div class="wrap">{section_head("Unterwegs", "Wohin wir gemeinsam fahren", "Vom Hallenbad in der Nähe bis ans Rote Meer. Jeder ist willkommen, auch Begleitung ohne Tauchschein.")}
       <div class="trip-tiles">{tile_html}</div></div></section>
-    <section class="photo-section"><div class="wrap">{section_head("Eindrücke", "Echte Momente mit der Tauchschule", 'Vom Bootsdeck vor Safaga bis zum Abschluss im Hallenbad. <a class="path-action" href="glueckwuensche.html">Alle Fotos ansehen</a>')}
+    <section class="photo-section"><div class="wrap">{section_head("Eindrücke", "Echte Momente mit der Tauchschule", 'Vom Bootsdeck vor Safaga bis zum Abschluss im Hallenbad. <a class="path-action" href="glueckwuensche.html#weitere-kursfotos">Weitere Fotos ansehen</a>')}
       <div class="photo-mosaic">{mosaic}</div></div></section>
-    <section class="moments-section"><div class="wrap">{section_head("Rückblick", "Erlebt mit der Tauchschule", f'{len(entries)} Ausflüge, Kurse und Reisen. <a class="path-action" href="glueckwuensche.html">Tauchabschlüsse ansehen</a>')}
+    <section class="moments-section" id="rueckblick"><div class="wrap">{section_head("Rückblick", "Erlebt mit der Tauchschule", f'{len(entries)} Ausflüge, Kurse und Reisen. <a class="path-action" href="termine.html#archiv">Alle Termine mit Ausschreibung</a>')}
       {"".join(years)}</div></section>
     {closing_band("Beim nächsten Mal dabei sein?", "Sag uns, wohin du mitkommen möchtest. Wir melden uns mit Termin und Details.", request, "Ausflug anfragen", "travel-closing")}'''
 
@@ -200,7 +198,7 @@ def albums(page):
         grid = image_gallery(photos, label)
         if not certs and len(photos) > 12:
             grid = image_gallery(photos[:12], label) + f'<details class="album-more"><summary>Alle {len(photos)} Fotos zeigen</summary>{image_gallery(photos[12:], label, 13)}</details>'
-        out.append(f'<section class="{classes}"><div class="album-head"><h2>{escape(label)}</h2><span>{count}</span></div>{grid}</section>')
+        out.append(f'<section class="{classes}" id="{slugify(label)}"><div class="album-head"><h2>{escape(label)}</h2><span>{count}</span></div>{grid}</section>')
     if "highlights" in page:
         out.append('<section class="reading"><h2>Reisen und Kurse im Rückblick</h2>')
         for year, events in page["highlights"].items():
@@ -237,7 +235,7 @@ def dates(page):
     for name, kind, region, program in VENUES:
         venue, place = name.split(" · ")
         link = "anfrage.html?" + escape(urlencode({"thema": "Termine und Reisen", "ziel": name}))
-        cards.append(f'''<article class="trip-card"><p class="trip-meta"><span class="trip-kind kind-{slugify(kind)}">{kind}</span>{escape(region)}</p>
+        cards.append(f'''<article class="trip-card" id="ziel-{slugify(venue)}"><p class="trip-meta"><span class="trip-kind kind-{slugify(kind)}">{kind}</span>{escape(region)}</p>
           <h3>{escape(venue)}</h3><p class="trip-place">{escape(place)}</p><p>{escape(program)}</p>
           <footer><span>{counts[name]} Termine seit {first_year}</span><a href="{link}">Mitkommen<span class="sr-only"> nach {escape(place)}</span></a></footer></article>''')
     facts = [
@@ -264,7 +262,7 @@ def dates(page):
       <p>Vom Hallenbad in der Nähe bis ans Rote Meer. Such dir ein Ziel aus, wir sagen dir den nächsten Termin.</p></div>
       <div class="trip-grid">{"".join(cards)}</div></div></section>
     <section class="trip-facts" aria-label="So funktioniert es"><div class="wrap"><ul>{"".join(f"<li><strong>{a}</strong><span>{b}</span></li>" for a, b in facts)}</ul></div></section>
-    <section class="trip-archive"><div class="wrap">
+    <section class="trip-archive" id="archiv"><div class="wrap">
       <div class="trip-head"><div><p class="kicker">Rückblick</p><h2>Bisherige Termine</h2></div>
       <p>{len(archive)} Ausflüge, Kurse und Reisen seit Januar {first_year}. <a class="path-action" href="bilder-reisen-event-s.html">Bilder ansehen</a></p></div>
       {"".join(years)}</div></section>
@@ -303,7 +301,7 @@ def jobs():
       <article class="job-card"><h3>Deine Aufgaben</h3><ul class="check-list">{check(tasks)}</ul></article>
       <article class="job-card"><h3>Das bringst du mit</h3><ul class="check-list">{check(needs)}</ul><p class="job-note">Die Schule nennt 18 Jahre als Richtwert und nimmt auch Anfragen von Jüngeren entgegen.</p></article>
       <article class="job-card job-train"><h3>Wir bilden dich aus</h3><p>Rettungsschwimmer- und Rescue-Diver-Ausbildung, Erste-Hilfe-Kurse und Auffrischungen sind direkt bei uns möglich.</p>
-        <div class="job-links"><a class="path-action" href="frti-kurse.html">Erste-Hilfe-Kurse</a><a class="path-action" href="tauchen-lernen-kurse.html">Tauchausbildung</a></div></article>
+        <div class="job-links"><a class="path-action" href="frti-kurse.html">Erste-Hilfe-Kurse</a><a class="path-action" href="tauchen-lernen-kurse.html#weiterlernen">Rescue Diver</a></div></article>
     </div></section>
     <section class="landing-contact" aria-labelledby="job-closing"><div class="wrap"><div><h2 id="job-closing">Bewirb dich bei uns</h2><p>Schick deine Unterlagen per Mail oder ruf täglich ab 13 Uhr an.</p></div>
       <div class="closing-actions"><a class="cta mint" href="{mail}">dive-world@mail.de</a><a class="plain" href="tel:+4917685639763">0176 8563 9763</a></div></div></section>'''

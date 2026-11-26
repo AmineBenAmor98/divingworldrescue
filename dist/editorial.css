@@ -1388,3 +1388,8 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 .dive-chips { align-items:stretch; }
 .dive-chips li { display:flex; margin:0; }
 .dive-chips a { min-height:44px; height:100%; }
+
+/* Destination cards reached from a trip tile */
+.trip-card { scroll-margin-top:96px; }
+.trip-card:target { border-color:var(--teal); box-shadow:0 0 0 3px rgba(20,121,111,.18); }
+.trip-archive,.moments-section,.album { scroll-margin-top:24px; }

@@ -45,6 +45,21 @@ Jedes Bild hat einen festen Dateinamen. Speichere das Ergebnis unter `public/ass
 
 > Dive emergency training at a lakeshore or on a dive boat, a diver in a wetsuit kneeling next to a "patient" diver lying on a mat, an oxygen kit with mask open beside them, instructor watching, calm and professional rescue scenario, overcast soft light.
 
+## 8. `kurs-einsteiger.webp`
+**Wo:** Tauchkurse-Übersicht, Kachel „Neu dabei“ (Text liegt unten links auf dem Bild)
+
+> A first-time scuba student in a rental wetsuit sitting on the edge of a bright indoor pool, an instructor kneeling next to them adjusting the mask strap, both smiling slightly, scuba tanks and fins beside them, encouraging beginner atmosphere. Keep the lower left third calm and slightly darker for text overlay.
+
+## 9. `scubility-kurs.webp`
+**Wo:** Tauchkurse-Übersicht, Abschnitt „Inklusiv tauchen“
+
+> An inclusive scuba lesson in a clear indoor pool: a diver with a physical disability (for example using a wheelchair parked at the pool edge, or with a prosthetic leg) being assisted into the water by an instructor and a dive buddy, respectful, empowering and natural, no pity, warm light.
+
+## 10. `kurs-fortgeschritten.webp`
+**Wo:** Tauchkurse-Übersicht, Kachel „Schon Taucher“
+
+> Two experienced divers underwater in a clear green European lake, one checking a dive computer and compass while hovering perfectly horizontal, soft light from above, calm and confident mood. Keep the lower left third calm and slightly darker for text overlay.
+
 ---
 
 ### Tipps
