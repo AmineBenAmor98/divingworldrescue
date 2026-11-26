@@ -60,6 +60,28 @@ Jedes Bild hat einen festen Dateinamen. Speichere das Ergebnis unter `public/ass
 
 > Two experienced divers underwater in a clear green European lake, one checking a dive computer and compass while hovering perfectly horizontal, soft light from above, calm and confident mood. Keep the lower left third calm and slightly darker for text overlay.
 
+## 11. `cover-tauchkurse.webp`
+**Wo:** Tauchkurse-Übersicht, Kopfbild (Text liegt links auf dem Bild)
+
+> Wide scene at the edge of a bright indoor diving pool: a scuba instructor in a black wetsuit kneels and explains a hand signal to three adult beginner students in wetsuits sitting on the pool edge, scuba tanks and fins beside them, everyone relaxed and listening, faces clearly visible with plenty of headroom. All people are placed in the right half of the image. The left 45 % shows only calm, softly blurred pool water and tiled wall, slightly darker, so a white headline can sit on it. Candid, slightly imperfect, like a real club photo.
+
+## 12. `cover-erste-hilfe.webp`
+**Wo:** Erste-Hilfe-Kurse, Kopfbild (Text liegt links auf dem Bild)
+
+> Wide scene of a small first aid course in a bright training room: a female instructor in a dark green polo shirt kneels beside two adult participants who practice chest compressions on adult CPR manikins, an AED trainer on the mat next to them, focused but friendly mood, faces visible with plenty of headroom. All people are placed in the right half of the image. The left 45 % shows only a calm, softly lit wall and window area, slightly darker, so a white headline can sit on it. Candid, like a real course photo.
+
+## 13. `inklusiv-tauchen.webp`
+**Wo:** Startseite und Tauchkurse-Übersicht, Kachel „Inklusiv tauchen“ (Text liegt unten auf dem Bild)
+
+> Over-under split-level photo at a bright indoor pool, the waterline runs across the upper third of the frame. Above the water: an empty wheelchair stands on the tiled pool deck. Below the water: the wheelchair user, an adult man in a black wetsuit with full scuba gear, hovers horizontally with his legs relaxed, a dive buddy gently holds his forearm, an instructor next to them gives the OK sign. Everyone underwater has the regulator in the mouth and wears a mask, eyes smiling, faces visible. Joyful, empowering, natural, no pity. Keep the lower third calm and slightly darker for text overlay.
+
+## 14. `schnuppertauchen.webp`
+**Wo:** Tauchen lernen, Abschnitt „Schnuppertauchen“
+
+> Above-water photo at the shallow end of a bright indoor pool, camera at water level: a first-time diver, an adult woman, stands chest-deep in the water wearing a scuba jacket with tank, her mask pushed up onto her forehead, holding the regulator in her hand just before her very first breath underwater, excited and a little nervous smile. Next to her an instructor in a black wetsuit, also chest-deep, explains calmly and points to the regulator. Water droplets, soft reflections, warm daylight from large windows. Candid, slightly imperfect, like a real club photo.
+
+*Hinweis:* Unterwasser-Szenen mit Atemregler im Mund gelingen Bildgeneratoren oft nicht (Regler neben dem Mund, Maske ohne Nase). Szenen über Wasser wirken glaubwürdiger.
+
 ---
 
 ### Tipps

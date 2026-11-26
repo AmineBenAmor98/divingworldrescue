@@ -1150,7 +1150,7 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 .hero .playback:hover,.hero .playback:focus-visible { opacity:1; }
 
 /* ===== Erste-Hilfe page v2 ===== */
-.aid-cover.aid-cover-v2 { background-image:linear-gradient(90deg,rgba(5,38,41,.96) 0%,rgba(5,38,41,.88) 38%,rgba(5,38,41,.45) 72%,rgba(5,38,41,.25) 100%),url('assets/erste-hilfe-familie.webp'); background-size:cover; background-position:center 40%; }
+.aid-cover.aid-cover-v2 { background-image:linear-gradient(90deg,rgba(5,38,41,.96) 0%,rgba(5,38,41,.88) 38%,rgba(5,38,41,.45) 72%,rgba(5,38,41,.25) 100%),url('assets/cover-erste-hilfe.webp'); background-size:cover; background-position:center 40%; }
 .aid-cover-v2 .wrap { text-align:left; padding-block:clamp(40px,6vw,88px); }
 .aid-cover-v2 h1 { margin-inline:0; }
 .aid-cover-v2 p { margin-inline:0; max-width:48ch; }
@@ -1214,7 +1214,7 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
   .aid-path { min-height:0; aspect-ratio:16/8; }
 }
 @media (max-width:700px) {
-  .aid-cover.aid-cover-v2 { background-image:linear-gradient(180deg,rgba(5,38,41,.86),rgba(5,38,41,.94)),url('assets/erste-hilfe-familie.webp'); }
+  .aid-cover.aid-cover-v2 { background-image:linear-gradient(180deg,rgba(5,38,41,.86),rgba(5,38,41,.94)),url('assets/cover-erste-hilfe.webp'); }
   .aid-path { aspect-ratio:16/9; }
   .aid-path-copy { padding:16px 18px; }
   .aid-course-row { grid-template-columns:1fr; gap:18px; padding:22px 20px; }
@@ -1292,7 +1292,7 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 }
 
 /* Tauchkurse hub v2 */
-.aid-cover.hub-cover { background-image:linear-gradient(90deg,rgba(5,38,41,.96) 0%,rgba(5,38,41,.86) 40%,rgba(5,38,41,.4) 74%,rgba(5,38,41,.2) 100%),url('assets/reisen-rotes-meer.webp'); background-position:center 55%; }
+.aid-cover.hub-cover { background-image:linear-gradient(90deg,rgba(5,38,41,.96) 0%,rgba(5,38,41,.86) 40%,rgba(5,38,41,.4) 74%,rgba(5,38,41,.2) 100%),url('assets/cover-tauchkurse.webp'); background-position:center 55%; }
 .aid-path.is-page .aid-path-copy strong::after { content:" →"; }
 .hub-scubility { padding-block:clamp(40px,5vw,64px) 0; }
 .hub-scubility .training-path { border-bottom:0; padding-block:0; }
@@ -1307,7 +1307,7 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 .hub-plan-grid span { color:var(--muted); font-size:.9375rem; line-height:1.45; }
 @media (max-width:900px) { .hub-plan-grid { grid-template-columns:1fr; gap:10px; } }
 @media (max-width:700px) {
-  .aid-cover.hub-cover { background-image:linear-gradient(180deg,rgba(5,38,41,.84),rgba(5,38,41,.94)),url('assets/reisen-rotes-meer.webp'); }
+  .aid-cover.hub-cover { background-image:linear-gradient(180deg,rgba(5,38,41,.84),rgba(5,38,41,.94)),url('assets/cover-tauchkurse.webp'); }
   .hub-plan-grid a { padding:18px 20px; }
 }
 @media (prefers-reduced-motion:reduce) { .hub-plan-grid a:hover { transform:none; } }
@@ -1450,11 +1450,15 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
 }
 
 /* --- Cover crops: keep faces in the wide, short cover strips ------------- */
-.aid-cover.hub-cover { background-position:center 6%; }
-.aid-cover.aid-cover-v2:not(.hub-cover) { background-position:center 4%; }
 .interior-cover.school-cover { background-position:center 62%; }
 .dive-intro.dive-intro-v2 { background-position:center 24%; }
 
 /* --- Country flags on the Termine destination cards --------------------- */
 .trip-country { display:inline-flex; align-items:center; gap:8px; }
 .trip-country .flag { flex:none; border-radius:2px; box-shadow:0 0 0 1px rgba(16,47,50,.14); }
+
+/* --- Dedicated cover photos: people sit right, text side stays clean ---- */
+@media (min-width:701px) {
+  .aid-cover.aid-cover-v2 { background-image:linear-gradient(90deg,rgba(5,38,41,.94) 0%,rgba(5,38,41,.82) 34%,rgba(5,38,41,.32) 62%,rgba(5,38,41,.08) 100%),url('assets/cover-erste-hilfe.webp'); background-position:center 27%; }
+  .aid-cover.hub-cover { background-image:linear-gradient(90deg,rgba(5,38,41,.94) 0%,rgba(5,38,41,.82) 34%,rgba(5,38,41,.32) 62%,rgba(5,38,41,.08) 100%),url('assets/cover-tauchkurse.webp'); background-position:center 22%; }
+}
