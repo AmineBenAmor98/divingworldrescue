@@ -322,10 +322,10 @@ def google_reviews():
 # Search titles and descriptions. Visible page copy stays as written; these
 # only feed <title>, the meta description and social previews.
 SEO = {
-    "index.html": ("Tauchschule Düsseldorf: Tauchkurse & Erste Hilfe", "Tauchschule in Düsseldorf: Schnuppertauchen, Tauchschein nach SDI/TDI und PSS, inklusives Tauchen mit Scubility, Erste-Hilfe-Kurse nach FRTI sowie Tauchausrüstung zum Kaufen und Leihen."),
+    "index.html": ("Tauchschule Düsseldorf: Tauchkurse & Erste Hilfe", "Tauchschule in Düsseldorf: Schnuppertauchen, Tauchschein nach SDI/TDI und PSS, inklusiv mit Scubility, Erste-Hilfe-Kurse und Ausrüstung zum Kaufen und Leihen."),
     "kurse": ("Tauchkurse in Düsseldorf: Schnuppertauchen bis Divemaster", "Tauchkurse in Düsseldorf: Schnuppertauchen, Open Water Diver, Advanced, Rescue und Spezialkurse nach SDI/TDI und PSS. Finde den passenden Einstieg."),
     "tauchen-lernen-kurse": ("Tauchen lernen in Düsseldorf: Tauchschein Open Water Diver", "Tauchen lernen in Düsseldorf: Mit dem Open Water Diver machst du deinen Tauchschein in Theorie, Hallenbad und Freiwasser. Auch Schnuppertauchen und Wiedereinstieg."),
-    "preis-kurse": ("Tauchkurs Preise: Schnuppertauchen, Tauchschein & Weiterbildung", "Was kostet ein Tauchkurs? Kursgebühren für Schnuppertauchen, Scuba Diver, Open Water und Advanced Open Water Diver mit allen enthaltenen Leistungen."),
+    "preis-kurse": ("Tauchkurs-Preise: Schnuppertauchen bis Advanced", "Was kostet ein Tauchkurs? Kursgebühren für Schnuppertauchen, Scuba Diver, Open Water und Advanced Open Water Diver mit allen enthaltenen Leistungen."),
     "frti-kurse": ("Erste-Hilfe-Kurs Düsseldorf: Familie, Beruf & Tauchsport", "Erste-Hilfe-Kurse in Düsseldorf nach First Response Training International: für Eltern und Familie, für Betriebe und für Taucher mit Sauerstoffgabe."),
     "tauch-shop": ("Tauchshop Düsseldorf: Tauchausrüstung kaufen & leihen", "Tauchausrüstung in Düsseldorf: Atemregler, Tauchcomputer, Jackets, Anzüge, Masken und Flossen mit persönlicher Beratung, auch zum Leihen."),
     "equipment-verleih": ("Tauchausrüstung leihen in Düsseldorf: Leihpreise", "Tauchausrüstung leihen: Atemregler, Tauchcomputer, Jacket, Anzug und Flossen pro Tag, Wochenende oder Woche. Alle Leihpreise im Überblick."),
@@ -344,6 +344,53 @@ def site_origin():
     if not origin and (ROOT / "CNAME").exists():
         origin = "https://" + (ROOT / "CNAME").read_text().strip()
     return origin.rstrip("/") + "/"
+
+
+from functools import lru_cache
+
+
+@lru_cache(maxsize=None)
+def image_size(path):
+    """Read width and height from a WebP, PNG or JPEG header (no image library needed in CI)."""
+    try:
+        data = Path(path).read_bytes()[:65536]
+    except OSError:
+        return None
+    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        kind = data[12:16]
+        if kind == b"VP8 ":
+            return int.from_bytes(data[26:28], "little") & 0x3FFF, int.from_bytes(data[28:30], "little") & 0x3FFF
+        if kind == b"VP8L":
+            bits = int.from_bytes(data[21:25], "little")
+            return (bits & 0x3FFF) + 1, ((bits >> 14) & 0x3FFF) + 1
+        if kind == b"VP8X":
+            return int.from_bytes(data[24:27], "little") + 1, int.from_bytes(data[27:30], "little") + 1
+    if data[:8] == b"\x89PNG\r\n\x1a\n":
+        return int.from_bytes(data[16:20], "big"), int.from_bytes(data[20:24], "big")
+    if data[:2] == b"\xff\xd8":
+        i = 2
+        while i + 9 < len(data):
+            if data[i] != 0xFF:
+                i += 1
+                continue
+            marker, length = data[i + 1], int.from_bytes(data[i + 2:i + 4], "big")
+            if marker in (0xC0, 0xC1, 0xC2):
+                return int.from_bytes(data[i + 7:i + 9], "big"), int.from_bytes(data[i + 5:i + 7], "big")
+            i += 2 + length
+    return None
+
+
+def image_dimensions(html, prefix):
+    """Give every local image its intrinsic size so the layout doesn't jump while photos load."""
+    def add(m):
+        tag, src = m[0], m[1]
+        if " width=" in tag or src.startswith(("http", "data:")):
+            return tag
+        size = image_size(ROOT / "public" / src.split("?")[0].removeprefix(prefix))
+        if not size:
+            return tag
+        return tag.replace("<img ", f'<img width="{size[0]}" height="{size[1]}" ', 1)
+    return re.sub(r'<img\b[^>]*?\ssrc="([^"]+)"[^>]*>', add, html)
 
 
 def responsive_images(html, prefix):
@@ -390,7 +437,50 @@ def business_ld(origin):
     return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
 
 
-def add_metadata(html, path, title, description, prefix, share_image="assets/tauchgang.webp"):
+TITLE_MAX = 62
+DESCRIPTION_RANGE = (110, 160)
+
+
+def fit_title(title, brand):
+    """Search results cut titles at about 60 characters: shorten the brand, or drop it."""
+    if len(title) <= TITLE_MAX:
+        return title
+    core = title.removesuffix(brand)
+    short = core + " · Dive-World"
+    return short if len(short) <= TITLE_MAX else core
+
+
+def fit_description(description, slug):
+    """Keep meta descriptions between about 110 and 160 characters."""
+    low, high = DESCRIPTION_RANGE
+    description = " ".join(description.split())
+    if len(description) < low:
+        tail = (" Preis und Verfügbarkeit bei Dive-World & Rescue in Düsseldorf anfragen." if slug.startswith("produkt-")
+                else " Dive-World & Rescue, Tauchschule und Erste-Hilfe-Ausbildung in Düsseldorf.")
+        if not description.endswith((".", "!", "?")):
+            description += "."
+        if len(description + tail) <= high:
+            description += tail
+    if len(description) > high:
+        description = description[:high - 1].rsplit(" ", 1)[0].rstrip(",;:") + "…"
+    return description
+
+
+def primary_products():
+    """Some products are listed in two categories. Each copy points search engines at one main page."""
+    copies = {}
+    for page in PAGES:
+        if page["slug"].startswith("tauch-shop--") or page.get("catalogue"):
+            for item in catalogue_items(page):
+                copies.setdefault(item["name"], []).append(item["slug"])
+    primary = {}
+    for slugs in copies.values():
+        main = next((slug for slug in slugs if "frti-kurse--" not in slug and "sonderangebote" not in slug), slugs[0])
+        primary.update({slug: main for slug in slugs})
+    return primary
+
+
+def add_metadata(html, path, title, description, prefix, share_image="assets/tauchgang.webp", canonical=None):
     slug = path.removeprefix("pages/").removesuffix(".html")
     brand = " · Dive-World & Rescue"
     if path in SEO or slug in SEO:
@@ -399,9 +489,10 @@ def add_metadata(html, path, title, description, prefix, share_image="assets/tau
     elif slug.startswith("tauch-shop--"):
         description = CATEGORY_SEO.format(name=title.removesuffix(brand))
         title = title.removesuffix(brand) + " kaufen" + brand
+    title, description = fit_title(title, brand), fit_description(description, slug)
     html = re.sub(r"<title>.*?</title>", f"<title>{escape(title)}</title>", html, count=1, flags=re.S)
     html = decorate(html, path)
-    html = responsive_images(html, prefix)
+    html = responsive_images(image_dimensions(html, prefix), prefix)
     editorial_version = sha256((SRC / "editorial.css").read_bytes()).hexdigest()[:10]
     html = html.replace('</head>', f'<link rel="stylesheet" href="{prefix}editorial.css?v={editorial_version}"></head>')
     for asset in ("main.css", "home.js", "inquiry.js"):
@@ -432,7 +523,7 @@ def add_metadata(html, path, title, description, prefix, share_image="assets/tau
         parsed = urlsplit(origin)
         if parsed.scheme not in {"https", "http"} or not parsed.netloc or parsed.query or parsed.fragment:
             raise ValueError("SITE_URL must be an absolute website base URL.")
-        url = origin if path == "index.html" else urljoin(origin, path)
+        url = origin if path == "index.html" else urljoin(origin, canonical or path)
         tags.extend([
             f'<link rel="canonical" href="{escape(url, quote=True)}">',
             f'<meta property="og:url" content="{escape(url, quote=True)}">',
@@ -448,7 +539,8 @@ def add_metadata(html, path, title, description, prefix, share_image="assets/tau
         crumb = breadcrumb_ld(html, origin, path)
         if crumb:
             tags.append(crumb)
-        SITEMAP.append(url)
+        if not canonical or canonical == path:
+            SITEMAP.append(url)
     return html.replace("</head>", "\n".join(tags) + "</head>")
 
 def write_not_found():
@@ -479,6 +571,8 @@ def build():
     shutil.copytree(ROOT / "public", DIST, dirs_exist_ok=True)
     for name in ("main.css", "editorial.css", "home.js", "inquiry.js", "gallery.css", "gallery.js"):
         shutil.copyfile(SRC / name, DIST / name)
+    global PRIMARY_PRODUCT
+    PRIMARY_PRODUCT = primary_products()
     home = HOME.replace("<!-- site-header -->", header("")).replace("<!-- site-footer -->", footer(""))
     home = home.replace("<!-- hero-trust -->", hero_trust()).replace("<!-- home-news -->", home_news(BY_SLUG["termine"], BY_SLUG["glueckwuensche"])).replace("<!-- trip-tiles -->", trip_tiles(BY_SLUG["bilder-reisen-event-s"], "pages/termine.html", "")).replace("<!-- course-preview -->", home_offers()).replace("<!-- equipment-preview -->", equipment_preview()).replace("<!-- google-reviews -->", google_reviews())
     (DIST / "index.html").write_text(add_metadata(home, "index.html", "Tauchen und Erste Hilfe · Dive-World & Rescue", "Tauchkurse, Scubility, Erste Hilfe und Ausrüstung bei Dive-World & Rescue.", ""))
@@ -489,9 +583,10 @@ def build():
         if page["slug"].startswith("tauch-shop--") or page.get("catalogue"):
             items = catalogue_items(page)
             for item in items:
+                main_slug = PRIMARY_PRODUCT.get(item["slug"], item["slug"])
                 main = product_detail(item, page, items)
                 html = page_shell(escape(item["name"]), main, "tauch-shop", item["slug"])
-                html = add_metadata(html, "pages/" + item["slug"] + ".html", item["name"] + " · Dive-World & Rescue", item["summary"], "../", item["photos"][0].removeprefix("../"))
+                html = add_metadata(html, "pages/" + item["slug"] + ".html", item["name"] + " · Dive-World & Rescue", item["summary"], "../", item["photos"][0].removeprefix("../"), "pages/" + main_slug + ".html")
                 (DIST / "pages" / (item["slug"] + ".html")).write_text(html)
 
     write_not_found()

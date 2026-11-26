@@ -90,7 +90,9 @@ def check():
     if OWN_HOST:
         sitemap = (DIST / 'sitemap.xml').read_text()
         listed = {DIST / (urlsplit(u).path.lstrip('/') or 'index.html') for u in re.findall(r'<loc>([^<]+)</loc>', sitemap)}
-        assert listed == reachable, reachable ^ listed
+        # Product copies listed in a second category point their canonical at the main page.
+        copies = {d for d in reachable if (m := re.search(r'rel="canonical" href="([^"]+)"', d.read_text())) and DIST / (urlsplit(m[1]).path.lstrip('/') or 'index.html') != d}
+        assert listed == reachable - copies, (reachable - copies) ^ listed
     print(f'{len(docs)} pages reachable. Local links, media, anchors and form destinations passed.')
 
 

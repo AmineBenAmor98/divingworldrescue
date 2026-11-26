@@ -1462,3 +1462,9 @@ section.landing-contact > .wrap > div:first-child { flex:1 1 auto; }
   .aid-cover.aid-cover-v2 { background-image:linear-gradient(90deg,rgba(5,38,41,.94) 0%,rgba(5,38,41,.82) 34%,rgba(5,38,41,.32) 62%,rgba(5,38,41,.08) 100%),url('assets/cover-erste-hilfe.webp'); background-position:center 27%; }
   .aid-cover.hub-cover { background-image:linear-gradient(90deg,rgba(5,38,41,.94) 0%,rgba(5,38,41,.82) 34%,rgba(5,38,41,.32) 62%,rgba(5,38,41,.08) 100%),url('assets/cover-tauchkurse.webp'); background-position:center 22%; }
 }
+
+/* Images now carry width/height attributes; keep their proportions unless a rule sets a height. */
+img { height:auto; }
+
+/* Breadcrumb links: at least 24px tall to tap (WCAG 2.2 target size) without moving the text. */
+.crumb a,.item-crumb a { display:inline-block; padding:4px 3px; margin:-4px -3px; }
