@@ -368,7 +368,7 @@ def business_ld(origin):
     data = {
         "@context": "https://schema.org", "@type": "SportsActivityLocation",
         "name": "Dive-World & Rescue", "description": SEO["index.html"][1],
-        "url": origin, "logo": urljoin(origin, "assets/logo-mark.png"), "image": urljoin(origin, "assets/tauchgang.webp"),
+        "url": origin, "logo": urljoin(origin, "assets/icon-192.png"), "image": urljoin(origin, "assets/tauchgang.webp"),
         "telephone": "+49 176 85639763", "email": "dive-world@mail.de",
         "address": {"@type": "PostalAddress", "streetAddress": "Bebelstr. 1", "postalCode": "40627", "addressLocality": "Düsseldorf", "addressCountry": "DE"},
         "areaServed": "Düsseldorf",
@@ -393,7 +393,9 @@ def add_metadata(html, path, title, description, prefix, share_image="assets/tau
     for asset in ("main.css", "home.js", "inquiry.js"):
         version = sha256((SRC / asset).read_bytes()).hexdigest()[:10]
         html = html.replace(f'"{prefix}{asset}"', f'"{prefix}{asset}?v={version}"')
-    if 'class="album-grid"' in html:
+    logo_version = sha256((ROOT / "public" / "assets" / "logo-mark.png").read_bytes()).hexdigest()[:10]
+    html = html.replace('assets/logo-mark.png"', f'assets/logo-mark.png?v={logo_version}"')
+    if 'class="album-grid"' in html or 'class="photo-mosaic"' in html:
         css_version = sha256((SRC / "gallery.css").read_bytes()).hexdigest()[:10]
         script_version = sha256((SRC / "gallery.js").read_bytes()).hexdigest()[:10]
         html = html.replace("</head>", (
@@ -405,7 +407,11 @@ def add_metadata(html, path, title, description, prefix, share_image="assets/tau
         '<meta property="og:type" content="website">',
         f'<meta property="og:title" content="{escape(title, quote=True)}">',
         f'<meta property="og:description" content="{escape(description, quote=True)}">',
+        f'<link rel="icon" href="{prefix}favicon.ico" sizes="48x48">',
+        f'<link rel="icon" type="image/png" sizes="32x32" href="{prefix}assets/favicon-32.png">',
         f'<link rel="icon" type="image/png" sizes="64x64" href="{prefix}assets/favicon.png">',
+        f'<link rel="icon" type="image/png" sizes="192x192" href="{prefix}assets/icon-192.png">',
+        f'<link rel="apple-touch-icon" href="{prefix}assets/apple-touch-icon.png">',
     ]
     origin = site_origin()
     if origin != "/":

@@ -1,8 +1,8 @@
 function setupGalleryViewer() {
   if (typeof HTMLDialogElement === 'undefined' || !HTMLDialogElement.prototype.showModal) return;
 
-  const albums = [...document.querySelectorAll('.album')].map(album =>
-    [...album.querySelectorAll('.album-grid figure > a')]
+  const albums = [...document.querySelectorAll('.album, .photo-mosaic')].map(album =>
+    [...album.querySelectorAll('.album-grid figure > a, .photo-mosaic > a')]
   ).filter(photos => photos.length);
   if (!albums.length) return;
 
@@ -39,7 +39,7 @@ function setupGalleryViewer() {
   function showPhoto(index) {
     current = (index + activeAlbum.length) % activeAlbum.length;
     const link = activeAlbum[current];
-    const title = link.closest('figure').querySelector('figcaption')?.textContent.trim() || '';
+    const title = link.closest('figure')?.querySelector('figcaption')?.textContent.trim() || '';
     error.hidden = true;
     image.hidden = false;
     image.alt = link.querySelector('img').alt;
