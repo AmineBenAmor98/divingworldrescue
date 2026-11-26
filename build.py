@@ -292,19 +292,29 @@ def equipment_preview():
 def google_reviews():
     data = json.loads((ROOT / "content/google-reviews.json").read_text())
     url = escape(data["url"], quote=True)
-    icon = '<img class="google-icon" src="assets/google-g.png" width="20" height="20" alt="">'
-    quotes = []
+    google = '<img class="google-icon" src="assets/google-g.png" width="20" height="20" alt="">'
+    cards = []
     for review in data["reviews"]:
         author = escape(review["author"])
-        quotes.append(f'''<figure class="google-review">
-          <blockquote>„{escape(review["excerpt"])}“</blockquote>
-          <figcaption><span class="review-stars" aria-label="{review["stars"]} von 5 Sternen"><span aria-hidden="true">★★★★★</span></span><strong>{author}</strong></figcaption>
-        </figure>''')
-    return f'''<section class="google-reviews" aria-labelledby="review-title"><div class="wrap">
-      <div class="review-heading"><p class="kicker">Erfahrungen</p><h2 id="review-title">Das sagen unsere Kunden</h2>
-      <a class="google-rating" href="{url}" target="_blank" rel="noopener noreferrer">{icon}<span class="review-stars" aria-hidden="true">★★★★★</span><span><strong>{data["rating"]}</strong> · {data["count"]} Google-Rezensionen</span></a></div>
-      <div class="google-review-grid">{"".join(quotes)}</div>
-      <p class="review-foot">Auszüge aus Google-Rezensionen, Stand <time datetime="{data["checked_on"]}">{data["checked_label"]}</time> · <a href="{url}" target="_blank" rel="noopener noreferrer">Alle Rezensionen auf Google</a></p>
+        initials = "".join(part[0] for part in review["author"].split()[:2]).upper()
+        excerpt = escape(review["excerpt"])
+        # Excerpts that start mid-sentence get a leading ellipsis so the cut is visible.
+        if excerpt[:1].islower():
+            excerpt = "… " + excerpt
+        cards.append(f'''<li><figure class="review-card">
+          <div class="review-card-top"><span class="review-stars" aria-label="{review["stars"]} von 5 Sternen"><span aria-hidden="true">{"★" * review["stars"]}</span></span>{google.replace('alt=""', 'alt="Google"')}</div>
+          <blockquote>„{excerpt}“</blockquote>
+          <figcaption><span class="review-avatar" aria-hidden="true">{initials}</span><span><strong>{author}</strong><small>Google-Rezension</small></span></figcaption>
+        </figure></li>''')
+    return f'''<section class="google-reviews" aria-labelledby="review-title"><div class="wrap review-layout">
+      <div class="review-summary">
+        <p class="kicker">Erfahrungen</p>
+        <h2 id="review-title">Das sagen unsere Kunden</h2>
+        <div class="review-score"><span class="review-score-num">{data["rating"]}</span><span class="review-score-meta"><span class="review-stars" aria-label="{data["rating"]} von 5 Sternen"><span aria-hidden="true">★★★★★</span></span><span>{data["count"]} Google-Rezensionen</span></span></div>
+        <a class="review-cta" href="{url}" target="_blank" rel="noopener noreferrer">{google}Alle Rezensionen auf Google</a>
+        <p class="review-note">Auszüge, Stand <time datetime="{data["checked_on"]}">{data["checked_label"]}</time></p>
+      </div>
+      <ul class="review-cards">{"".join(cards)}</ul>
     </div></section>'''
 
 

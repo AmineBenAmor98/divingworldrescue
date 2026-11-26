@@ -226,6 +226,27 @@ def notice(text):
     return re.sub(r"\s{2,}", " ", text).strip(" ,")
 
 
+# Small inline flags: emoji flags show as two letters on Windows, SVG works everywhere.
+FLAG_STRIPES = {
+    "Belgien": ("v", "#000", "#fdda24", "#ef3340"),
+    "Deutschland": ("h", "#000", "#dd0000", "#ffce00"),
+    "Niederlande": ("h", "#ae1c28", "#fff", "#21468b"),
+    "Ägypten": ("h", "#ce1126", "#fff", "#000"),
+}
+
+
+def flag(country):
+    if country not in FLAG_STRIPES:
+        return ""
+    axis, *colors = FLAG_STRIPES[country]
+    rects = "".join(
+        f'<rect x="{i * 10}" y="0" width="10" height="20" fill="{c}"/>' if axis == "v" else f'<rect x="0" y="{i * 20 / 3:.2f}" width="30" height="{20 / 3:.2f}" fill="{c}"/>'
+        for i, c in enumerate(colors))
+    if country == "Ägypten":
+        rects += '<circle cx="15" cy="10" r="2.2" fill="#c09300"/>'
+    return f'<svg class="flag" viewBox="0 0 30 20" width="21" height="14" aria-hidden="true">{rects}</svg>'
+
+
 def dates(page):
     archive = page["archive"]
     counts = Counter(record["name"] for record in archive)
@@ -235,7 +256,7 @@ def dates(page):
     for name, kind, region, program in VENUES:
         venue, place = name.split(" · ")
         link = "anfrage.html?" + escape(urlencode({"thema": "Termine und Reisen", "ziel": name}))
-        cards.append(f'''<article class="trip-card" id="ziel-{slugify(venue)}"><p class="trip-meta"><span class="trip-kind kind-{slugify(kind)}">{kind}</span>{escape(region)}</p>
+        cards.append(f'''<article class="trip-card" id="ziel-{slugify(venue)}"><p class="trip-meta"><span class="trip-kind kind-{slugify(kind)}">{kind}</span><span class="trip-country">{flag(region) or flag(place)}{escape(region)}</span></p>
           <h3>{escape(venue)}</h3><p class="trip-place">{escape(place)}</p><p>{escape(program)}</p>
           <footer><span>{counts[name]} Termine seit {first_year}</span><a href="{link}">Mitkommen<span class="sr-only"> nach {escape(place)}</span></a></footer></article>''')
     facts = [
