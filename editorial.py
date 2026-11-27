@@ -367,7 +367,7 @@ def guestbook(page):
 
 
 def jobs():
-    mail = "mailto:dive-world@mail.de?subject=" + escape("Bewerbung Rettungsschwimmer Unterbacher See")
+    mail = "mailto:info@dive-world-rescue.de?subject=" + escape("Bewerbung Rettungsschwimmer Unterbacher See")
     tasks = ["Badebetrieb beaufsichtigen und Badegäste betreuen", "Rettungs- und Erste-Hilfe-Maßnahmen durchführen", "Ausrüstung kontrollieren und das Team bei der Organisation unterstützen"]
     needs = ["Aktuelles Rettungsschwimmabzeichen", "Erste-Hilfe-Nachweis, höchstens zwei Jahre alt", "Körperliche Fitness", "Freude an der Arbeit im Team"]
     check = lambda items: "".join(f"<li>{escape(i)}</li>" for i in items)
@@ -385,7 +385,7 @@ def jobs():
         <div class="job-links"><a class="path-action" href="frti-kurse.html">Erste-Hilfe-Kurse</a><a class="path-action" href="tauchen-lernen-kurse.html#weiterlernen">Rescue Diver</a></div></article>
     </div></section>
     <section class="landing-contact" aria-labelledby="job-closing"><div class="wrap"><div><h2 id="job-closing">Bewirb dich bei uns</h2><p>Schick deine Unterlagen per Mail oder ruf uns an.</p></div>
-      <div class="closing-actions"><a class="cta mint" href="{mail}">dive-world@mail.de</a><a class="plain" href="tel:+4917685639763">0176 8563 9763</a></div></div></section>'''
+      <div class="closing-actions"><a class="cta mint" href="{mail}">info@dive-world-rescue.de</a><a class="plain" href="tel:+4917685639763">0176 8563 9763</a></div></div></section>'''
 
 
 def hud(page):
@@ -406,7 +406,7 @@ def legal(page):
     contact = [
         row('Telefon', '<a href="tel:+4917685639763">+49 176 85639763</a>'),
         row('Fax', '01805002068423'),
-        row('E-Mail', '<a href="mailto:dive-world@mail.de">dive-world@mail.de</a><br><a href="mailto:info@dive-world-rescue.de">info@dive-world-rescue.de</a>'),
+        row('E-Mail', '<a href="mailto:info@dive-world-rescue.de">info@dive-world-rescue.de</a>'),
         row('Web', 'www.dive-world-rescue.de'),
         row('Facebook', escape(blocks[15]['text'])),
         row('Twitter', escape(blocks[17]['text'])),

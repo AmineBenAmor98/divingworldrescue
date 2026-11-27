@@ -18,7 +18,7 @@ function formatInquiry({ topic, interest, period, message }) {
 function inquiryURL(channel, values) {
   const body = encodeURIComponent(formatInquiry(values));
   return channel === 'mail'
-    ? 'mailto:dive-world@mail.de?subject=' + encodeURIComponent('Anfrage · ' + values.topic) + '&body=' + body
+    ? 'mailto:info@dive-world-rescue.de?subject=' + encodeURIComponent('Anfrage · ' + values.topic) + '&body=' + body
     : 'https://wa.me/4917685639763?text=' + body;
 }
 

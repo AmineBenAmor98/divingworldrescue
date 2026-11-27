@@ -434,7 +434,7 @@ def business_ld(origin):
         "@context": "https://schema.org", "@type": "SportsActivityLocation",
         "name": "Dive-World & Rescue", "description": SEO["index.html"][1],
         "url": origin, "logo": urljoin(origin, "assets/icon-192.png"), "image": urljoin(origin, "assets/tauchgang.webp"),
-        "telephone": "+49 176 85639763", "email": "dive-world@mail.de",
+        "telephone": "+49 176 85639763", "email": "info@dive-world-rescue.de",
         "address": {"@type": "PostalAddress", "streetAddress": "Bebelstr. 1", "postalCode": "40627", "addressLocality": "Düsseldorf", "addressCountry": "DE"},
         "areaServed": "Düsseldorf",
     }
