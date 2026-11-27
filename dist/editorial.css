@@ -1617,8 +1617,42 @@ main h2:not(#_) { line-height:1.12; }
 }
 .equip-stage img { mix-blend-mode: normal; }
 
-/* These four supplier photos use the same navy background. Keep the zoom originals. */
-main img:is([src$="e04d19ac13beb405.webp"], [src$="cab0c131ea1904d4.webp"],
-       [src$="bbb7d1676d207914.webp"], [src$="45bc9d2be2a1fc3d.webp"]) {
-  filter: url("assets/catalogue-backdrop.svg#navy-to-white");
+
+/* ===== Team board (Nov 2026): one left edge, intro beside the owner, four equal member cards ===== */
+.team-board { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px 48px; align-items:center; }
+.team-board .team-intro { grid-column:1; text-align:left; }
+.team-board .team-intro p { margin:12px 0 0; max-width:44ch; }
+.team-board .member-lead { grid-column:2; }
+.team-members { grid-column:1 / -1; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; margin:8px 0 0; padding:0; list-style:none; }
+main .team-members > li + li { margin-top:0; }
+.member { display:flex; flex-direction:column; align-items:flex-start; gap:16px; height:100%; padding:24px; background:var(--white); border:1px solid var(--line); border-radius:var(--radius); text-align:left; }
+.member img { width:72px; height:72px; flex:none; border-radius:50%; object-fit:cover; object-position:center 22%; background:var(--sage); box-shadow:0 0 0 1px var(--line); }
+.member-sascha img { object-position:center 12%; }
+.member-body { display:flex; flex-direction:column; gap:4px; min-width:0; }
+.member h3 { margin:0; font-size:1.125rem; line-height:1.3; }
+.member-role { margin:0; color:var(--muted); font-size:.9375rem; line-height:1.45; }
+.member-meta { display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; margin-top:10px; }
+.member-certs { display:flex; flex-wrap:wrap; gap:6px; margin:0; padding:0; list-style:none; }
+main .member-certs li + li { margin-top:0; }
+.member-certs li { padding:3px 10px; border-radius:999px; background:var(--sage); color:var(--teal-dark); font-size:.8125rem; font-weight:600; line-height:1.4; }
+.member-region { color:var(--muted); font-size:.8125rem; }
+.member-lead { flex-direction:row; align-items:center; gap:24px; height:auto; padding:28px; }
+.member-lead img { width:96px; height:96px; }
+.member-lead h3 { font-size:1.3125rem; }
+@media (max-width:1000px) {
+  .team-board { grid-template-columns:1fr; }
+  .team-board .member-lead, .team-members { grid-column:1; }
+  .team-members { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .member:not(.member-lead) { flex-direction:row; align-items:center; }
 }
+@media (max-width:600px) {
+  .team-members { grid-template-columns:1fr; gap:12px; }
+  .member { padding:16px; gap:14px; }
+  .member img { width:60px; height:60px; }
+  .member-lead { padding:20px 16px; }
+  .member-lead img { width:80px; height:80px; }
+  .member-lead h3 { font-size:1.1875rem; }
+}
+
+/* Kontakt band: the photo spans the whole band so the fade has no visible edge on wide screens. */
+@media (min-width:701px) { .contact .shore { width:100%; object-position:30% 55%; } }
