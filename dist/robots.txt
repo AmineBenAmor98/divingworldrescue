@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://abenamor.duckdns.org/sitemap.xml
+Sitemap: https://dive-world-rescue.de/sitemap.xml
